@@ -47,12 +47,12 @@ export default async function ProgramsPage({
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-200/30 rounded-full blur-[120px]" />
       </div>
 
-      <section className="pt-40 pb-16 px-4 sm:px-6 lg:px-8 text-center text-slate-900">
+      <section className="pt-32 md:pt-40 pb-12 md:pb-16 px-4 sm:px-6 lg:px-8 text-center text-slate-900">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-6xl md:text-7xl font-black tracking-tight mb-8">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight mb-6 md:mb-8 leading-tight">
             {t('title').split(' ')[0]} <span className="text-sky-500">{t('title').split(' ')[1]}</span>
           </h1>
-          <p className="text-xl text-slate-600 font-medium leading-relaxed uppercase text-xs tracking-[0.2em] font-black opacity-60">
+          <p className="text-sm md:text-xl text-slate-600 font-medium leading-relaxed uppercase tracking-[0.1em] md:tracking-[0.2em] font-black opacity-60 px-4">
             {t('subtitle')}
           </p>
         </div>

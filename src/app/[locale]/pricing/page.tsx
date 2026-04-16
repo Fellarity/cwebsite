@@ -29,12 +29,12 @@ export default async function PricingPage({
       </div>
 
       {/* Header */}
-      <section className="pt-40 pb-20 px-4 sm:px-6 lg:px-8 text-center">
+      <section className="pt-32 md:pt-40 pb-16 md:pb-20 px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-6xl md:text-7xl font-black text-slate-900 tracking-tight mb-8">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 tracking-tight mb-6 md:mb-8 leading-tight">
             {t('title').split('.')[0]}<span className="text-sky-500">.</span>
           </h1>
-          <p className="text-xl text-slate-600 font-medium leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed px-4">
             {t('subtitle')}
           </p>
         </div>

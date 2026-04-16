@@ -23,22 +23,22 @@ export default async function Home({
       </div>
 
       {/* Hero Section */}
-      <section className="pt-40 pb-24 px-4 sm:px-6 lg:px-8">
+      <section className="pt-32 md:pt-40 pb-20 md:pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-sky-100 text-sky-700 text-xs font-bold mb-10 shadow-sm uppercase tracking-widest backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-sky-100 text-sky-700 text-[10px] md:text-xs font-bold mb-8 md:mb-10 shadow-sm uppercase tracking-widest backdrop-blur-sm">
               <GraduationCap className="h-4 w-4 text-amber-500" />
               <span>{t('heroBadge')}</span>
             </div>
             
-            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight text-slate-900 mb-10 leading-[1.05]">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-slate-900 mb-8 md:mb-10 leading-[1.1] md:leading-[1.05]">
               {t('title1')}<span className="text-sky-500">.</span> <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-600 via-indigo-600 to-sky-600 animate-gradient-x">
                 {t('title2')}
               </span>
             </h1>
             
-            <p className="text-xl sm:text-2xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
+            <p className="text-lg md:text-xl lg:text-2xl text-slate-600 mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed font-medium px-4">
               {t('subtitle')}
             </p>
             
