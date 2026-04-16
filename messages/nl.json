@@ -1,0 +1,102 @@
+{
+  "Navbar": {
+    "findTutors": "Tutors vinden",
+    "programs": "Programma's",
+    "pricing": "Tarieven",
+    "signIn": "Inloggen",
+    "getStarted": "Aan de slag",
+    "dashboard": "Dashboard"
+  },
+  "Index": {
+    "heroBadge": "AI-begeleiding van wereldklasse",
+    "title1": "Persoonlijke AI-begeleiding",
+    "title2": "Om jou heen gebouwd",
+    "subtitle": "Vind de juiste AI-tutor, kies je leerdoel en boek een live 1-op-1 programma.",
+    "exploreTutors": "Tutors verkennen",
+    "feature1Title": "Live 1-op-1 sessies",
+    "feature1Desc": "Directe toegang tot elite AI-mentoren voor persoonlijke groei.",
+    "feature2Title": "AI-gestuurde paden",
+    "feature2Desc": "Curriculum dat evolueert met jouw voortgang en doelen.",
+    "feature3Title": "Bewezen resultaten",
+    "feature3Desc": "Gegarandeerde beheersing door strikte verantwoordelijkheid."
+  },
+  "Tutors": {
+    "title": "Elite AI-mentoren",
+    "subtitle": "Maak contact met toonaangevende experts voor 1-op-1 begeleiding.",
+    "searchPlaceholder": "Zoek expertise...",
+    "viewProfile": "Profiel bekijken",
+    "verified": "Geverifieerd",
+    "sessions": "sessies",
+    "perHour": "uur"
+  },
+  "TutorProfile": {
+    "back": "Terug naar overzicht",
+    "verifiedBadge": "Geverifieerde Elite Mentor",
+    "reviews": "Recensies",
+    "availableThisWeek": "Deze week beschikbaar",
+    "expertiseTitle": "Expertise & Curriculum",
+    "styleTitle": "Lesstijl",
+    "styleDesc": "Mijn aanpak is studentgericht en datagedreven. We leren niet alleen concepten; we bouwen mentale modellen. Elke sessie bevat real-time feedback en bruikbare afhaalpunten.",
+    "bookTitle": "Boek een sessie",
+    "weeklySlots": "Wekelijkse slots",
+    "viewAll": "Toon alles",
+    "selectPlan": "Kies een plan",
+    "guarantee": "Veilige betaling via Razorpay • 100% tevredenheid gegarandeerd"
+  },
+  "Pricing": {
+    "title": "Investeer in je toekomst.",
+    "subtitle": "Kies een coachingprogramma dat past bij je leerdoelen. Alle plannen bevatten live 1-op-1 sessies en persoonlijke AI-trajecten.",
+    "mostPopular": "Meest populair",
+    "program": "programma",
+    "sessions": "Live 1-op-1 sessies",
+    "minutes": "minuten per sessie",
+    "personalized": "Gepersonaliseerd AI-curriculum",
+    "messaging": "Directe berichten met mentor",
+    "reports": "Voortgangsrapporten & Analyse",
+    "choose": "Kies",
+    "guaranteeTitle": "Tevredenheid gegarandeerd",
+    "guaranteeDesc": "Niet tevreden met je eerste sessie? We betalen je hele programma terug of zoeken gratis een nieuwe mentor voor je."
+  },
+  "Programs": {
+    "title": "Leer Programma",
+    "subtitle": "Gestaag 1-op-1 leertrajecten ontworpen om je van beginner naar industrie-klaar te brengen.",
+    "path1Title": "Machine Learning",
+    "path1Desc": "Beheers algoritmen, modeltraining en Scikit-Learn vanaf de basis.",
+    "path2Title": "Generatieve AI",
+    "path2Desc": "Leer applicaties bouwen met OpenAI API-s, LangChain en RAG-architecturen.",
+    "path3Title": "Data Engineering",
+    "path3Desc": "Bouw robuuste datapijplijnen, beheer SQL-databases en verwerk big data-stromen.",
+    "path4Title": "AI-strategie",
+    "path4Desc": "Voor oprichters en PM-s: leer hoe u AI implementeert en meet in zakelijke toepassingen.",
+    "viewCurriculum": "Bekijk Trajectoverzicht"
+  },
+  "Dashboard": {
+    "welcome": "Welkom terug",
+    "subtitle": "Hier is je leeroverzicht en aankomende sessies.",
+    "upcoming": "Aankomende sessies",
+    "completed": "Voltooide sessies",
+    "hours": "Leeruren",
+    "nextSession": "Volgende sessie",
+    "noSessions": "Je hebt momenteel geen sessies gepland.",
+    "bookButton": "Tutor boeken",
+    "currentPlan": "Huidig plan",
+    "activePlan": "Actief plan",
+    "noPlan": "Geen actief plan",
+    "upgrade": "Nu upgraden"
+  },
+  "TutorDashboard": {
+    "welcome": "Welkom",
+    "subtitle": "Beheer je beschikbaarheid, studenten en aankomende sessies.",
+    "portalTag": "Tutor Portaal",
+    "manageButton": "Beheer beschikbaarheid",
+    "sessionsToday": "Sessies vandaag",
+    "activeStudents": "Actieve studenten",
+    "totalHours": "Totaal gewerkte uren",
+    "scheduleTitle": "Aankomende planning",
+    "noSessions": "Je hebt nog geen sessies geboekt.",
+    "quickActions": "Snelle acties",
+    "action1": "Profiel & Tarief bijwerken",
+    "action2": "Verdiensten bekijken",
+    "action3": "Sessienotities indienen"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "Navbar": {
+    "findTutors": "Find Tutors",
+    "programs": "Programs",
+    "pricing": "Pricing",
+    "signIn": "Sign In",
+    "getStarted": "Get Started",
+    "dashboard": "Dashboard"
+  },
+  "Index": {
+    "heroBadge": "World-Class AI Mentorship",
+    "title1": "Personal AI Tutoring",
+    "title2": "Built Around You",
+    "subtitle": "Find the right AI tutor, choose your learning goal, and book a live 1-to-1 program.",
+    "exploreTutors": "Explore Tutors",
+    "feature1Title": "Live 1-to-1 Sessions",
+    "feature1Desc": "Direct access to elite AI mentors for personalized growth.",
+    "feature2Title": "AI-Powered Paths",
+    "feature2Desc": "Curriculum that evolves with your progress and goals.",
+    "feature3Title": "Proven Results",
+    "feature3Desc": "Guaranteed mastery through rigorous accountability."
+  },
+  "Tutors": {
+    "title": "Elite AI Mentors",
+    "subtitle": "Connect with industry-leading experts for 1-to-1 guidance.",
+    "searchPlaceholder": "Search expertise...",
+    "viewProfile": "View Profile",
+    "verified": "Verified",
+    "sessions": "sessions",
+    "perHour": "hr"
+  },
+  "TutorProfile": {
+    "back": "Back to Directory",
+    "verifiedBadge": "Verified Elite Mentor",
+    "reviews": "Reviews",
+    "availableThisWeek": "Available This Week",
+    "expertiseTitle": "Expertise & Curriculum",
+    "styleTitle": "Teaching Style",
+    "styleDesc": "My approach is student-centric and data-driven. We don't just learn concepts; we build mental models. Every session includes real-time feedback and actionable takeaways.",
+    "bookTitle": "Book a Session",
+    "weeklySlots": "Weekly Slots",
+    "viewAll": "View All",
+    "selectPlan": "Select a Plan",
+    "guarantee": "Secure payment via Razorpay • 100% Satisfaction Guaranteed"
+  },
+  "Pricing": {
+    "title": "Invest in Your Future.",
+    "subtitle": "Choose a coaching program that matches your learning goals. All plans include 1-to-1 live sessions and personalized AI pathways.",
+    "mostPopular": "Most Popular",
+    "program": "program",
+    "sessions": "Live 1-to-1 Sessions",
+    "minutes": "Minutes Per Session",
+    "personalized": "Personalized AI Curriculum",
+    "messaging": "Direct Mentor Messaging",
+    "reports": "Progress Reports & Analytics",
+    "choose": "Choose",
+    "guaranteeTitle": "Satisfaction Guaranteed",
+    "guaranteeDesc": "Not satisfied with your first session? We'll refund your entire program or find you a new mentor for free."
+  },
+  "Programs": {
+    "title": "Learning Programs",
+    "subtitle": "Structured 1-to-1 learning paths designed to take you from beginner to industry-ready.",
+    "path1Title": "Machine Learning",
+    "path1Desc": "Master algorithms, model training, and Scikit-Learn from the ground up.",
+    "path2Title": "Generative AI",
+    "path2Desc": "Learn to build applications with OpenAI APIs, LangChain, and RAG architectures.",
+    "path3Title": "Data Engineering",
+    "path3Desc": "Build robust data pipelines, manage SQL databases, and handle big data streams.",
+    "path4Title": "AI Strategy",
+    "path4Desc": "For founders and PMs: learn how to implement and measure AI in business applications.",
+    "viewCurriculum": "View Path Curriculum"
+  },
+  "Dashboard": {
+    "welcome": "Welcome back",
+    "subtitle": "Here is your learning summary and upcoming sessions.",
+    "upcoming": "Upcoming Sessions",
+    "completed": "Completed Sessions",
+    "hours": "Learning Hours",
+    "nextSession": "Next Session",
+    "noSessions": "You dont have any upcoming sessions scheduled.",
+    "bookButton": "Book a Tutor",
+    "currentPlan": "Current Plan",
+    "activePlan": "Active Plan",
+    "noPlan": "No Active Plan",
+    "upgrade": "Upgrade Now"
+  },
+  "TutorDashboard": {
+    "welcome": "Welcome",
+    "subtitle": "Manage your availability, students, and upcoming tutoring sessions.",
+    "portalTag": "Tutor Portal",
+    "manageButton": "Manage Availability",
+    "sessionsToday": "Sessions Today",
+    "activeStudents": "Active Students",
+    "totalHours": "Total Hours Taught",
+    "scheduleTitle": "Upcoming Schedule",
+    "noSessions": "You dont have any sessions booked yet.",
+    "quickActions": "Quick Actions",
+    "action1": "Update Profile & Rate",
+    "action2": "View Earnings",
+    "action3": "Submit Session Notes"
+  }
+}

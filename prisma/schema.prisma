@@ -1,0 +1,179 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  role          Role      @default(STUDENT)
+  phone         String?
+  language      String    @default("en")
+  timezone      String    @default("UTC")
+
+  sessions      Session[]
+  accounts      Account[]
+  
+  studentProfile StudentProfile?
+  tutorProfile   TutorProfile?
+  orders         Order[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
+}
+
+enum Role {
+  STUDENT
+  TUTOR
+  ADMIN
+}
+
+model TutorProfile {
+  id                 String              @id @default(cuid())
+  userId             String              @unique
+  user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio                String?
+  expertise          String[]
+  languages          String[]
+  hourlyRate         Float?
+  verificationStatus String              @default("PENDING")
+  payoutDetails      Json?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  
+  availability       TutorAvailability[]
+  bookings           Booking[]
+}
+
+model StudentProfile {
+  id                String    @id @default(cuid())
+  userId            String    @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  learningGoal      String?
+  currentLevel      String?
+  onboardingAnswers Json?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  bookings          Booking[]
+}
+
+model TutorAvailability {
+  id        String       @id @default(cuid())
+  tutorId   String
+  tutor     TutorProfile @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  dayOfWeek Int
+  startTime String
+  endTime   String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model Plan {
+  id             String   @id @default(cuid())
+  title          String
+  description    String?
+  sessionCount   Int
+  duration       Int
+  price          Float
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  orders         Order[]
+}
+
+model Booking {
+  id              String         @id @default(cuid())
+  studentId       String
+  student         StudentProfile @relation(fields: [studentId], references: [id])
+  tutorId         String
+  tutor           TutorProfile   @relation(fields: [tutorId], references: [id])
+  startTime       DateTime
+  endTime         DateTime
+  meetLink        String?
+  calendarEventId String?
+  status          BookingStatus  @default(PENDING)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model Order {
+  id               String      @id @default(cuid())
+  userId           String
+  user             User        @relation(fields: [userId], references: [id])
+  planId           String
+  plan             Plan        @relation(fields: [planId], references: [id])
+  razorpayOrderId  String?
+  razorpayPaymentId String?
+  amount           Float
+  status           OrderStatus @default(PENDING)
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+}
