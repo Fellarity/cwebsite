@@ -1,7 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import createMiddleware from 'next-intl/middleware';
 import { locales, localePrefix } from './navigation';
-import { NextResponse } from "next/server";
 
 const intlMiddleware = createMiddleware({
   locales,
@@ -10,30 +9,31 @@ const intlMiddleware = createMiddleware({
 });
 
 const isProtectedRoute = createRouteMatcher([
-  "/(en|nl)/(dashboard|admin)(.*)",
-  "/(en|nl)/tutor",
-  "/(en|nl)/tutor/(.*)"
+  "/(en|nl)/dashboard(.*)",
+  "/(en|nl)/tutor(.*)",
+  "/(en|nl)/admin(.*)"
 ]);
 
 export default clerkMiddleware(async (auth, request) => {
-    const pathname = request.nextUrl.pathname;
-    
-    // Handle API routes first
-    if (pathname.startsWith("/api")) {
-        return NextResponse.next();
+    // 1. Skip middleware for public API routes or assets if needed
+    if (request.nextUrl.pathname.startsWith('/api/webhooks')) {
+        return;
     }
-    
-    // Protect routes
+
+    // 2. Protect specific routes
     if (isProtectedRoute(request)) {
         await auth.protect();
     }
 
-    // Handle Internationalized Routing
+    // 3. Handle Internationalized Routing
     return intlMiddleware(request);
 });
 
 export const config = {
   matcher: [
-    '/((?!_next|_vercel|.*\\..*).*)',
+    // Optimized matcher: Skip all internal paths and static files
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
   ],
 };
