@@ -10,7 +10,7 @@ const intlMiddleware = createMiddleware({
 });
 
 const authMiddleware = auth.middleware({
-  loginUrl: '/api/auth/login',
+  loginUrl: '/auth/sign-in',
 });
 
 export default async function middleware(request: NextRequest) {
@@ -28,6 +28,8 @@ export default async function middleware(request: NextRequest) {
       pathname.includes('/admin');
 
     if (isProtectedRoute) {
+        // Neon Auth middleware will handle session check and redirect to /auth/sign-in
+        // intlMiddleware will then rewrite /auth/sign-in to /en/auth/sign-in or /nl/auth/sign-in
         return authMiddleware(request);
     }
 
