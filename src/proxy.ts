@@ -21,20 +21,25 @@ export default async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    // 2. Protect routes
+    // 2. Handle Internationalized Routing First
+    // This ensures that headers and locale state are set before auth checks
+    const response = intlMiddleware(request);
+
+    // 3. Protect routes
     const isProtectedRoute = 
       pathname.includes('/dashboard') || 
       pathname.includes('/tutor/') || 
       pathname.includes('/admin');
 
     if (isProtectedRoute) {
-        // Neon Auth middleware will handle session check and redirect to /auth/sign-in
-        // intlMiddleware will then rewrite /auth/sign-in to /en/auth/sign-in or /nl/auth/sign-in
-        return authMiddleware(request);
+        // Run auth middleware and return its response if it's a redirect
+        const authResponse = await authMiddleware(request);
+        if (authResponse.status === 302 || authResponse.status === 307) {
+            return authResponse;
+        }
     }
 
-    // 3. Handle Internationalized Routing
-    return intlMiddleware(request);
+    return response;
 }
 
 export const config = {
