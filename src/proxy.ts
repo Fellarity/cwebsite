@@ -34,7 +34,7 @@ export default async function middleware(request: NextRequest) {
     if (isProtectedRoute) {
         // Run auth middleware and return its response if it's a redirect
         const authResponse = await authMiddleware(request);
-        if (authResponse.status === 302 || authResponse.status === 307) {
+        if (authResponse && (authResponse.status === 302 || authResponse.status === 307)) {
             return authResponse;
         }
     }

@@ -16,13 +16,29 @@
   --background: var(--color-brand-surface);
   --foreground: var(--color-brand-text);
   
-  /* Neon Auth Theme Variables */
-  --neon-primary: var(--color-brand-primary);
-  --neon-primary-foreground: #ffffff;
-  --neon-radius: 1.5rem;
-  --neon-border: #e2e8f0;
-  --neon-input: #f8fafc;
-  --neon-ring: var(--color-brand-primary);
+  /* ── Neon Auth / shadcn CSS Variable Overrides ── */
+  /* These drive all Neon Auth UI component colors via --neon-* fallbacks */
+  --primary: oklch(0.685 0.169 217.323);          /* sky-500 #0ea5e9 */
+  --primary-foreground: oklch(1 0 0);              /* white */
+  --secondary: oklch(0.585 0.233 277.117);         /* indigo-500 #6366f1 */
+  --secondary-foreground: oklch(1 0 0);            /* white */
+  --card: oklch(1 0 0);                            /* white */
+  --card-foreground: oklch(0.145 0.02 255);        /* slate-900 */
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0.02 255);
+  --muted: oklch(0.968 0.007 226);                 /* sky-50 */
+  --muted-foreground: oklch(0.554 0.02 255);       /* slate-500 */
+  --accent: oklch(0.968 0.007 226);                /* sky-50 */
+  --accent-foreground: oklch(0.145 0.02 255);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.928 0.014 227);                /* sky-100 */
+  --input: oklch(0.928 0.014 227);                 /* sky-100 */
+  --ring: oklch(0.685 0.169 217.323);              /* sky-500 */
+  --radius: 0.75rem;
+
+  /* Neon Auth explicit overrides */
+  --neon-radius: 0.75rem;
 }
 
 body {
@@ -43,11 +59,4 @@ body {
   }
 }
 
-/* Force override Neon Auth internal styles to match our theme */
-.neon-auth-container button {
-  @apply font-black uppercase tracking-widest text-xs transition-all !rounded-2xl;
-}
 
-.neon-auth-container input {
-  @apply !rounded-2xl border-sky-100 focus:border-sky-500 focus:ring-sky-100 transition-all;
-}
