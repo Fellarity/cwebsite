@@ -31,7 +31,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className="light" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased text-slate-900`}>
         <AuthProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>

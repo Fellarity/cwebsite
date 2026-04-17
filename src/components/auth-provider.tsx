@@ -5,7 +5,7 @@ import { authClient } from "@/lib/auth-client";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   return (
-    <NeonAuthUIProvider authClient={authClient}>
+    <NeonAuthUIProvider authClient={authClient} defaultTheme="light">
       {children}
     </NeonAuthUIProvider>
   );
