@@ -2,8 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from 'sonner';
-import { NeonAuthUIProvider } from "@neondatabase/auth/react";
-import { authClient } from "@/lib/auth-client";
+import { AuthProvider } from "@/components/auth-provider";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -33,13 +32,13 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NeonAuthUIProvider authClient={authClient}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased text-slate-900`}>
+        <AuthProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
             <Toaster position="top-center" richColors />
           </NextIntlClientProvider>
-        </NeonAuthUIProvider>
+        </AuthProvider>
       </body>
     </html>
   );
