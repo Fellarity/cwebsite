@@ -13,7 +13,7 @@ export default function SignUpPage() {
       </div>
 
       <div className="pt-48 pb-20 flex items-center justify-center px-4 relative">
-        <div className="w-full max-w-md bg-white/80 backdrop-blur-xl p-10 rounded-[3rem] shadow-2xl border border-sky-100/50">
+        <div className="w-full max-w-md bg-white/80 backdrop-blur-xl p-10 rounded-[3rem] shadow-2xl border border-sky-100/50 neon-auth-container">
           <div className="text-center mb-10">
              <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-2 uppercase">Create Account</h2>
              <p className="text-slate-500 font-bold text-[10px] uppercase tracking-[0.2em]">Start your AI learning journey</p>

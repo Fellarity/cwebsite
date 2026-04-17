@@ -2,7 +2,7 @@ import { auth } from "./auth";
 import { prisma } from "./prisma";
 
 /**
- * Gets the currently authenticated Neon Auth user from the database.
+ * Syncs the currently authenticated Neon Auth user to the primary Prisma database.
  * Returns the Prisma user record, or null if not authenticated.
  */
 export async function syncUser() {
@@ -12,10 +12,24 @@ export async function syncUser() {
     return null;
   }
 
-  // Neon Auth stores users in the database automatically.
-  // We can fetch the full user record from our primary user table.
-  const user = await prisma.user.findUnique({
+  // Upsert the user into our public schema 'user' table
+  // using the ID and Email provided by Neon Auth
+  const user = await prisma.user.upsert({
     where: { id: session.user.id },
+    update: {
+      email: session.user.email,
+      name: session.user.name || session.user.email.split('@')[0],
+      image: session.user.image,
+      emailVerified: session.user.emailVerified,
+    },
+    create: {
+      id: session.user.id,
+      email: session.user.email,
+      name: session.user.name || session.user.email.split('@')[0],
+      image: session.user.image,
+      emailVerified: session.user.emailVerified,
+      role: "STUDENT",
+    },
   });
 
   return user;

@@ -15,6 +15,14 @@
 :root {
   --background: var(--color-brand-surface);
   --foreground: var(--color-brand-text);
+  
+  /* Neon Auth Theme Variables */
+  --neon-primary: var(--color-brand-primary);
+  --neon-primary-foreground: #ffffff;
+  --neon-radius: 1.5rem;
+  --neon-border: #e2e8f0;
+  --neon-input: #f8fafc;
+  --neon-ring: var(--color-brand-primary);
 }
 
 body {
@@ -33,4 +41,13 @@ body {
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-600 to-indigo-600;
   }
+}
+
+/* Force override Neon Auth internal styles to match our theme */
+.neon-auth-container button {
+  @apply font-black uppercase tracking-widest text-xs transition-all !rounded-2xl;
+}
+
+.neon-auth-container input {
+  @apply !rounded-2xl border-sky-100 focus:border-sky-500 focus:ring-sky-100 transition-all;
 }

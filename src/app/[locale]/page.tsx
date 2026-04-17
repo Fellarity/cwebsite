@@ -2,7 +2,7 @@ import { Navbar } from "@/components/navbar";
 import { Sparkles, ShieldCheck, Zap, GraduationCap } from "lucide-react";
 import { getTranslations } from 'next-intl/server';
 import { HomeHeroButtons } from "@/components/home-hero-buttons";
-import { auth } from "@/lib/auth";
+import { syncUser } from "@/lib/sync-user";
 
 export default async function Home({
   params
@@ -12,7 +12,9 @@ export default async function Home({
   await params;
   const t = await getTranslations('Index');
   const tNav = await getTranslations('Navbar');
-  const { data: session } = await auth.getSession();
+  
+  // This ensures the user is synced to our public database table on the first visit
+  await syncUser();
 
   return (
     <main className="min-h-screen">
@@ -90,7 +92,7 @@ export default async function Home({
       </section>
 
       <footer className="py-12 text-center text-slate-400 text-sm font-bold uppercase tracking-widest">
-        &copy; 2026 AI Coaching Hub &bull; Built for Excellence
+        &copy; 2026 AI Coaching Hub & bull; Built for Excellence
       </footer>
     </main>
   );
