@@ -1,41 +1,21 @@
-import { currentUser } from "@clerk/nextjs/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { auth } from "./auth";
+import { prisma } from "./prisma";
 
 /**
- * Syncs the currently authenticated Clerk user to the Prisma database.
- * Call this in any server component where you need the DB user.
+ * Gets the currently authenticated Neon Auth user from the database.
  * Returns the Prisma user record, or null if not authenticated.
  */
 export async function syncUser() {
-  const clerkUser = await currentUser();
+  const { data: session } = await auth.getSession();
 
-  if (!clerkUser) {
+  if (!session?.user) {
     return null;
   }
 
-  const email = clerkUser.emailAddresses[0]?.emailAddress;
-  if (!email) return null;
-
-  const name = `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`.trim() || "No Name";
-
-  const user = await prisma.user.upsert({
-    where: { id: clerkUser.id },
-    update: {
-      email,
-      name,
-      image: clerkUser.imageUrl,
-      emailVerified: true,
-    },
-    create: {
-      id: clerkUser.id,
-      email,
-      name,
-      image: clerkUser.imageUrl,
-      emailVerified: true,
-      role: "STUDENT",
-    },
+  // Neon Auth stores users in the database automatically.
+  // We can fetch the full user record from our primary user table.
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
   });
 
   return user;

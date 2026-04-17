@@ -1,4 +1,4 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Video, Calendar, Users, Briefcase, ArrowRight } from "lucide-react";
 import { Link } from "@/navigation";
@@ -11,14 +11,15 @@ export default async function TutorDashboard({
   params: Promise<{ locale: string }>;
 }) {
   await params;
-  const { userId } = await auth();
+  const { data: session } = await auth.getSession();
+  const userId = session?.user?.id;
   const t = await getTranslations('TutorDashboard');
   
   if (!userId) {
     redirect('/');
   }
 
-  const user = await currentUser();
+  const user = session?.user;
 
   const stats = [
     { title: t('sessionsToday'), value: "0", icon: Video, color: "text-sky-500", bg: "bg-sky-50" },
@@ -44,7 +45,7 @@ export default async function TutorDashboard({
                 <span>{t('portalTag')}</span>
               </div>
               <h1 className="text-5xl font-black text-slate-900 tracking-tight">
-                {t('welcome')}, <span className="text-sky-600">{user?.firstName || 'Tutor'}!</span>
+                {t('welcome')}, <span className="text-sky-600">{user?.name || 'Tutor'}!</span>
               </h1>
               <p className="text-slate-500 font-bold mt-2 uppercase text-xs tracking-widest">{t('subtitle')}</p>
             </div>

@@ -2,7 +2,7 @@
 
 import { Link } from "@/navigation";
 import { ArrowRight } from "lucide-react";
-import { SignUpButton, useAuth } from "@clerk/nextjs";
+import { authClient } from "@/lib/auth-client";
 
 export const HomeHeroButtons = ({ 
   getStartedText, 
@@ -13,9 +13,9 @@ export const HomeHeroButtons = ({
   dashboardText: string, 
   exploreTutorsText: string 
 }) => {
-  const { isSignedIn, isLoaded } = useAuth();
+  const { data: session, isPending } = authClient.useSession();
 
-  if (!isLoaded) {
+  if (isPending) {
     return (
       <div className="flex flex-col sm:flex-row items-center justify-center gap-6 opacity-0 animate-pulse">
         <div className="w-full sm:w-64 h-16 bg-slate-200 rounded-2xl" />
@@ -26,13 +26,13 @@ export const HomeHeroButtons = ({
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-      {!isSignedIn ? (
-        <SignUpButton mode="modal">
+      {!session ? (
+        <Link href="/api/auth/register">
           <button className="w-full sm:w-auto px-10 py-5 bg-slate-900 text-white rounded-2xl font-black text-xl hover:bg-slate-800 transition-all shadow-2xl shadow-slate-200 hover:-translate-y-1 flex items-center justify-center gap-3 group">
             {getStartedText}
             <ArrowRight className="h-6 w-6 text-sky-400 group-hover:translate-x-1 transition-transform" />
           </button>
-        </SignUpButton>
+        </Link>
       ) : (
         <Link 
           href="/dashboard" 

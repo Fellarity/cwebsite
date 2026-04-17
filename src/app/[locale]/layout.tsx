@@ -2,7 +2,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from 'sonner';
-import { ClerkProvider } from '@clerk/nextjs';
 import "../globals.css";
 
 const geistSans = Geist({
@@ -31,15 +30,13 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <ClerkProvider>
-      <html lang={locale}>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
-            <Toaster position="top-center" richColors />
-          </NextIntlClientProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang={locale}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {children}
+          <Toaster position="top-center" richColors />
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }

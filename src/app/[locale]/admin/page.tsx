@@ -1,10 +1,11 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { ShieldAlert, Users } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 
 export default async function AdminDashboard() {
-  const { userId } = await auth();
+  const { data: session } = await auth.getSession();
+  const userId = session?.user?.id;
   
   if (!userId) {
     redirect('/');

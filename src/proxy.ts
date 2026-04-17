@@ -1,6 +1,7 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { auth } from "./lib/auth";
 import createMiddleware from 'next-intl/middleware';
 import { locales, localePrefix } from './navigation';
+import { NextRequest } from 'next/server';
 
 const intlMiddleware = createMiddleware({
   locales,
@@ -8,32 +9,35 @@ const intlMiddleware = createMiddleware({
   defaultLocale: 'en'
 });
 
-const isProtectedRoute = createRouteMatcher([
-  "/(en|nl)/dashboard(.*)",
-  "/(en|nl)/tutor(.*)",
-  "/(en|nl)/admin(.*)"
-]);
+const authMiddleware = auth.middleware({
+  loginUrl: '/api/auth/login',
+});
 
-export default clerkMiddleware(async (auth, request) => {
-    // 1. Skip middleware for public API routes or assets if needed
-    if (request.nextUrl.pathname.startsWith('/api/webhooks')) {
+export default async function middleware(request: NextRequest) {
+    const pathname = request.nextUrl.pathname;
+    
+    // 1. Handle API routes first
+    if (pathname.startsWith("/api/webhooks")) {
         return;
     }
 
-    // 2. Protect specific routes
-    if (isProtectedRoute(request)) {
-        await auth.protect();
+    // 2. Protect routes
+    const isProtectedRoute = 
+      pathname.includes('/dashboard') || 
+      pathname.includes('/tutor/') || 
+      pathname.includes('/admin');
+
+    if (isProtectedRoute) {
+        return authMiddleware(request);
     }
 
     // 3. Handle Internationalized Routing
     return intlMiddleware(request);
-});
+}
 
 export const config = {
   matcher: [
-    // Optimized matcher: Skip all internal paths and static files
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
     '/(api|trpc)(.*)',
   ],
 };

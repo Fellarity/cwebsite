@@ -2,6 +2,7 @@ import { Navbar } from "@/components/navbar";
 import { Sparkles, ShieldCheck, Zap, GraduationCap } from "lucide-react";
 import { getTranslations } from 'next-intl/server';
 import { HomeHeroButtons } from "@/components/home-hero-buttons";
+import { auth } from "@/lib/auth";
 
 export default async function Home({
   params
@@ -11,6 +12,7 @@ export default async function Home({
   await params;
   const t = await getTranslations('Index');
   const tNav = await getTranslations('Navbar');
+  const { data: session } = await auth.getSession();
 
   return (
     <main className="min-h-screen">
