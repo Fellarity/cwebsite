@@ -27,12 +27,12 @@ export const HomeHeroButtons = ({
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
       {!session ? (
-        <Link href="/api/auth/register">
+        <a href="/api/auth/register">
           <button className="w-full sm:w-auto px-10 py-5 bg-slate-900 text-white rounded-2xl font-black text-xl hover:bg-slate-800 transition-all shadow-2xl shadow-slate-200 hover:-translate-y-1 flex items-center justify-center gap-3 group">
             {getStartedText}
             <ArrowRight className="h-6 w-6 text-sky-400 group-hover:translate-x-1 transition-transform" />
           </button>
-        </Link>
+        </a>
       ) : (
         <Link 
           href="/dashboard" 

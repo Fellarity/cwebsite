@@ -47,15 +47,15 @@ export const Navbar = () => {
               <>
                 {!session ? (
                   <div className="flex items-center gap-4">
-                    <Link href="/api/auth/login" className="text-sm font-bold text-slate-700 hover:text-sky-600 transition-colors">
+                    <a href="/api/auth/login" className="text-sm font-bold text-slate-700 hover:text-sky-600 transition-colors">
                       {t('signIn')}
-                    </Link>
-                    <Link 
+                    </a>
+                    <a 
                       href="/api/auth/register" 
                       className="bg-gradient-to-r from-sky-500 to-indigo-600 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:shadow-lg hover:shadow-sky-200 transition-all active:scale-95"
                     >
                       {t('getStarted')}
-                    </Link>
+                    </a>
                   </div>
                 ) : (
                   <div className="relative">
@@ -121,8 +121,8 @@ export const Navbar = () => {
             <div className="pt-4">
               {!session ? (
                 <div className="flex flex-col gap-4">
-                  <Link href="/api/auth/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-4 text-center font-black text-slate-900 uppercase tracking-widest border-2 border-slate-100 rounded-2xl">{t('signIn')}</Link>
-                  <Link href="/api/auth/register" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-5 bg-gradient-to-r from-sky-500 to-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-sky-200">{t('getStarted')}</Link>
+                  <a href="/api/auth/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-4 text-center font-black text-slate-900 uppercase tracking-widest border-2 border-slate-100 rounded-2xl">{t('signIn')}</a>
+                  <a href="/api/auth/register" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-5 bg-gradient-to-r from-sky-500 to-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-sky-200">{t('getStarted')}</a>
                 </div>
               ) : (
                 <div className="flex flex-col gap-3">

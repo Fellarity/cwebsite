@@ -1,7 +1,7 @@
 import { auth } from "./lib/auth";
 import createMiddleware from 'next-intl/middleware';
 import { locales, localePrefix } from './navigation';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 const intlMiddleware = createMiddleware({
   locales,
@@ -16,9 +16,9 @@ const authMiddleware = auth.middleware({
 export default async function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
     
-    // 1. Handle API routes first
-    if (pathname.startsWith("/api/webhooks")) {
-        return;
+    // 1. Skip ALL API routes from internationalization
+    if (pathname.startsWith("/api")) {
+        return NextResponse.next();
     }
 
     // 2. Protect routes
