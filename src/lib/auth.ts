@@ -1,10 +1,10 @@
 import { createNeonAuth } from "@neondatabase/auth/next/server";
 
 export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL || "https://placeholder.neonauth.tech",
+  // Use your actual URL as the fallback to prevent "placeholder" resolution errors during build
+  baseUrl: process.env.NEON_AUTH_BASE_URL || "https://ep-square-salad-angz6kci.neonauth.c-6.us-east-1.aws.neon.tech/neondb/auth",
   cookies: {
-    // Provide a fallback for build-time static analysis
-    // The actual secret MUST be provided in the Vercel dashboard for production
+    // Providing a default secret for the build-time static analysis phase
     secret: process.env.NEON_AUTH_COOKIE_SECRET || "build-time-placeholder-secret-32-chars-long",
   },
 });
