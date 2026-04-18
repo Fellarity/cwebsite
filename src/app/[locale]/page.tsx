@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Navbar } from "@/components/navbar";
 import { Sparkles, ShieldCheck, Zap, GraduationCap } from "lucide-react";
 import { getTranslations } from 'next-intl/server';

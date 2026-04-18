@@ -14,32 +14,32 @@ const authMiddleware = auth.middleware({
 });
 
 export default async function middleware(request: NextRequest) {
-    const pathname = request.nextUrl.pathname;
-    
-    // 1. Skip ALL API routes from internationalization
-    if (pathname.startsWith("/api")) {
-        return NextResponse.next();
+  const pathname = request.nextUrl.pathname;
+
+  // 1. Skip ALL API routes from internationalization
+  if (pathname.startsWith("/api")) {
+    return NextResponse.next();
+  }
+
+  // 2. Handle Internationalized Routing First
+  // This ensures that headers and locale state are set before auth checks
+  const response = intlMiddleware(request);
+
+  // 3. Protect routes
+  const isProtectedRoute =
+    pathname.includes('/dashboard') ||
+    pathname.includes('/tutor/') ||
+    pathname.includes('/admin');
+
+  if (isProtectedRoute) {
+    // Run auth middleware and return its response if it's a redirect
+    const authResponse = await authMiddleware(request);
+    if (authResponse && (authResponse.status === 302 || authResponse.status === 307)) {
+      return authResponse;
     }
+  }
 
-    // 2. Handle Internationalized Routing First
-    // This ensures that headers and locale state are set before auth checks
-    const response = intlMiddleware(request);
-
-    // 3. Protect routes
-    const isProtectedRoute = 
-      pathname.includes('/dashboard') || 
-      pathname.includes('/tutor/') || 
-      pathname.includes('/admin');
-
-    if (isProtectedRoute) {
-        // Run auth middleware and return its response if it's a redirect
-        const authResponse = await authMiddleware(request);
-        if (authResponse && (authResponse.status === 302 || authResponse.status === 307)) {
-            return authResponse;
-        }
-    }
-
-    return response;
+  return response;
 }
 
 export const config = {

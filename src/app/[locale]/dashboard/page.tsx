@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { redirect } from "next/navigation";
 import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight } from "lucide-react";
 import { Link } from "@/navigation";
