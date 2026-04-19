@@ -98,5 +98,22 @@
     "action1": "Profiel & Tarief bijwerken",
     "action2": "Verdiensten bekijken",
     "action3": "Sessienotities indienen"
+  },
+  "FAQ": {
+    "title": "Veelgestelde Vragen",
+    "subtitle": "Alles wat u moet weten over ons elite AI-coachingmodel.",
+    "q1": "Hoe werken live sessies?",
+    "a1": "Sessies worden 1-op-1 uitgevoerd via Google Meet. Je krijgt real-time feedback en begeleiding van je mentor.",
+    "q2": "Kan ik van tutor wisselen?",
+    "a2": "Ja. Als je denkt dat een andere mentor beter bij je doelen past, kun je na elke sessie gratis overstappen.",
+    "q3": "Wat gebeurt er als ik een sessie mis?",
+    "a3": "Je kunt tot 24 uur van tevoren gratis verzetten. Gemiste sessies zonder bericht worden van je tegoed afgeschreven."
+  },
+  "Testimonials": {
+    "title": "Succesverhalen",
+    "quote1": "De 1-op-1 sessies hebben mijn LLM-implementatie met maanden versneld. Pure uitmuntendheid.",
+    "author1": "Sarah Chen, Data Lead",
+    "quote2": "Beste investering in mijn AI-carrière. Het persoonlijke curriculum werkt echt.",
+    "author2": "David Smit, Senior Engineer"
   }
 }

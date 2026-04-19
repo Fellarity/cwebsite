@@ -1,10 +1,11 @@
-export const dynamic = "force-dynamic";
-import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Video, Calendar, Users, Briefcase, ArrowRight } from "lucide-react";
 import { Link } from "@/navigation";
 import { Navbar } from "@/components/navbar";
 import { getTranslations } from 'next-intl/server';
+import { syncUser } from "@/lib/sync-user";
+
+export const dynamic = "force-dynamic";
 
 export default async function TutorDashboard({
   params
@@ -12,15 +13,13 @@ export default async function TutorDashboard({
   params: Promise<{ locale: string }>;
 }) {
   await params;
-  const { data: session } = await auth.getSession();
-  const userId = session?.user?.id;
+  const user = await syncUser();
   const t = await getTranslations('TutorDashboard');
   
-  if (!userId) {
+  // RBAC Enforcement: Strict check for TUTOR role
+  if (!user || user.role !== 'TUTOR') {
     redirect('/');
   }
-
-  const user = session?.user;
 
   const stats = [
     { title: t('sessionsToday'), value: "0", icon: Video, color: "text-sky-500", bg: "bg-sky-50" },

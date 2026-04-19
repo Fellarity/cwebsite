@@ -98,5 +98,22 @@
     "action1": "Update Profile & Rate",
     "action2": "View Earnings",
     "action3": "Submit Session Notes"
+  },
+  "FAQ": {
+    "title": "Common Questions",
+    "subtitle": "Everything you need to know about our elite AI coaching model.",
+    "q1": "How do live sessions work?",
+    "a1": "Sessions are conducted 1-to-1 via Google Meet. You get real-time feedback, code reviews, and architectural guidance from your mentor.",
+    "q2": "Can I switch tutors?",
+    "a2": "Yes. If you feel another mentor matches your goals better, you can switch after any session at no extra cost.",
+    "q3": "What happens if I miss a session?",
+    "a3": "You can reschedule for free up to 24 hours in advance. Missed sessions without notice are deducted from your plan credits."
+  },
+  "Testimonials": {
+    "title": "Success Stories",
+    "quote1": "The 1-to-1 sessions accelerated my LLM deployment by months. Pure excellence.",
+    "author1": "Sarah Chen, Data Lead",
+    "quote2": "Best investment in my AI career. The personalized curriculum actually works.",
+    "author2": "David Smit, Senior Engineer"
   }
 }
