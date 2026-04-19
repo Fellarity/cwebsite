@@ -3,6 +3,7 @@ import { getMessages } from 'next-intl/server';
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from 'sonner';
 import { AuthProvider } from "@/components/auth-provider";
+import Script from "next/script";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -39,6 +40,7 @@ export default async function RootLayout({
             <Toaster position="top-center" richColors />
           </NextIntlClientProvider>
         </AuthProvider>
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       </body>
     </html>
   );

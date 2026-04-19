@@ -1,7 +1,8 @@
 import { Navbar } from "@/components/navbar";
 import { prisma } from "@/lib/prisma";
 import { getTranslations } from 'next-intl/server';
-import { Check, Zap, Sparkles, Trophy, ArrowRight } from "lucide-react";
+import { Check, Zap, Sparkles, Trophy } from "lucide-react";
+import { PricingButton } from "@/components/pricing-button";
 
 export default async function PricingPage({
   params
@@ -24,7 +25,7 @@ export default async function PricingPage({
       
       {/* Background Blobs */}
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-200/40 rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-soft/40 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-200/30 rounded-full blur-[120px]" />
       </div>
 
@@ -64,9 +65,9 @@ export default async function PricingPage({
 
                 <div className="mb-10">
                   <div className={`h-16 w-16 rounded-[1.25rem] flex items-center justify-center mb-8 shadow-lg ${
-                    isPopular ? 'bg-sky-500' : 'bg-sky-50'
+                    isPopular ? 'bg-brand-primary' : 'bg-brand-soft'
                   }`}>
-                    <Icon className={`h-8 w-8 ${isPopular ? 'text-white' : 'text-sky-600'}`} />
+                    <Icon className={`h-8 w-8 ${isPopular ? 'text-white' : 'text-brand-primary'}`} />
                   </div>
                   <h3 className="text-2xl font-black mb-3 uppercase tracking-tighter">{plan.title}</h3>
                   <div className="flex items-baseline gap-1">
@@ -92,14 +93,12 @@ export default async function PricingPage({
                   ))}
                 </div>
 
-                <button className={`w-full py-5 rounded-2xl font-black text-lg transition-all flex items-center justify-center gap-3 active:scale-95 group ${
-                  isPopular 
-                  ? 'bg-gradient-to-r from-sky-500 to-indigo-600 text-white shadow-xl shadow-sky-500/20' 
-                  : 'bg-slate-900 hover:bg-slate-800 text-white shadow-2xl shadow-slate-100'
-                }`}>
-                  {t('choose')} {plan.title.split(' ')[0]}
-                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </button>
+                <PricingButton 
+                  planId={plan.id}
+                  planTitle={plan.title}
+                  isPopular={isPopular}
+                  buttonText={`${t('choose')} ${plan.title.split(' ')[0]}`}
+                />
               </div>
             );
           })}
@@ -108,7 +107,7 @@ export default async function PricingPage({
 
       {/* Guarantee Section */}
       <section className="mt-40 max-w-4xl mx-auto px-4 text-center pb-20">
-        <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/50 border border-sky-100 text-sky-600 text-[10px] font-black uppercase tracking-[0.2em] mb-8 shadow-sm">
+        <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/50 border border-brand-border text-brand-primary text-[10px] font-black uppercase tracking-[0.2em] mb-8 shadow-sm">
           {t('guaranteeTitle')}
         </div>
         <p className="text-xl text-slate-500 font-medium leading-relaxed max-w-2xl mx-auto italic">
