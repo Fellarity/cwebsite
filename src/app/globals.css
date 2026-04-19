@@ -4,41 +4,31 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Scholarship Modern Palette */
-  --color-brand-primary: #0ea5e9;    /* Sky Blue */
-  --color-brand-secondary: #6366f1;  /* Indigo */
-  --color-brand-accent: #f59e0b;     /* Amber/Gold for Scholarship feel */
-  --color-brand-surface: #f0f9ff;    /* Light Sky Blue Background */
-  --color-brand-text: #0f172a;       /* Slate Dark */
+  /* Design_CTL.pdf: Formal Blue-White Ed-Tech Aesthetic */
+  --color-brand-primary: #1D4ED8;     /* Primary Blue */
+  --color-brand-primary-hover: #1E40AF; /* Dark Blue */
+  --color-brand-soft: #DBEAFE;       /* Soft Blue */
+  --color-brand-surface-main: #FFFFFF;
+  --color-brand-surface-soft: #F8FAFC;
+  --color-brand-surface-highlight: #F4F8FF;
+  --color-brand-text-heading: #0F172A;
+  --color-brand-text-body: #334155;
+  --color-brand-text-muted: #64748B;
+  --color-brand-border: #E2E8F0;
+  --color-brand-border-soft: #CBD5E1;
 }
 
 :root {
-  --background: var(--color-brand-surface);
-  --foreground: var(--color-brand-text);
+  --background: var(--color-brand-surface-main);
+  --foreground: var(--color-brand-text-body);
   
-  /* ── Neon Auth / shadcn CSS Variable Overrides ── */
-  /* These drive all Neon Auth UI component colors via --neon-* fallbacks */
-  --primary: oklch(0.685 0.169 217.323);          /* sky-500 #0ea5e9 */
-  --primary-foreground: oklch(1 0 0);              /* white */
-  --secondary: oklch(0.585 0.233 277.117);         /* indigo-500 #6366f1 */
-  --secondary-foreground: oklch(1 0 0);            /* white */
-  --card: oklch(1 0 0);                            /* white */
-  --card-foreground: oklch(0.145 0.02 255);        /* slate-900 */
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0.02 255);
-  --muted: oklch(0.968 0.007 226);                 /* sky-50 */
-  --muted-foreground: oklch(0.554 0.02 255);       /* slate-500 */
-  --accent: oklch(0.968 0.007 226);                /* sky-50 */
-  --accent-foreground: oklch(0.145 0.02 255);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.928 0.014 227);                /* sky-100 */
-  --input: oklch(0.928 0.014 227);                 /* sky-100 */
-  --ring: oklch(0.685 0.169 217.323);              /* sky-500 */
-  --radius: 0.75rem;
-
-  /* Neon Auth explicit overrides */
-  --neon-radius: 0.75rem;
+  /* Neon Auth Theme Variables mapped to Design_CTL */
+  --neon-primary: var(--color-brand-primary);
+  --neon-primary-hover: var(--color-brand-primary-hover);
+  --neon-radius: 1.5rem; /* 24px per PDF */
+  --neon-border: var(--color-brand-border);
+  --neon-input: var(--color-brand-surface-soft);
+  --neon-ring: var(--color-brand-primary);
 }
 
 body {
@@ -48,15 +38,22 @@ body {
   min-height: 100vh;
 }
 
-/* Custom Utilities for the Premium Feel */
+/* Custom Utilities from Design_CTL */
 @layer utilities {
-  .glass-card {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-xl shadow-sky-100/50;
+  .hero-gradient {
+    background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 55%, #DBEAFE 100%);
   }
   
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-600 to-indigo-600;
+  .glass-card {
+    @apply bg-white border border-brand-border shadow-[0_4px_20px_rgba(15,23,42,0.06)] hover:shadow-[0_8px_30px_rgba(29,78,216,0.08)] transition-all;
   }
 }
 
+/* Force override Neon Auth internal styles to match Design_CTL */
+.neon-auth-container button {
+  @apply font-bold uppercase tracking-widest text-[10px] transition-all !rounded-2xl;
+}
 
+.neon-auth-container input {
+  @apply !rounded-2xl border-brand-border focus:border-brand-primary focus:ring-brand-soft transition-all;
+}
