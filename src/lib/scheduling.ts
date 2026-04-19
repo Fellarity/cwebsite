@@ -55,7 +55,7 @@ export function generateAvailableSlots(
         slots.push({
           start: studentStart.toJSDate(),
           end: studentEnd.toJSDate(),
-          label: \`\${studentStart.toFormat("HH:mm")} - \${studentEnd.toFormat("HH:mm")} (\${studentStart.toFormat("ccc, LLL d")})\`,
+          label: `${studentStart.toFormat("HH:mm")} - ${studentEnd.toFormat("HH:mm")} (${studentStart.toFormat("ccc, LLL d")})`,
         });
       }
     }
