@@ -1,12 +1,18 @@
 import { auth } from "./auth";
 import { prisma } from "./prisma";
 
+import { headers } from "next/headers";
+
 /**
  * Syncs the currently authenticated Neon Auth user to the primary Prisma database.
  * Returns the Prisma user record, or null if not authenticated.
  */
 export async function syncUser() {
-  const { data: session } = await auth.getSession();
+  const { data: session } = await auth.getSession({
+    fetchOptions: {
+      headers: await headers(),
+    }
+  });
 
   if (!session?.user) {
     return null;
