@@ -7,4 +7,10 @@ export const auth = createNeonAuth({
     // Providing a default secret for the build-time static analysis phase
     secret: process.env.NEON_AUTH_COOKIE_SECRET || "build-time-placeholder-secret-32-chars-long",
   },
+  trustedOrigins: [
+    "http://localhost:3000",
+    ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
+    ...(process.env.VERCEL_BRANCH_URL ? [`https://${process.env.VERCEL_BRANCH_URL}`] : []),
+    ...(process.env.VERCEL_PROJECT_PRODUCTION_URL ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`] : []),
+  ]
 });
