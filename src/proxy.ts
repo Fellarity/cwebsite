@@ -21,6 +21,13 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // 2. Skip better-auth client-side endpoints that the SDK calls directly
+  //    (e.g. /get-session, /sign-in/email, /sign-out, /token)
+  const betterAuthPaths = ['/get-session', '/sign-in', '/sign-up', '/sign-out', '/token', '/update-user'];
+  if (betterAuthPaths.some(p => pathname === p || pathname.startsWith(p + '/'))) {
+    return NextResponse.next();
+  }
+
   // 2. Handle Internationalized Routing First
   // This ensures that headers and locale state are set before auth checks
   const response = intlMiddleware(request);

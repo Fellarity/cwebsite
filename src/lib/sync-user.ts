@@ -8,11 +8,20 @@ import { headers } from "next/headers";
  * Returns the Prisma user record, or null if not authenticated.
  */
 export async function syncUser() {
-  const { data: session } = await auth.getSession({
-    fetchOptions: {
-      headers: await headers(),
-    }
-  });
+  let session;
+  try {
+    const result = await auth.getSession({
+      fetchOptions: {
+        headers: await headers(),
+      }
+    });
+    session = result.data;
+  } catch {
+    // auth.getSession() can throw "Cookies can only be modified in a Server Action or Route Handler"
+    // when NeonAuth attempts session token rotation inside a Server Component.
+    // Gracefully return null — the user simply won't be synced on this render.
+    return null;
+  }
 
   if (!session?.user) {
     return null;
