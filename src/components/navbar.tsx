@@ -43,7 +43,7 @@ export const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-6">
             <LanguageSwitcher />
-            {!isPending && (
+            {!isPending ? (
               <>
                 {!session ? (
                   <div className="flex items-center gap-4">
@@ -66,7 +66,7 @@ export const Navbar = () => {
                       <User className="h-5 w-5 text-brand-primary" />
                     </button>
                     
-                    {isUserMenuOpen && (
+                    {isUserMenuOpen ? (
                       <div className="absolute right-0 mt-3 w-56 bg-white border border-brand-border rounded-3xl shadow-2xl p-2 py-3 animate-in fade-in slide-in-from-top-2 duration-200">
                         <div className="px-4 py-2 border-b border-brand-surface-soft mb-2">
                            <p className="text-[9px] font-black text-brand-text-muted uppercase tracking-widest mb-0.5">Signed in as</p>
@@ -88,11 +88,11 @@ export const Navbar = () => {
                           Sign Out
                         </button>
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 )}
               </>
-            )}
+            ) : null}
           </div>
 
           {/* Mobile Menu Button */}
@@ -109,7 +109,7 @@ export const Navbar = () => {
       </div>
 
       {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
+      {isMobileMenuOpen ? (
         <div className="md:hidden bg-white border-b border-brand-border shadow-2xl animate-in slide-in-from-top duration-300">
           <div className="px-4 pt-6 pb-10 space-y-6">
             <Link href="/tutors" onClick={() => setIsMobileMenuOpen(false)} className="block text-sm font-black text-brand-text-heading uppercase tracking-widest border-b border-brand-surface-soft pb-4">{t('findTutors')}</Link>
@@ -134,7 +134,7 @@ export const Navbar = () => {
             </div>
           </div>
         </div>
-      )}
+      ) : null}
     </nav>
   );
 };

@@ -11,15 +11,15 @@ export default async function TutorsPage({
   params: Promise<{ locale: string }>;
 }) {
   await params;
-  const t = await getTranslations('Tutors');
-  
-  // Fetch tutors with profiles from the database
-  const tutors = await prisma.user.findMany({
-    where: { role: 'TUTOR' },
-    include: {
-      tutorProfile: true
-    }
-  });
+  const [t, tutors] = await Promise.all([
+    getTranslations('Tutors'),
+    prisma.user.findMany({
+      where: { role: 'TUTOR' },
+      include: {
+        tutorProfile: true
+      }
+    })
+  ]);
 
   return (
     <main className="min-h-screen pb-20">

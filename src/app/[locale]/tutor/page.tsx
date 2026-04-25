@@ -13,8 +13,10 @@ export default async function TutorDashboard({
   params: Promise<{ locale: string }>;
 }) {
   await params;
-  const user = await syncUser();
-  const t = await getTranslations('TutorDashboard');
+  const [user, t] = await Promise.all([
+    syncUser(),
+    getTranslations('TutorDashboard')
+  ]);
   
   // RBAC Enforcement: Strict check for TUTOR role
   if (!user || user.role !== 'TUTOR') {

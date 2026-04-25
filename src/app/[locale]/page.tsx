@@ -13,12 +13,13 @@ export default async function Home({
   params: Promise<{ locale: string }>;
 }) {
   await params;
-  const t = await getTranslations('Index');
-  const tNav = await getTranslations('Navbar');
-  const tFAQ = await getTranslations('FAQ');
-  const tTest = await getTranslations('Testimonials');
-  
-  await syncUser();
+  const [t, tNav, tFAQ, tTest] = await Promise.all([
+    getTranslations('Index'),
+    getTranslations('Navbar'),
+    getTranslations('FAQ'),
+    getTranslations('Testimonials'),
+    syncUser()
+  ]);
 
   return (
     <main className="min-h-screen">

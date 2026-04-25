@@ -10,12 +10,13 @@ export default async function PricingPage({
   params: Promise<{ locale: string }>;
 }) {
   await params;
-  const t = await getTranslations('Pricing');
-  
-  const plans = await prisma.plan.findMany({
-    where: { active: true },
-    orderBy: { price: 'asc' }
-  });
+  const [t, plans] = await Promise.all([
+    getTranslations('Pricing'),
+    prisma.plan.findMany({
+      where: { active: true },
+      orderBy: { price: 'asc' }
+    })
+  ]);
 
   const icons = [Zap, Sparkles, Trophy];
 
@@ -57,11 +58,11 @@ export default async function PricingPage({
                   : 'bg-white border-white text-slate-900 shadow-xl shadow-sky-100/20'
                 }`}
               >
-                {isPopular && (
+                {isPopular ? (
                   <div className="absolute -top-6 left-1/2 -translate-x-1/2 px-8 py-2.5 bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg text-white whitespace-nowrap">
                     {t('mostPopular')}
                   </div>
-                )}
+                ) : null}
 
                 <div className="mb-10">
                   <div className={`h-16 w-16 rounded-[1.25rem] flex items-center justify-center mb-8 shadow-lg ${

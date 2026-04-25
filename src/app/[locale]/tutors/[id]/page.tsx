@@ -24,21 +24,21 @@ export default async function TutorProfilePage({
   params: Promise<{ id: string; locale: string }>;
 }) {
   const { id } = await params;
-  const t = await getTranslations('TutorProfile');
-  const tGen = await getTranslations('Tutors');
-  
-  const student = await syncUser();
-
-  const tutor = await prisma.user.findUnique({
-    where: { id },
-    include: {
-      tutorProfile: {
-        include: {
-          availability: true
+  const [t, tGen, student, tutor] = await Promise.all([
+    getTranslations('TutorProfile'),
+    getTranslations('Tutors'),
+    syncUser(),
+    prisma.user.findUnique({
+      where: { id },
+      include: {
+        tutorProfile: {
+          include: {
+            availability: true
+          }
         }
       }
-    }
-  });
+    })
+  ]);
 
   if (!tutor || tutor.role !== 'TUTOR') {
     notFound();

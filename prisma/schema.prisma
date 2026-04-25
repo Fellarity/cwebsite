@@ -164,7 +164,7 @@ model Order {
   user             User        @relation(fields: [userId], references: [id])
   planId           String
   plan             Plan        @relation(fields: [planId], references: [id])
-  razorpayOrderId  String?
+  razorpayOrderId  String?      @unique
   razorpayPaymentId String?
   amount           Float
   status           OrderStatus @default(PENDING)

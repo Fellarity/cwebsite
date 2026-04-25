@@ -12,8 +12,10 @@ export default async function StudentDashboard({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const user = await syncUser();
-  const t = await getTranslations('Dashboard');
+  const [user, t] = await Promise.all([
+    syncUser(),
+    getTranslations('Dashboard')
+  ]);
   
   if (!user) {
     redirect('/');
