@@ -54,8 +54,35 @@ body {
   @apply font-bold uppercase tracking-widest text-[10px] transition-all !rounded-2xl;
 }
 
-.neon-auth-container input {
+.neon-auth-container input[type="email"],
+.neon-auth-container input[type="password"],
+.neon-auth-container input[type="text"] {
   @apply !rounded-2xl border-brand-border focus:border-brand-primary focus:ring-brand-soft transition-all;
+}
+
+/* Fix Neon Auth OTP Inputs (Shadcn/input-otp) */
+.neon-auth-container [data-slot="input-otp-slot"] {
+  border: 1px solid var(--color-brand-border-soft);
+  color: var(--color-brand-text-heading);
+  background: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: 3rem;
+  height: 3.5rem;
+  border-radius: 0.75rem;
+  margin: 0 0.25rem;
+}
+
+.neon-auth-container [data-slot="input-otp-group"] {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.neon-auth-container [data-slot="input-otp-slot"][data-active="true"] {
+  border-color: var(--color-brand-primary) !important;
+  box-shadow: 0 0 0 3px var(--color-brand-soft) !important;
+  z-index: 10;
 }
 
 /* Constrain social provider button icons (Google / Microsoft logos) */
