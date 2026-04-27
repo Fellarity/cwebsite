@@ -46,6 +46,7 @@ export default function SignUpPage() {
 
             <AuthView 
               view="SIGN_UP" 
+              socialLayout="vertical"
               classNames={{ 
                 base: "border-none shadow-none bg-transparent !p-0",
                 header: "hidden",
@@ -56,6 +57,7 @@ export default function SignUpPage() {
                   input: "bg-slate-50/50 border-sky-100/60 rounded-2xl px-5 py-6 focus:border-sky-500 focus:ring-4 focus:ring-sky-100 placeholder:text-slate-300 text-sm font-medium transition-all",
                   label: "text-slate-700 font-black uppercase tracking-[0.1em] text-[10px] mb-1.5 ml-1",
                   forgotPasswordLink: "text-sky-600 font-bold hover:text-indigo-600 text-[10px] uppercase tracking-wider",
+                  providerButton: "w-full border-2 border-indigo-100/80 hover:border-indigo-300 bg-white hover:bg-indigo-50/50 rounded-2xl py-4 font-bold text-sm text-slate-700 shadow-sm hover:shadow-md transition-all",
                 }
               }} 
             />
