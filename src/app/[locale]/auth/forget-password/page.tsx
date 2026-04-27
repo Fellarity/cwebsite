@@ -44,7 +44,7 @@ export default function ForgetPasswordPage() {
             </div>
 
             <AuthView 
-              view="FORGET_PASSWORD" 
+              view="FORGOT_PASSWORD" 
               classNames={{ 
                 base: "border-none shadow-none bg-transparent !p-0",
                 header: "hidden",
