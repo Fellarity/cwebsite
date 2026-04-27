@@ -57,3 +57,21 @@ body {
 .neon-auth-container input {
   @apply !rounded-2xl border-brand-border focus:border-brand-primary focus:ring-brand-soft transition-all;
 }
+
+/* Constrain social provider button icons (Google / Microsoft logos) */
+.neon-auth-container button svg {
+  width: 20px !important;
+  height: 20px !important;
+  flex-shrink: 0;
+}
+
+/* Social provider buttons — reduce padding & normalize text */
+.neon-auth-container button[data-provider],
+.neon-auth-container .flex.w-full.items-center button {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+  font-size: 0.8125rem !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  gap: 0.625rem;
+}

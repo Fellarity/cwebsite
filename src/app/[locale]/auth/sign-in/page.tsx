@@ -53,8 +53,8 @@ export default function SignInPage() {
                 content: "!p-0",
                 footer: "!p-0 mt-6",
                 form: {
-                  primaryButton: "w-full bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-black uppercase tracking-[0.2em] text-xs py-7 rounded-2xl shadow-xl shadow-sky-200 hover:shadow-2xl hover:shadow-sky-300 transition-all border-none",
-                  input: "bg-slate-50/50 border-sky-100/60 rounded-2xl px-5 py-6 focus:border-sky-500 focus:ring-4 focus:ring-sky-100 placeholder:text-slate-300 text-sm font-medium transition-all",
+                  primaryButton: "w-full bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-black uppercase tracking-[0.2em] text-xs py-4 rounded-2xl shadow-xl shadow-sky-200 hover:shadow-2xl hover:shadow-sky-300 transition-all border-none",
+                  input: "bg-slate-50/50 border-sky-100/60 rounded-2xl px-5 py-4 focus:border-sky-500 focus:ring-4 focus:ring-sky-100 placeholder:text-slate-300 text-sm font-medium transition-all",
                   label: "text-slate-700 font-black uppercase tracking-[0.1em] text-[10px] mb-1.5 ml-1",
                   forgotPasswordLink: "text-sky-600 font-bold hover:text-indigo-600 text-[10px] uppercase tracking-wider",
                   providerButton: "w-full border-2 border-sky-100/80 hover:border-sky-300 bg-white hover:bg-sky-50/50 rounded-2xl py-4 font-bold text-sm text-slate-700 shadow-sm hover:shadow-md transition-all",
