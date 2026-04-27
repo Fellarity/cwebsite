@@ -8,6 +8,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <NeonAuthUIProvider
       authClient={authClient as any}
       defaultTheme="light"
+      emailOTP
       social={{
         providers: ["google"],
       }}
