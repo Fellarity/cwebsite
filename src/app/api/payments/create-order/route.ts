@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
+import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { razorpay } from "@/lib/razorpay";
 
 export async function POST(request: Request) {
-  const { data: session } = await auth.getSession();
-  if (!session?.user) {
+  const { userId } = await auth();
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     // 3. Store Pending Order in DB
     await prisma.order.create({
       data: {
-        userId: session.user.id,
+        userId: userId,
         planId: plan.id,
         razorpayOrderId: order.id,
         amount: plan.price,

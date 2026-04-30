@@ -12,7 +12,7 @@
     "seed": "node prisma/seed.js"
   },
   "dependencies": {
-    "@neondatabase/auth": "^0.2.0-beta.1",
+    "@clerk/nextjs": "^7.2.8",
     "@prisma/client": "^5.22.0",
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",
@@ -26,7 +26,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "sonner": "^1.5.0",
-    "svix": "^1.90.0",
+    "svix": "^1.92.2",
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {

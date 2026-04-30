@@ -1,10 +1,10 @@
 "use client";
 
-import { AuthView } from "@neondatabase/auth/react";
+import { SignUp } from "@clerk/nextjs";
 import { Navbar } from "@/components/navbar";
-import { KeyRound, Sparkles } from "lucide-react";
+import { GraduationCap, Sparkles } from "lucide-react";
 
-export default function ForgetPasswordPage() {
+export default function SignUpPage() {
   return (
     <main className="min-h-screen relative overflow-hidden">
       <Navbar />
@@ -13,6 +13,7 @@ export default function ForgetPasswordPage() {
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
         <div className="absolute top-[-15%] right-[-10%] w-[50%] h-[50%] bg-indigo-200/50 rounded-full blur-[140px] animate-pulse" />
         <div className="absolute bottom-[-15%] left-[-15%] w-[50%] h-[50%] bg-sky-200/40 rounded-full blur-[140px] animate-pulse" style={{ animationDelay: '1.5s' }} />
+        <div className="absolute top-[30%] left-[5%] w-[20%] h-[20%] bg-amber-100/25 rounded-full blur-[80px]" />
       </div>
 
       <div className="pt-36 pb-20 flex items-center justify-center px-4 relative">
@@ -21,7 +22,7 @@ export default function ForgetPasswordPage() {
           <div className="flex justify-center mb-8">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-indigo-100 text-indigo-700 text-[10px] font-black uppercase tracking-[0.2em] shadow-sm backdrop-blur-sm">
               <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-              <span>Account Recovery</span>
+              <span>Start Your Journey</span>
             </div>
           </div>
 
@@ -33,31 +34,24 @@ export default function ForgetPasswordPage() {
             {/* Logo & heading */}
             <div className="text-center mb-10 pt-2">
               <div className="mx-auto mb-5 h-14 w-14 bg-gradient-to-br from-indigo-500 to-sky-500 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200">
-                <KeyRound className="h-7 w-7 text-white" />
+                <GraduationCap className="h-7 w-7 text-white" />
               </div>
               <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-2">
-                Reset Password
+                Create Account
               </h2>
               <p className="text-slate-400 font-bold text-[10px] uppercase tracking-[0.2em]">
-                We'll send you recovery instructions
+                Join the AI Mentorship Platform
               </p>
             </div>
 
-            <AuthView 
-              view="FORGOT_PASSWORD" 
-              classNames={{ 
-                base: "border-none shadow-none bg-transparent !p-0",
-                header: "hidden",
-                content: "!p-0",
-                footer: "!p-0 mt-6",
-                form: {
-                  primaryButton: "w-full bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-black uppercase tracking-[0.2em] text-xs py-4 rounded-2xl shadow-xl shadow-sky-200 hover:shadow-2xl hover:shadow-sky-300 transition-all border-none",
-                  input: "bg-slate-50/50 border-sky-100/60 rounded-2xl px-5 py-4 focus:border-sky-500 focus:ring-4 focus:ring-sky-100 placeholder:text-slate-300 text-sm font-medium transition-all",
-                  label: "text-slate-700 font-black uppercase tracking-[0.1em] text-[10px] mb-1.5 ml-1",
-                  forgotPasswordLink: "text-sky-600 font-bold hover:text-indigo-600 text-[10px] uppercase tracking-wider",
-                }
-              }} 
-            />
+            <SignUp />
+          </div>
+
+          {/* Bottom trust badge */}
+          <div className="text-center mt-8">
+            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.15em]">
+              ✨ Join 1,000+ learners worldwide
+            </p>
           </div>
         </div>
       </div>
