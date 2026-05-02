@@ -49,48 +49,63 @@ body {
   }
 }
 
-/* Override Clerk component dark backgrounds globally */
-.cl-footer,
-.cl-footerAction,
-.cl-footerPages,
-.cl-card > footer,
-.cl-userButtonPopoverFooter,
-.cl-popoverBox,
-[class*="cl-footer"],
-[class*="cl-internal"] {
-  background: transparent !important;
-  background-color: transparent !important;
+/* ===== Clerk UI — Frosted Glass Theme ===== */
+
+/* Modal backdrop overlay */
+.cl-modalBackdrop {
+  background: rgba(15, 23, 42, 0.4) !important;
+  backdrop-filter: blur(4px) !important;
 }
 
-/* Clerk UserButton popover card styling */
-.cl-userButtonPopoverCard {
-  background: white !important;
-  border: 1px solid #e2e8f0 !important;
+/* Modal container */
+.cl-modalContent {
   border-radius: 1.5rem !important;
-  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12) !important;
+  overflow: hidden !important;
+  box-shadow: 0 25px 80px rgba(15, 23, 42, 0.18) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
 }
 
-/* Clerk popover menu items */
+/* All Clerk cards — auth pages + popovers */
+.cl-card {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(24px) saturate(1.8) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.8) !important;
+}
+
+.cl-cardBox {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* UserButton popover */
+.cl-userButtonPopoverCard {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(24px) saturate(1.8) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.8) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  border-radius: 1.25rem !important;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.14) !important;
+}
+
 .cl-userButtonPopoverActionButton {
   border-radius: 0.75rem !important;
 }
 
 .cl-userButtonPopoverActionButton:hover {
-  background: #f0f9ff !important;
+  background: rgba(224, 242, 254, 0.7) !important;
 }
 
-/* Clerk UserProfile modal — fix dark sidebar & backgrounds */
-.cl-modalContent {
-  border-radius: 1.5rem !important;
-  overflow: hidden !important;
-}
-
+/* UserProfile modal — sidebar */
 .cl-userProfile-root {
-  background: white !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
 }
 
 .cl-navbar {
-  background: #f8fafc !important;
+  background: rgba(248, 250, 252, 0.95) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   border-right: 1px solid #e2e8f0 !important;
 }
 
@@ -100,27 +115,39 @@ body {
 }
 
 .cl-navbarButton:hover {
-  background: #e0f2fe !important;
+  background: rgba(224, 242, 254, 0.6) !important;
 }
 
 .cl-navbarButton[data-active="true"],
 .cl-navbarButtonActive {
-  background: #dbeafe !important;
+  background: rgba(219, 234, 254, 0.8) !important;
   color: #1d4ed8 !important;
 }
 
+/* Profile page content area */
 .cl-pageScrollBox {
-  background: white !important;
+  background: rgba(255, 255, 255, 0.96) !important;
 }
 
 .cl-profilePage,
 .cl-page {
-  background: white !important;
+  background: rgba(255, 255, 255, 0.96) !important;
 }
 
-/* Remove dark bg from any Clerk internal branding section */
-.cl-internal-b3fm6y,
-[class*="cl-internal"] > div:last-child {
+/* Footers — transparent everywhere */
+.cl-footer,
+.cl-footerAction,
+.cl-footerPages,
+.cl-card > footer,
+.cl-userButtonPopoverFooter {
+  background: rgba(255, 255, 255, 0.9) !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+/* Clerk internal branding — keep subtle */
+[class*="cl-internal"] {
   background: transparent !important;
+  background-color: transparent !important;
 }
-
