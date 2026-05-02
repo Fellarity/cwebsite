@@ -49,7 +49,7 @@ body {
   }
 }
 
-/* ===== Clerk UI — Frosted Glass Theme ===== */
+/* ===== Clerk UI — Solid Theme ===== */
 
 /* Modal backdrop overlay */
 .cl-modalBackdrop {
@@ -67,9 +67,7 @@ body {
 
 /* All Clerk cards — auth pages + popovers */
 .cl-card {
-  background: rgba(255, 255, 255, 0.92) !important;
-  backdrop-filter: blur(24px) saturate(1.8) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(1.8) !important;
+  background: #ffffff !important;
 }
 
 .cl-cardBox {
@@ -79,10 +77,8 @@ body {
 
 /* UserButton popover */
 .cl-userButtonPopoverCard {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(24px) saturate(1.8) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(1.8) !important;
-  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
   border-radius: 1.25rem !important;
   box-shadow: 0 20px 60px rgba(15, 23, 42, 0.14) !important;
 }
@@ -92,20 +88,16 @@ body {
 }
 
 .cl-userButtonPopoverActionButton:hover {
-  background: rgba(224, 242, 254, 0.7) !important;
+  background: #f0f9ff !important;
 }
 
 /* UserProfile modal — sidebar */
 .cl-userProfile-root {
-  background: rgba(255, 255, 255, 0.96) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  background: #ffffff !important;
 }
 
 .cl-navbar {
-  background: rgba(248, 250, 252, 0.95) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
+  background: #f8fafc !important;
   border-right: 1px solid #e2e8f0 !important;
 }
 
@@ -115,23 +107,23 @@ body {
 }
 
 .cl-navbarButton:hover {
-  background: rgba(224, 242, 254, 0.6) !important;
+  background: #e0f2fe !important;
 }
 
 .cl-navbarButton[data-active="true"],
 .cl-navbarButtonActive {
-  background: rgba(219, 234, 254, 0.8) !important;
+  background: #dbeafe !important;
   color: #1d4ed8 !important;
 }
 
 /* Profile page content area */
 .cl-pageScrollBox {
-  background: rgba(255, 255, 255, 0.96) !important;
+  background: #ffffff !important;
 }
 
 .cl-profilePage,
 .cl-page {
-  background: rgba(255, 255, 255, 0.96) !important;
+  background: #ffffff !important;
 }
 
 /* Footers — transparent everywhere */
@@ -140,10 +132,8 @@ body {
 .cl-footerPages,
 .cl-card > footer,
 .cl-userButtonPopoverFooter {
-  background: rgba(255, 255, 255, 0.9) !important;
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
 }
 
 /* Clerk internal branding — keep subtle */
