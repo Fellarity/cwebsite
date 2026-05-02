@@ -79,8 +79,48 @@ body {
   background: #f0f9ff !important;
 }
 
+/* Clerk UserProfile modal — fix dark sidebar & backgrounds */
+.cl-modalContent {
+  border-radius: 1.5rem !important;
+  overflow: hidden !important;
+}
+
+.cl-userProfile-root {
+  background: white !important;
+}
+
+.cl-navbar {
+  background: #f8fafc !important;
+  border-right: 1px solid #e2e8f0 !important;
+}
+
+.cl-navbarButton {
+  color: #334155 !important;
+  border-radius: 0.75rem !important;
+}
+
+.cl-navbarButton:hover {
+  background: #e0f2fe !important;
+}
+
+.cl-navbarButton[data-active="true"],
+.cl-navbarButtonActive {
+  background: #dbeafe !important;
+  color: #1d4ed8 !important;
+}
+
+.cl-pageScrollBox {
+  background: white !important;
+}
+
+.cl-profilePage,
+.cl-page {
+  background: white !important;
+}
+
 /* Remove dark bg from any Clerk internal branding section */
 .cl-internal-b3fm6y,
 [class*="cl-internal"] > div:last-child {
   background: transparent !important;
 }
+
