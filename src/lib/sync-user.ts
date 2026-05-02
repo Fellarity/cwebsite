@@ -3,6 +3,7 @@ import { prisma } from "./prisma";
 
 /**
  * Syncs the currently authenticated Clerk user to the primary Prisma database.
+ * Handles migration from Neon Auth by matching on email if the Clerk ID doesn't exist yet.
  * Returns the Prisma user record, or null if not authenticated.
  */
 export async function syncUser() {
@@ -18,24 +19,52 @@ export async function syncUser() {
 
   if (!primaryEmail) return null;
 
-  // Upsert the user into our public schema 'user' table
-  // using the ID and Email provided by Clerk
-  const dbUser = await prisma.user.upsert({
-    where: { id: user.id },
-    update: {
-      email: primaryEmail,
-      name: user.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : primaryEmail.split('@')[0],
-      image: user.imageUrl,
-    },
-    create: {
-      id: user.id,
-      email: primaryEmail,
-      name: user.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : primaryEmail.split('@')[0],
-      image: user.imageUrl,
-      emailVerified: true,
-      role: "STUDENT",
-    },
-  });
+  const name = user.firstName
+    ? `${user.firstName} ${user.lastName || ''}`.trim()
+    : primaryEmail.split('@')[0];
+
+  // First, try to find user by Clerk ID
+  let dbUser = await prisma.user.findUnique({ where: { id: user.id } });
+
+  if (dbUser) {
+    // User already synced with Clerk ID — just update fields
+    dbUser = await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        email: primaryEmail,
+        name,
+        image: user.imageUrl,
+      },
+    });
+  } else {
+    // Check if a user with this email exists (legacy Neon Auth user)
+    const existingByEmail = await prisma.user.findUnique({ where: { email: primaryEmail } });
+
+    if (existingByEmail) {
+      // Migrate: update the old user's ID to the new Clerk ID
+      dbUser = await prisma.user.update({
+        where: { email: primaryEmail },
+        data: {
+          id: user.id,
+          name,
+          image: user.imageUrl,
+        },
+      });
+    } else {
+      // Brand new user — create
+      dbUser = await prisma.user.create({
+        data: {
+          id: user.id,
+          email: primaryEmail,
+          name,
+          image: user.imageUrl,
+          emailVerified: true,
+          role: "STUDENT",
+        },
+      });
+    }
+  }
 
   return dbUser;
 }
+

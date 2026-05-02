@@ -86,22 +86,36 @@ export async function POST(req: Request) {
         ? `${data.first_name} ${data.last_name || ""}`.trim()
         : primaryEmail.split("@")[0];
 
-      await prisma.user.upsert({
-        where: { id: data.id },
-        update: {
-          email: primaryEmail,
-          name,
-          image: data.image_url,
-        },
-        create: {
-          id: data.id,
-          email: primaryEmail,
-          name,
-          image: data.image_url,
-          emailVerified: true,
-          role: "STUDENT",
-        },
-      });
+      // Check if user already exists by Clerk ID
+      const existingById = await prisma.user.findUnique({ where: { id: data.id } });
+
+      if (existingById) {
+        await prisma.user.update({
+          where: { id: data.id },
+          data: { email: primaryEmail, name, image: data.image_url },
+        });
+      } else {
+        // Check for legacy user with same email (Neon Auth migration)
+        const existingByEmail = await prisma.user.findUnique({ where: { email: primaryEmail } });
+
+        if (existingByEmail) {
+          await prisma.user.update({
+            where: { email: primaryEmail },
+            data: { id: data.id, name, image: data.image_url },
+          });
+        } else {
+          await prisma.user.create({
+            data: {
+              id: data.id,
+              email: primaryEmail,
+              name,
+              image: data.image_url,
+              emailVerified: true,
+              role: "STUDENT",
+            },
+          });
+        }
+      }
 
       console.log(`User ${type}: ${data.id} (${primaryEmail})`);
       break;
