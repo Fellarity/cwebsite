@@ -35,15 +35,15 @@ export default async function RootLayout({
     <ClerkProvider
       appearance={{
         variables: {
-          colorPrimary: '#1D4ED8',
+          colorPrimary: '#0ea5e9',
           colorText: '#334155',
-          colorBackground: 'rgba(255, 255, 255, 0.8)',
-          borderRadius: '1.5rem',
+          colorBackground: 'transparent',
+          borderRadius: '1rem',
+          fontFamily: 'var(--font-geist-sans), system-ui, sans-serif',
         },
         elements: {
-          card: 'backdrop-blur-xl border border-brand-border shadow-[0_4px_20px_rgba(15,23,42,0.06)]',
-          formButtonPrimary: 'font-bold uppercase tracking-widest text-[10px] transition-all',
-          socialButtonsBlockButton: 'justify-center border-brand-border hover:bg-brand-surface-highlight',
+          card: 'shadow-none bg-transparent border-none',
+          cardBox: 'shadow-none',
         }
       }}
     >
