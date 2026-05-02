@@ -20,8 +20,8 @@ export default function SignInPage() {
           appearance={{
             elements: {
               rootBox: "w-full max-w-md",
+              cardBox: "shadow-none bg-transparent",
               card: "w-full rounded-[2rem] shadow-2xl shadow-sky-200/40 border border-sky-100/60 bg-white/85 backdrop-blur-2xl p-2",
-              cardBox: "shadow-none",
               header: "pb-2",
               headerTitle: "text-2xl font-black text-slate-900 tracking-tight",
               headerSubtitle: "text-slate-400 font-bold text-[11px] uppercase tracking-[0.15em]",
@@ -32,8 +32,12 @@ export default function SignInPage() {
               formFieldLabel: "text-slate-700 font-black uppercase tracking-[0.1em] text-[10px] mb-1",
               formFieldInput: "bg-slate-50/50 border-sky-100 rounded-2xl px-4 py-3 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 placeholder:text-slate-300 text-sm font-medium transition-all w-full",
               formButtonPrimary: "w-full bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-black uppercase tracking-[0.2em] text-xs py-3.5 rounded-2xl shadow-xl shadow-sky-200 hover:shadow-2xl hover:shadow-sky-300 transition-all border-none",
+              footer: "bg-transparent rounded-b-[2rem]",
+              footerAction: "bg-transparent",
               footerActionLink: "text-sky-600 font-bold hover:text-indigo-600 transition-colors",
-              footerActionText: "text-slate-400 text-xs font-medium",
+              footerActionText: "text-slate-500 text-xs font-medium",
+              footerPages: "bg-transparent",
+              footerPagesLink: "text-slate-400 text-xs",
               identityPreviewText: "text-slate-700 font-semibold",
               identityPreviewEditButton: "text-sky-600 font-bold hover:text-indigo-600",
               formResendCodeLink: "text-sky-600 font-bold hover:text-indigo-600 text-[11px]",

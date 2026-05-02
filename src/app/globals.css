@@ -22,13 +22,7 @@
   --background: var(--color-brand-surface-main);
   --foreground: var(--color-brand-text-body);
   
-  /* Neon Auth Theme Variables mapped to Design_CTL */
-  --neon-primary: var(--color-brand-primary);
-  --neon-primary-hover: var(--color-brand-primary-hover);
-  --neon-radius: 1.5rem; /* 24px per PDF */
-  --neon-border: var(--color-brand-border);
-  --neon-input: var(--color-brand-surface-soft);
-  --neon-ring: var(--color-brand-primary);
+
 }
 
 body {
@@ -55,4 +49,12 @@ body {
   }
 }
 
-
+/* Override Clerk component dark backgrounds */
+.cl-footer,
+.cl-footerAction,
+.cl-footerPages,
+.cl-card > footer,
+[class*="cl-footer"] {
+  background: transparent !important;
+  background-color: transparent !important;
+}
