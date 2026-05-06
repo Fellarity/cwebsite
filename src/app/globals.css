@@ -199,8 +199,8 @@ body {
   background: transparent !important;
 }
 
-/* Clerk internal branding elements */
-[class*="cl-internal"] {
+/* Clerk internal branding elements (only in footer) */
+.cl-footer [class*="cl-internal"] {
   background-color: transparent !important;
 }
 
