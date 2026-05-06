@@ -49,49 +49,66 @@ body {
   }
 }
 
-/* ===== Clerk UI — Solid Theme ===== */
+/* ===== Clerk UI — Solid White Theme ===== */
 
-/* Modal backdrop overlay */
+/* Modal backdrop — dark overlay with blur */
 .cl-modalBackdrop {
-  background: rgba(15, 23, 42, 0.4) !important;
-  backdrop-filter: blur(4px) !important;
+  background: rgba(15, 23, 42, 0.5) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
 }
 
 /* Modal container */
 .cl-modalContent {
   border-radius: 1.5rem !important;
   overflow: hidden !important;
-  box-shadow: 0 25px 80px rgba(15, 23, 42, 0.18) !important;
-  border: 1px solid rgba(226, 232, 240, 0.8) !important;
-}
-
-/* All Clerk cards — auth pages + popovers */
-.cl-card {
+  box-shadow: 0 25px 80px rgba(15, 23, 42, 0.2) !important;
+  border: 1px solid #e2e8f0 !important;
   background: #ffffff !important;
 }
 
+/* All Clerk cards — cardBox wraps both the card and footer */
 .cl-cardBox {
-  background: transparent !important;
+  background: #ffffff !important;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 8px 40px rgba(15, 23, 42, 0.12), 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+  border: 1px solid #e2e8f0 !important;
+  overflow: hidden !important;
+}
+
+.cl-card {
+  background: #ffffff !important;
+  border: none !important;
   box-shadow: none !important;
 }
 
-/* UserButton popover */
+/* UserButton popover dropdown */
 .cl-userButtonPopoverCard {
   background: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
-  border-radius: 1.25rem !important;
-  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.14) !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.15) !important;
+}
+
+.cl-userButtonPopoverActions {
+  background: #ffffff !important;
 }
 
 .cl-userButtonPopoverActionButton {
-  border-radius: 0.75rem !important;
+  border-radius: 0.5rem !important;
+  background: #ffffff !important;
 }
 
 .cl-userButtonPopoverActionButton:hover {
   background: #f0f9ff !important;
 }
 
-/* UserProfile modal — sidebar */
+.cl-userButtonPopoverFooter {
+  background: #ffffff !important;
+  border-top: 1px solid #f1f5f9 !important;
+}
+
+/* UserProfile modal */
 .cl-userProfile-root {
   background: #ffffff !important;
 }
@@ -103,7 +120,8 @@ body {
 
 .cl-navbarButton {
   color: #334155 !important;
-  border-radius: 0.75rem !important;
+  border-radius: 0.5rem !important;
+  background: transparent !important;
 }
 
 .cl-navbarButton:hover {
@@ -126,18 +144,91 @@ body {
   background: #ffffff !important;
 }
 
-/* Footers — transparent everywhere */
-.cl-footer,
-.cl-footerAction,
-.cl-footerPages,
-.cl-card > footer,
-.cl-userButtonPopoverFooter {
+.cl-profileSection {
   background: #ffffff !important;
-  background-color: #ffffff !important;
 }
 
-/* Clerk internal branding — keep subtle */
+.cl-profileSectionContent {
+  background: #ffffff !important;
+}
+
+/* Auth card headers */
+.cl-headerTitle {
+  color: #0f172a !important;
+}
+
+.cl-headerSubtitle {
+  color: #64748b !important;
+}
+
+/* Form elements */
+.cl-formFieldInput {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+.cl-formFieldInput:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Footers — solid white */
+.cl-footer {
+  background: #ffffff !important;
+}
+
+.cl-footerAction {
+  background: #ffffff !important;
+}
+
+.cl-footerPages {
+  background: #ffffff !important;
+}
+
+.cl-card > footer {
+  background: #ffffff !important;
+}
+
+/* Clerk internal branding elements */
 [class*="cl-internal"] {
-  background: transparent !important;
   background-color: transparent !important;
+}
+
+/* Override any remaining dark backgrounds */
+.cl-main {
+  background: #ffffff !important;
+}
+
+.cl-rootBox {
+  background: transparent !important;
+}
+
+.cl-signIn-root,
+.cl-signUp-root {
+  background: transparent !important;
+}
+
+/* Scrollable areas */
+.cl-scrollBox {
+  background: #ffffff !important;
+}
+
+/* Active devices / security sections */
+.cl-activeDeviceListItem {
+  background: #ffffff !important;
+  border: 1px solid #f1f5f9 !important;
+  border-radius: 0.75rem !important;
+}
+
+.cl-activeDeviceListItem:hover {
+  background: #f8fafc !important;
+}
+
+/* Accordion / expandable sections */
+.cl-accordionTriggerButton {
+  background: #ffffff !important;
+}
+
+.cl-accordionContent {
+  background: #ffffff !important;
 }
