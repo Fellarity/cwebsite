@@ -87,29 +87,36 @@ body {
 }
 
 /* UserButton popover dropdown */
-.cl-userButtonPopoverCard {
+.cl-userButtonPopoverCard,
+.cl-popoverBox {
   background: #ffffff !important;
+  background-color: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
   border-radius: 1.25rem !important;
-  box-shadow: 0 16px 40px -5px rgba(15, 23, 42, 0.15) !important;
+  box-shadow: 0 16px 40px -5px rgba(15, 23, 42, 0.2) !important;
+  opacity: 1 !important;
 }
 
 .cl-userButtonPopoverActions {
-  background: transparent !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
 }
 
 .cl-userButtonPopoverActionButton {
   border-radius: 0.75rem !important;
-  background: transparent !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
   transition: all 0.2s ease !important;
 }
 
 .cl-userButtonPopoverActionButton:hover {
-  background: rgba(240, 249, 255, 0.8) !important;
+  background: #f0f9ff !important;
+  background-color: #f0f9ff !important;
 }
 
 .cl-userButtonPopoverFooter {
-  background: transparent !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
   border-top: 1px solid rgba(226, 232, 240, 0.6) !important;
 }
 
