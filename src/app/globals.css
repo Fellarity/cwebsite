@@ -49,11 +49,11 @@ body {
   }
 }
 
-/* ===== Clerk UI — Solid White Theme ===== */
+/* ===== Clerk UI — Premium Thick Frost Theme ===== */
 
 /* Modal backdrop — dark overlay with blur */
 .cl-modalBackdrop {
-  background: rgba(15, 23, 42, 0.5) !important;
+  background: rgba(15, 23, 42, 0.3) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
 }
@@ -62,99 +62,108 @@ body {
 .cl-modalContent {
   border-radius: 1.5rem !important;
   overflow: hidden !important;
-  box-shadow: 0 25px 80px rgba(15, 23, 42, 0.2) !important;
-  border: 1px solid #e2e8f0 !important;
-  background: #ffffff !important;
+  box-shadow: 0 25px 80px rgba(15, 23, 42, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.6) !important;
+  border: none !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(40px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(1.5) !important;
 }
 
 /* All Clerk cards — cardBox wraps both the card and footer */
 .cl-cardBox {
-  background: #ffffff !important;
+  background: rgba(255, 255, 255, 0.85) !important;
   border-radius: 1.5rem !important;
-  box-shadow: 0 8px 40px rgba(15, 23, 42, 0.12), 0 2px 8px rgba(15, 23, 42, 0.06) !important;
-  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 20px 60px -10px rgba(15, 23, 42, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.6) !important;
+  border: none !important;
   overflow: hidden !important;
+  backdrop-filter: blur(40px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(1.5) !important;
 }
 
 .cl-card {
-  background: #ffffff !important;
+  background: transparent !important;
   border: none !important;
   box-shadow: none !important;
 }
 
 /* UserButton popover dropdown */
 .cl-userButtonPopoverCard {
-  background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
-  border-radius: 1rem !important;
-  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.15) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: none !important;
+  border-radius: 1.25rem !important;
+  box-shadow: 0 16px 40px -5px rgba(15, 23, 42, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(30px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(1.5) !important;
 }
 
 .cl-userButtonPopoverActions {
-  background: #ffffff !important;
+  background: transparent !important;
 }
 
 .cl-userButtonPopoverActionButton {
-  border-radius: 0.5rem !important;
-  background: #ffffff !important;
+  border-radius: 0.75rem !important;
+  background: transparent !important;
+  transition: all 0.2s ease !important;
 }
 
 .cl-userButtonPopoverActionButton:hover {
-  background: #f0f9ff !important;
+  background: rgba(240, 249, 255, 0.8) !important;
 }
 
 .cl-userButtonPopoverFooter {
-  background: #ffffff !important;
-  border-top: 1px solid #f1f5f9 !important;
+  background: transparent !important;
+  border-top: 1px solid rgba(226, 232, 240, 0.6) !important;
 }
 
 /* UserProfile modal */
 .cl-userProfile-root {
-  background: #ffffff !important;
+  background: transparent !important;
 }
 
 .cl-navbar {
-  background: #f8fafc !important;
-  border-right: 1px solid #e2e8f0 !important;
+  background: rgba(248, 250, 252, 0.6) !important;
+  border-right: 1px solid rgba(226, 232, 240, 0.6) !important;
 }
 
 .cl-navbarButton {
   color: #334155 !important;
-  border-radius: 0.5rem !important;
+  border-radius: 0.75rem !important;
   background: transparent !important;
+  transition: all 0.2s ease !important;
 }
 
 .cl-navbarButton:hover {
-  background: #e0f2fe !important;
+  background: rgba(224, 242, 254, 0.7) !important;
 }
 
 .cl-navbarButton[data-active="true"],
 .cl-navbarButtonActive {
-  background: #dbeafe !important;
+  background: rgba(219, 234, 254, 0.8) !important;
   color: #1d4ed8 !important;
 }
 
 /* Profile page content area */
 .cl-pageScrollBox {
-  background: #ffffff !important;
+  background: transparent !important;
 }
 
 .cl-profilePage,
 .cl-page {
-  background: #ffffff !important;
+  background: transparent !important;
 }
 
 .cl-profileSection {
-  background: #ffffff !important;
+  background: transparent !important;
 }
 
 .cl-profileSectionContent {
-  background: #ffffff !important;
+  background: transparent !important;
 }
 
 /* Auth card headers */
 .cl-headerTitle {
   color: #0f172a !important;
+  font-weight: 800 !important;
 }
 
 .cl-headerSubtitle {
@@ -163,30 +172,26 @@ body {
 
 /* Form elements */
 .cl-formFieldInput {
-  background: #f8fafc !important;
-  border: 1px solid #e2e8f0 !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border-radius: 0.75rem !important;
+  transition: all 0.2s ease !important;
 }
 
 .cl-formFieldInput:focus {
   border-color: #3b82f6 !important;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
-}
-
-/* Footers — solid white */
-.cl-footer {
   background: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
 }
 
-.cl-footerAction {
-  background: #ffffff !important;
-}
-
-.cl-footerPages {
-  background: #ffffff !important;
-}
-
+/* Footers */
+.cl-footer,
+.cl-footerAction,
+.cl-footerPages,
 .cl-card > footer {
-  background: #ffffff !important;
+  background: transparent !important;
 }
 
 /* Clerk internal branding elements */
@@ -196,7 +201,7 @@ body {
 
 /* Override any remaining dark backgrounds */
 .cl-main {
-  background: #ffffff !important;
+  background: transparent !important;
 }
 
 .cl-rootBox {
@@ -210,25 +215,26 @@ body {
 
 /* Scrollable areas */
 .cl-scrollBox {
-  background: #ffffff !important;
+  background: transparent !important;
 }
 
 /* Active devices / security sections */
 .cl-activeDeviceListItem {
-  background: #ffffff !important;
-  border: 1px solid #f1f5f9 !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(241, 245, 249, 0.8) !important;
   border-radius: 0.75rem !important;
+  transition: all 0.2s ease !important;
 }
 
 .cl-activeDeviceListItem:hover {
-  background: #f8fafc !important;
+  background: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* Accordion / expandable sections */
 .cl-accordionTriggerButton {
-  background: #ffffff !important;
+  background: transparent !important;
 }
 
 .cl-accordionContent {
-  background: #ffffff !important;
+  background: transparent !important;
 }
