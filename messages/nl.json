@@ -115,5 +115,22 @@
     "author1": "Sarah Chen, Data Lead",
     "quote2": "Beste investering in mijn AI-carrière. Het persoonlijke curriculum werkt echt.",
     "author2": "David Smit, Senior Engineer"
+  },
+  "Onboarding": {
+    "step": "Stap",
+    "of": "van",
+    "back": "Terug",
+    "complete": "Profiel voltooien",
+    "finalizing": "Verwerken...",
+    "success": "Profiel succesvol bijgewerkt!",
+    "error": "Er is iets misgegaan. Probeer het opnieuw.",
+    "goalTitle": "Wat wil je leren?",
+    "goalSubtitle": "Selecteer je primaire aandachtsgebied in AI.",
+    "levelTitle": "Wat is je huidige niveau?",
+    "levelSubtitle": "Wees eerlijk! Dit helpt ons de juiste mentor te vinden.",
+    "paceTitle": "Wat is je voorkeurstempo?",
+    "paceSubtitle": "Hoeveel uur per week kun je besteden?",
+    "langTitle": "Voorkeurstaal?",
+    "langSubtitle": "Kies de primaire taal voor je coachingsessies."
   }
 }

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight } from "lucide-react";
 import { Link } from "@/navigation";
 import { Navbar } from "@/components/navbar";
+import { prisma } from "@/lib/prisma";
 import { syncUser } from "@/lib/sync-user";
 import { getTranslations } from 'next-intl/server';
 
@@ -20,6 +21,16 @@ export default async function StudentDashboard({
   if (!user) {
     redirect('/');
   }
+
+  // Check if onboarding is completed
+  const studentProfile = await prisma.studentProfile.findUnique({
+    where: { userId: user.id }
+  });
+
+  if (!studentProfile || !studentProfile.learningGoal) {
+    redirect('/onboarding');
+  }
+
 
   const stats = [
     { title: t('upcoming'), value: "0", icon: Calendar, color: "text-sky-500", bg: "bg-sky-50" },

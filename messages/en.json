@@ -115,5 +115,22 @@
     "author1": "Sarah Chen, Data Lead",
     "quote2": "Best investment in my AI career. The personalized curriculum actually works.",
     "author2": "David Smit, Senior Engineer"
+  },
+  "Onboarding": {
+    "step": "Step",
+    "of": "of",
+    "back": "Back",
+    "complete": "Complete Profile",
+    "finalizing": "Finalizing...",
+    "success": "Profile updated successfully!",
+    "error": "Something went wrong. Please try again.",
+    "goalTitle": "What do you want to learn?",
+    "goalSubtitle": "Select your primary focus area in AI.",
+    "levelTitle": "What is your current level?",
+    "levelSubtitle": "Be honest! This helps us match you with the right mentor.",
+    "paceTitle": "What is your preferred pace?",
+    "paceSubtitle": "How many hours per week can you dedicate?",
+    "langTitle": "Preferred language?",
+    "langSubtitle": "Choose the primary language for your tutoring sessions."
   }
 }
