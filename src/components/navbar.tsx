@@ -55,7 +55,14 @@ export const Navbar = () => {
                     <UserButton
                       appearance={{
                         elements: {
-                          userButtonAvatarBox: "w-9 h-9 border border-brand-border rounded-full hover:shadow-md transition-all active:scale-95"
+                          userButtonAvatarBox: "w-9 h-9 border border-brand-border rounded-full hover:shadow-md transition-all active:scale-95",
+                          userButtonPopoverCard: "bg-white border border-slate-200 shadow-xl backdrop-blur-none",
+                          userButtonPopoverActions: "bg-white backdrop-blur-none",
+                          userButtonPopoverActionButton: "bg-white hover:bg-slate-50",
+                          userButtonPopoverFooter: "bg-white backdrop-blur-none",
+                          userPreviewMainIdentifier: "text-slate-900 font-bold",
+                          userPreviewSecondaryIdentifier: "text-slate-500",
+                          userButtonPopoverActionButtonText: "text-slate-700 font-medium"
                         }
                       }}
                     >
