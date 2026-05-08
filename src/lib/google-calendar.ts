@@ -21,12 +21,12 @@ export async function createGoogleMeeting({
   description: string;
 }) {
   try {
-    const auth = new google.auth.JWT(
-      process.env.GOOGLE_CLIENT_EMAIL,
-      undefined,
-      process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-      SCOPES
-    );
+    // Correct way to initialize JWT with googleapis v100+
+    const auth = new google.auth.JWT({
+      email: process.env.GOOGLE_CLIENT_EMAIL,
+      key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      scopes: SCOPES,
+    });
 
     const calendar = google.calendar({ version: "v3", auth });
 
@@ -66,8 +66,6 @@ export async function createGoogleMeeting({
     };
   } catch (error) {
     console.error("Google Calendar API Error:", error);
-    // Return null to allow the system to fallback to a manual link if needed
-    // as per Phase 4 semi-automated strategy
     return null;
   }
 }
