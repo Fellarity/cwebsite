@@ -82,7 +82,10 @@
     "currentPlan": "Huidig plan",
     "activePlan": "Actief plan",
     "noPlan": "Geen actief plan",
-    "upgrade": "Nu upgraden"
+    "upgrade": "Nu upgraden",
+    "matchesTitle": "Top Mentor Matches",
+    "matchesSubtitle": "Gebaseerd op jouw leerdoelen",
+    "viewProfile": "Profiel bekijken"
   },
   "TutorDashboard": {
     "welcome": "Welkom",

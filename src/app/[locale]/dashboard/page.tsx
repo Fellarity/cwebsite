@@ -1,11 +1,13 @@
 export const dynamic = "force-dynamic";
 import { redirect } from "next/navigation";
-import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight } from "lucide-react";
+import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight, Sparkles, Star } from "lucide-react";
 import { Link } from "@/navigation";
 import { Navbar } from "@/components/navbar";
 import { prisma } from "@/lib/prisma";
 import { syncUser } from "@/lib/sync-user";
 import { getTranslations } from 'next-intl/server';
+import { getRecommendedTutors } from "@/lib/matchmaker";
+import Image from "next/image";
 
 export default async function StudentDashboard({
   params
@@ -31,6 +33,8 @@ export default async function StudentDashboard({
     redirect('/onboarding');
   }
 
+  // Fetch recommended tutors based on onboarding data
+  const recommendedTutors = await getRecommendedTutors(user.id);
 
   const stats = [
     { title: t('upcoming'), value: "0", icon: Calendar, color: "text-sky-500", bg: "bg-sky-50" },
@@ -42,7 +46,6 @@ export default async function StudentDashboard({
     <main className="min-h-screen pb-20">
       <Navbar />
       
-      {/* Background Blobs */}
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-200/40 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-200/30 rounded-full blur-[120px]" />
@@ -73,9 +76,10 @@ export default async function StudentDashboard({
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div className="lg:col-span-2 space-y-10">
+              {/* Next Session */}
               <div className="bg-white border border-sky-100 rounded-[3rem] shadow-xl shadow-sky-100/20 p-10">
                 <h2 className="text-2xl font-black text-slate-900 mb-8 flex items-center gap-4 uppercase tracking-tight">
-                  <div className="p-3 bg-sky-500 rounded-xl shadow-lg shadow-sky-100">
+                  <div className="p-3 bg-brand-primary rounded-xl shadow-lg shadow-brand-soft">
                     <Calendar className="h-5 w-5 text-white" />
                   </div>
                   {t('nextSession')}
@@ -91,6 +95,50 @@ export default async function StudentDashboard({
                   </Link>
                 </div>
               </div>
+
+              {/* Top Matches */}
+              <div>
+                 <div className="flex items-center justify-between mb-8 px-4">
+                    <div>
+                       <h2 className="text-2xl font-black text-slate-900 tracking-tight uppercase">{t('matchesTitle')}</h2>
+                       <p className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">{t('matchesSubtitle')}</p>
+                    </div>
+                    <Link href="/tutors" className="text-xs font-black text-brand-primary uppercase tracking-widest hover:underline">See All</Link>
+                 </div>
+                 
+                 <div className="grid sm:grid-cols-2 gap-6">
+                    {recommendedTutors.map((tutor) => (
+                      <div key={tutor.id} className="bg-white border border-sky-50 p-6 rounded-[2.5rem] shadow-lg shadow-sky-100/20 hover:shadow-xl transition-all group">
+                         <div className="flex items-center gap-4 mb-6">
+                            <div className="relative h-16 w-16 rounded-2xl overflow-hidden bg-sky-50 shrink-0">
+                               {tutor.image ? (
+                                 <Image src={tutor.image} alt={tutor.name} fill className="object-cover" />
+                               ) : (
+                                 <div className="flex items-center justify-center h-full text-sky-200 font-black text-xl uppercase">{tutor.name[0]}</div>
+                               )}
+                            </div>
+                            <div>
+                               <h4 className="font-black text-slate-900 leading-tight">{tutor.name}</h4>
+                               <div className="flex items-center gap-1 text-amber-500 text-[10px] font-bold mt-1">
+                                  <Star className="h-3 w-3 fill-amber-500" />
+                                  4.9
+                               </div>
+                            </div>
+                         </div>
+                         <p className="text-slate-500 text-xs font-medium line-clamp-2 mb-6 leading-relaxed">
+                            {tutor.tutorProfile?.bio}
+                         </p>
+                         <Link 
+                           href={`/tutors/${tutor.id}`}
+                           className="w-full py-3 bg-brand-surface-soft text-brand-primary rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-brand-primary hover:text-white transition-all flex items-center justify-center gap-2"
+                         >
+                           {t('viewProfile')}
+                           <ArrowRight className="h-3.5 w-3.5" />
+                         </Link>
+                      </div>
+                    ))}
+                 </div>
+              </div>
             </div>
 
             <div className="space-y-10">
@@ -105,10 +153,10 @@ export default async function StudentDashboard({
                 </div>
                 <Link 
                   href="/pricing" 
-                  className="w-full py-4 bg-sky-500 hover:bg-sky-400 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-brand-primary hover:bg-brand-primary-hover text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-soft"
                 >
                   {t('upgrade')}
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 text-sky-400" />
                 </Link>
               </div>
             </div>

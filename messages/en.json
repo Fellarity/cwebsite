@@ -82,7 +82,10 @@
     "currentPlan": "Current Plan",
     "activePlan": "Active Plan",
     "noPlan": "No Active Plan",
-    "upgrade": "Upgrade Now"
+    "upgrade": "Upgrade Now",
+    "matchesTitle": "Top Mentor Matches",
+    "matchesSubtitle": "Based on your learning goals",
+    "viewProfile": "View Profile"
   },
   "TutorDashboard": {
     "welcome": "Welcome",
