@@ -26,7 +26,10 @@ export default async function StudentDashboard({
 
   // Check if onboarding is completed
   const studentProfile = await prisma.studentProfile.findUnique({
-    where: { userId: user.id }
+    where: { userId: user.id },
+    include: {
+      bookings: true
+    }
   });
 
   if (!studentProfile || !studentProfile.learningGoal) {
@@ -36,10 +39,15 @@ export default async function StudentDashboard({
   // Fetch recommended tutors based on onboarding data
   const recommendedTutors = await getRecommendedTutors(user.id);
 
+  // Calculate Real Stats
+  const upcomingSessions = studentProfile.bookings.filter(b => b.status === 'CONFIRMED' || b.status === 'PENDING').length;
+  const completedSessions = studentProfile.bookings.filter(b => b.status === 'COMPLETED').length;
+  const totalHours = completedSessions * 1; // Assuming 1 hour per session for now
+
   const stats = [
-    { title: t('upcoming'), value: "0", icon: Calendar, color: "text-sky-500", bg: "bg-sky-50" },
-    { title: t('completed'), value: "0", icon: CheckCircle2, color: "text-emerald-500", bg: "bg-emerald-50" },
-    { title: t('hours'), value: "0h", icon: Clock, color: "text-indigo-500", bg: "bg-indigo-50" },
+    { title: t('upcoming'), value: upcomingSessions.toString(), icon: Calendar, color: "text-sky-500", bg: "bg-sky-50" },
+    { title: t('completed'), value: completedSessions.toString(), icon: CheckCircle2, color: "text-emerald-500", bg: "bg-emerald-50" },
+    { title: t('hours'), value: `${totalHours}h`, icon: Clock, color: "text-indigo-500", bg: "bg-indigo-50" },
   ];
 
   return (
@@ -85,14 +93,34 @@ export default async function StudentDashboard({
                   {t('nextSession')}
                 </h2>
                 <div className="bg-sky-50/50 rounded-[2rem] p-12 text-center border-2 border-dashed border-sky-100">
-                  <p className="text-slate-500 font-medium text-lg mb-8">{t('noSessions')}</p>
-                  <Link 
-                    href="/tutors" 
-                    className="inline-flex items-center justify-center px-10 py-4 bg-slate-900 text-white rounded-2xl font-black text-sm hover:bg-slate-800 transition-all shadow-xl shadow-slate-100 group"
-                  >
-                    {t('bookButton')}
-                    <ArrowRight className="h-4 w-4 ml-2 text-sky-400 group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                  {upcomingSessions > 0 ? (
+                    <div className="text-left">
+                       <p className="text-slate-900 font-black uppercase tracking-widest text-xs mb-4">Your next live 1-to-1 session is scheduled.</p>
+                       <div className="bg-white p-6 rounded-3xl border border-sky-100 shadow-sm flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                             <div className="h-12 w-12 bg-sky-500 rounded-xl flex items-center justify-center text-white">
+                                <Video className="h-6 w-6" />
+                             </div>
+                             <div>
+                                <p className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Google Meet</p>
+                                <p className="text-sky-600 font-bold text-xs uppercase">Link will be active 5m before start</p>
+                             </div>
+                          </div>
+                          <button className="px-6 py-2 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-widest">Join Room</button>
+                       </div>
+                    </div>
+                  ) : (
+                    <>
+                      <p className="text-slate-500 font-medium text-lg mb-8">{t('noSessions')}</p>
+                      <Link 
+                        href="/tutors" 
+                        className="inline-flex items-center justify-center px-10 py-4 bg-slate-900 text-white rounded-2xl font-black text-sm hover:bg-slate-800 transition-all shadow-xl shadow-slate-100 group"
+                      >
+                        {t('bookButton')}
+                        <ArrowRight className="h-4 w-4 ml-2 text-sky-400 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -166,3 +194,6 @@ export default async function StudentDashboard({
     </main>
   );
 }
+
+// Add Video import
+import { Video } from "lucide-react";

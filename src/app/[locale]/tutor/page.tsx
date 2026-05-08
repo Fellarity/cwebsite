@@ -4,6 +4,7 @@ import { Link } from "@/navigation";
 import { Navbar } from "@/components/navbar";
 import { getTranslations } from 'next-intl/server';
 import { syncUser } from "@/lib/sync-user";
+import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -13,20 +14,46 @@ export default async function TutorDashboard({
   params: Promise<{ locale: string }>;
 }) {
   await params;
-  const [user, t] = await Promise.all([
-    syncUser(),
-    getTranslations('TutorDashboard')
-  ]);
+  const user = await syncUser();
+  const t = await getTranslations('TutorDashboard');
   
   // RBAC Enforcement: Strict check for TUTOR role
   if (!user || user.role !== 'TUTOR') {
     redirect('/');
   }
 
+  // Fetch real tutor profile and bookings
+  const tutorProfile = await prisma.tutorProfile.findUnique({
+    where: { userId: user.id },
+    include: {
+      bookings: {
+        include: {
+          student: {
+            include: {
+              user: true
+            }
+          }
+        }
+      }
+    }
+  });
+
+  if (!tutorProfile) {
+    redirect('/');
+  }
+
+  // Calculate Real Stats
+  const sessionsToday = tutorProfile.bookings.filter(b => {
+    const today = new Date();
+    return b.startTime.toDateString() === today.toDateString();
+  }).length;
+  const activeStudents = new Set(tutorProfile.bookings.map(b => b.studentId)).size;
+  const totalHours = tutorProfile.bookings.filter(b => b.status === 'COMPLETED').length * 1;
+
   const stats = [
-    { title: t('sessionsToday'), value: "0", icon: Video, color: "text-sky-500", bg: "bg-sky-50" },
-    { title: t('activeStudents'), value: "0", icon: Users, color: "text-indigo-500", bg: "bg-indigo-50" },
-    { title: t('totalHours'), value: "0h", icon: Calendar, color: "text-emerald-500", bg: "bg-emerald-50" },
+    { title: t('sessionsToday'), value: sessionsToday.toString(), icon: Video, color: "text-sky-500", bg: "bg-sky-50" },
+    { title: t('activeStudents'), value: activeStudents.toString(), icon: Users, color: "text-indigo-500", bg: "bg-indigo-50" },
+    { title: t('totalHours'), value: `${totalHours}h`, icon: Calendar, color: "text-emerald-500", bg: "bg-emerald-50" },
   ];
 
   return (
@@ -79,8 +106,22 @@ export default async function TutorDashboard({
                   </div>
                   {t('scheduleTitle')}
                 </h2>
-                <div className="bg-sky-50/50 rounded-[2rem] p-12 text-center border-2 border-dashed border-sky-100">
-                  <p className="text-slate-500 font-medium text-lg">{t('noSessions')}</p>
+                <div className="bg-sky-50/50 rounded-[2rem] p-4 text-center border-2 border-dashed border-sky-100 min-h-[300px] flex items-center justify-center">
+                  {tutorProfile.bookings.length > 0 ? (
+                    <div className="w-full text-left space-y-3">
+                       {tutorProfile.bookings.map((booking) => (
+                         <div key={booking.id} className="bg-white p-6 rounded-3xl border border-sky-50 shadow-sm flex items-center justify-between">
+                            <div>
+                               <p className="font-black text-slate-900 uppercase text-[10px] tracking-[0.2em] mb-1">{booking.student.user.name}</p>
+                               <p className="text-sm font-bold text-slate-500">{booking.startTime.toLocaleString()}</p>
+                            </div>
+                            <button className="px-6 py-2 bg-brand-primary text-white rounded-xl font-black text-[10px] uppercase tracking-widest">Start Call</button>
+                         </div>
+                       ))}
+                    </div>
+                  ) : (
+                    <p className="text-slate-500 font-medium text-lg">{t('noSessions')}</p>
+                  )}
                 </div>
               </div>
             </div>

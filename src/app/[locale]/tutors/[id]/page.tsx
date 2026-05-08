@@ -6,6 +6,7 @@ import Image from "next/image";
 import { getTranslations } from 'next-intl/server';
 import { generateAvailableSlots } from "@/lib/scheduling";
 import { syncUser } from "@/lib/sync-user";
+import { SlotPicker } from "@/components/slot-picker";
 import { 
   Calendar, 
   Clock, 
@@ -150,38 +151,12 @@ export default async function TutorProfilePage({
           </div>
 
           <div className="lg:col-span-1">
-            <div className="sticky top-32 p-10 rounded-[3.5rem] bg-slate-900 text-white shadow-2xl shadow-sky-200 border-4 border-slate-800">
-              <h3 className="text-3xl font-black mb-8 tracking-tight uppercase">{t('bookTitle')}</h3>
-              
-              <div className="space-y-6 mb-12">
-                <div className="p-6 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-between group">
-                  <div className="flex items-center gap-4">
-                    <Calendar className="h-6 w-6 text-sky-400" />
-                    <span className="font-black text-xs uppercase tracking-widest">{t('weeklySlots')}</span>
-                  </div>
-                </div>
-                
-                <div className="max-h-[300px] overflow-y-auto pr-2 space-y-3 custom-scrollbar">
-                  {dynamicSlots.length > 0 ? dynamicSlots.map((slot, idx) => (
-                    <button key={idx} className="w-full flex items-center justify-between text-[10px] py-4 px-6 border border-white/5 rounded-2xl font-black uppercase tracking-widest hover:bg-sky-500 hover:border-sky-500 transition-all group">
-                      <span className="text-slate-500 group-hover:text-white transition-colors">{slot.label.split('(')[1].replace(')', '')}</span>
-                      <span className="text-sky-400 group-hover:text-white transition-colors">{slot.label.split('(')[0]}</span>
-                    </button>
-                  )) : (
-                    <p className="text-slate-500 text-center py-10 font-bold text-xs uppercase">No slots available this week</p>
-                  )}
-                </div>
-              </div>
-
-              <Link href="/pricing" className="w-full py-5 bg-gradient-to-r from-sky-500 to-indigo-600 text-white rounded-2xl font-black text-lg transition-all shadow-xl shadow-sky-500/20 active:scale-95 flex items-center justify-center gap-3 group">
-                {t('selectPlan')}
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              
-              <p className="text-center mt-8 text-[10px] font-black text-slate-500 uppercase tracking-widest leading-loose max-w-[200px] mx-auto opacity-60">
-                {t('guarantee')}
-              </p>
-            </div>
+            <SlotPicker 
+              slots={dynamicSlots} 
+              tutorId={tutor.id} 
+              bookTitle={t('bookTitle')}
+              weeklySlotsText={t('weeklySlots')}
+            />
           </div>
 
         </div>
