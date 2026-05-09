@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import { redirect } from "next/navigation";
-import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight, Sparkles, Star } from "lucide-react";
+import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight, Star, Video } from "lucide-react";
 import { Link } from "@/navigation";
 import { Navbar } from "@/components/navbar";
 import { prisma } from "@/lib/prisma";
@@ -14,7 +14,7 @@ export default async function StudentDashboard({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
+  await params;
   const [user, t] = await Promise.all([
     syncUser(),
     getTranslations('Dashboard')
@@ -194,6 +194,3 @@ export default async function StudentDashboard({
     </main>
   );
 }
-
-// Add Video import
-import { Video } from "lucide-react";

@@ -36,12 +36,12 @@ export function generateAvailableSlots(
       const [endH, endM] = avail.endTime.split(":").map(Number);
 
       // Create tutor's start/end in tutor's timezone
-      let tutorStart = DateTime.fromObject(
+      const tutorStart = DateTime.fromObject(
         { year: targetDate.year, month: targetDate.month, day: targetDate.day, hour: startH, minute: startM },
         { zone: tutorTimezone }
       );
 
-      let tutorEnd = DateTime.fromObject(
+      const tutorEnd = DateTime.fromObject(
         { year: targetDate.year, month: targetDate.month, day: targetDate.day, hour: endH, minute: endM },
         { zone: tutorTimezone }
       );

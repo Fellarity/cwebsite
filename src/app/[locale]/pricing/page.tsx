@@ -112,7 +112,7 @@ export default async function PricingPage({
           {t('guaranteeTitle')}
         </div>
         <p className="text-xl text-slate-500 font-medium leading-relaxed max-w-2xl mx-auto italic">
-          "{t('guaranteeDesc')}"
+          &ldquo;{t('guaranteeDesc')}&rdquo;
         </p>
       </section>
     </main>

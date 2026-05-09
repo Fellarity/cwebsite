@@ -3,13 +3,11 @@
 import { useState } from "react";
 import { Navbar } from "@/components/navbar";
 import { motion } from "framer-motion";
-import { Briefcase, ArrowRight, Loader2, Sparkles, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Loader2, Sparkles, CheckCircle2 } from "lucide-react";
 import { useRouter } from "@/navigation";
 import { toast } from "sonner";
-import { useTranslations } from "next-intl";
 
 export default function TutorApplyPage() {
-  const t = useTranslations('TutorDashboard'); // Reusing some keys if possible or adding new ones
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
@@ -42,7 +40,7 @@ export default function TutorApplyPage() {
       } else {
         throw new Error("Failed to submit application");
       }
-    } catch (error) {
+    } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);

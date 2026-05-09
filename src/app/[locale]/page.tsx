@@ -1,5 +1,5 @@
 import { Navbar } from "@/components/navbar";
-import { Sparkles, ShieldCheck, Zap, GraduationCap, ChevronDown, Quote, ArrowRight, Brain } from "lucide-react";
+import { Sparkles, ShieldCheck, Zap, GraduationCap, ChevronDown, Quote, Brain } from "lucide-react";
 import { getTranslations } from 'next-intl/server';
 import { HomeHeroButtons } from "@/components/home-hero-buttons";
 import { syncUser } from "@/lib/sync-user";
@@ -107,7 +107,7 @@ export default async function Home({
              ].map((item, i) => (
                <div key={i} className="bg-brand-surface-highlight p-12 rounded-[3rem] border border-brand-border relative">
                   <Quote className="h-10 w-10 text-brand-soft absolute top-8 right-10" />
-                  <p className="text-2xl font-bold text-brand-text-heading italic mb-8 leading-relaxed">"{item.q}"</p>
+                  <p className="text-2xl font-bold text-brand-text-heading italic mb-8 leading-relaxed">&ldquo;{item.q}&rdquo;</p>
                   <p className="text-xs font-black uppercase tracking-widest text-brand-primary">— {item.a}</p>
                </div>
              ))}
@@ -126,11 +126,11 @@ export default async function Home({
             {[1, 2, 3].map((num) => (
               <div key={num} className="bg-white border border-brand-border p-8 rounded-3xl hover:border-brand-primary transition-colors cursor-pointer group">
                 <div className="flex items-center justify-between">
-                   <h4 className="font-black text-brand-text-heading uppercase tracking-wide text-sm">{tFAQ(`q${num}` as any)}</h4>
+                   <h4 className="font-black text-brand-text-heading uppercase tracking-wide text-sm">{tFAQ(`q${num}` as Parameters<typeof tFAQ>[0])}</h4>
                    <ChevronDown className="h-5 w-5 text-brand-border group-hover:text-brand-primary transition-all" />
                 </div>
                 <p className="mt-4 text-brand-text-body font-medium text-sm leading-relaxed hidden group-hover:block animate-in fade-in slide-in-from-top-2 duration-300">
-                  {tFAQ(`a${num}` as any)}
+                  {tFAQ(`a${num}` as Parameters<typeof tFAQ>[0])}
                 </p>
               </div>
             ))}

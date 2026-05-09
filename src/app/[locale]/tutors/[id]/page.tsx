@@ -8,13 +8,11 @@ import { generateAvailableSlots } from "@/lib/scheduling";
 import { syncUser } from "@/lib/sync-user";
 import { SlotPicker } from "@/components/slot-picker";
 import { 
-  Calendar, 
   Clock, 
   Globe, 
   Star, 
   BookOpen,
   ArrowLeft,
-  ArrowRight,
   CheckCircle2,
   BadgeCheck
 } from "lucide-react";
@@ -145,7 +143,7 @@ export default async function TutorProfilePage({
                 {t('styleTitle')}
               </h2>
               <p className="text-lg text-slate-600 leading-relaxed font-medium bg-white/50 p-8 rounded-[2.5rem] border border-sky-50 italic">
-                "{t('styleDesc')}"
+                &ldquo;{t('styleDesc')}&rdquo;
               </p>
             </div>
           </div>

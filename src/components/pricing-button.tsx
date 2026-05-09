@@ -5,8 +5,15 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "@/navigation";
 
+interface RazorpayResponse {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+}
+
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Razorpay: any;
   }
 }
@@ -53,7 +60,7 @@ export const PricingButton = ({
         name: "AI Coaching Hub",
         description: `Purchase: ${planTitle}`,
         order_id: order.id,
-        handler: async function (response: any) {
+        handler: async function (response: RazorpayResponse) {
           // 3. Verify Payment on Backend
           const verifyRes = await fetch("/api/payments/verify", {
             method: "POST",
