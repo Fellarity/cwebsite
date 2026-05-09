@@ -32,6 +32,7 @@ export const Navbar = () => {
             <Link href="/tutors" className="hover:text-brand-primary transition-colors">{t('findTutors')}</Link>
             <Link href="/programs" className="hover:text-brand-primary transition-colors">{t('programs')}</Link>
             <Link href="/pricing" className="hover:text-brand-primary transition-colors">{t('pricing')}</Link>
+            <Link href="/tutor/apply" className="px-4 py-1.5 border border-brand-soft rounded-full text-brand-primary hover:bg-brand-primary hover:text-white transition-all lowercase italic tracking-tight">{t('becomeTutor')}</Link>
           </div>
 
           <div className="hidden md:flex items-center gap-6">
@@ -100,6 +101,7 @@ export const Navbar = () => {
             <Link href="/tutors" onClick={() => setIsMobileMenuOpen(false)} className="block text-sm font-black text-brand-text-heading uppercase tracking-widest border-b border-brand-surface-soft pb-4">{t('findTutors')}</Link>
             <Link href="/programs" onClick={() => setIsMobileMenuOpen(false)} className="block text-sm font-black text-brand-text-heading uppercase tracking-widest border-b border-brand-surface-soft pb-4">{t('programs')}</Link>
             <Link href="/pricing" onClick={() => setIsMobileMenuOpen(false)} className="block text-sm font-black text-brand-text-heading uppercase tracking-widest border-b border-brand-surface-soft pb-4">{t('pricing')}</Link>
+            <Link href="/tutor/apply" onClick={() => setIsMobileMenuOpen(false)} className="block text-sm font-black text-brand-primary uppercase tracking-widest border-b border-brand-surface-soft pb-4 italic">{t('becomeTutor')}</Link>
             
             <div className="pt-4">
               {!isSignedIn ? (
