@@ -3,8 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { getTranslations } from 'next-intl/server';
 import { Star, MessageSquare, ShieldCheck, Search, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { Link } from "@/navigation";
-import { redirect } from "next/navigation";
+import { Link, redirect } from "@/navigation";
 
 export default async function TutorsPage({
   params,
@@ -38,7 +37,7 @@ export default async function TutorsPage({
   async function handleSearch(formData: FormData) {
     'use server';
     const q = formData.get('query');
-    redirect(`/${locale}/tutors${q ? `?query=${q}` : ''}`);
+    redirect({ href: `/tutors${q ? `?query=${q}` : ''}`, locale });
   }
 
   return (
@@ -79,7 +78,7 @@ export default async function TutorsPage({
           <div className="mt-8 flex flex-wrap items-center gap-2">
             <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mr-2">Popular:</span>
             {["ChatGPT", "LangChain", "Claude", "PyTorch", "Next.js", "Machine Learning"].map(tag => (
-               <Link key={tag} href={`/${locale}/tutors?query=${tag}`} className="px-4 py-2 bg-white border border-sky-100 rounded-full text-[10px] font-black text-slate-600 uppercase tracking-widest hover:border-brand-primary hover:text-brand-primary transition-all shadow-sm">
+               <Link key={tag} href={`/tutors?query=${tag}`} className="px-4 py-2 bg-white border border-sky-100 rounded-full text-[10px] font-black text-slate-600 uppercase tracking-widest hover:border-brand-primary hover:text-brand-primary transition-all shadow-sm">
                  {tag}
                </Link>
             ))}
