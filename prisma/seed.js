@@ -1,88 +1,165 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient();
-
-async function main() {
-  console.log("🌱 Starting database seeding...");
-
-  const tutors = [
-    {
-      name: "Dr. Elena Vance",
-      email: "elena.vance@example.com",
-      bio: "Expert in Neural Networks and Deep Learning with 10+ years of academic experience.",
-      expertise: ["Python", "PyTorch", "AI Ethics"],
-      hourlyRate: 85,
-    },
-    {
-      name: "Marcus Thorne",
-      email: "marcus.t@example.com",
-      bio: "Full-stack engineer specializing in LLM integration and vector databases.",
-      expertise: ["TypeScript", "Next.js", "LangChain"],
-      hourlyRate: 65,
-    },
-    {
-      name: "Sienna Miller",
-      email: "sienna.m@example.com",
-      bio: "Data Scientist focusing on Natural Language Processing and sentiment analysis.",
-      expertise: ["R", "Scikit-Learn", "NLP"],
-      hourlyRate: 75,
-    }
-  ];
-
-  for (const t of tutors) {
-    const user = await prisma.user.upsert({
-      where: { email: t.email },
-      update: {},
-      create: {
-        email: t.email,
-        name: t.name,
-        emailVerified: true,
-        role: "TUTOR",
-        tutorProfile: {
-          create: {
-            bio: t.bio,
-            expertise: t.expertise,
-            hourlyRate: t.hourlyRate,
-            languages: ["English", "Dutch"],
-            verificationStatus: "APPROVED",
-            availability: {
-              createMany: {
-                data: [
-                  { dayOfWeek: 1, startTime: "09:00", endTime: "17:00" },
-                  { dayOfWeek: 3, startTime: "09:00", endTime: "17:00" },
-                  { dayOfWeek: 5, startTime: "10:00", endTime: "15:00" },
-                ]
-              }
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
             }
-          }
-        }
-      }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var client_1 = require("@prisma/client");
+var prisma = new client_1.PrismaClient();
+function main() {
+    return __awaiter(this, void 0, void 0, function () {
+        var tutors, _i, tutors_1, t, user, plans, _a, plans_1, p;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    console.log("🌱 Starting database seeding...");
+                    tutors = [
+                        {
+                            name: "Dr. Elena Vance",
+                            email: "elena.vance@example.com",
+                            bio: "Expert in Neural Networks and Deep Learning with 10+ years of academic experience.",
+                            expertise: ["Python", "PyTorch", "AI Ethics", "ChatGPT", "Claude", "Hugging Face"],
+                            hourlyRate: 60,
+                        },
+                        {
+                            name: "Marcus Thorne",
+                            email: "marcus.t@example.com",
+                            bio: "Full-stack engineer specializing in LLM integration and vector databases.",
+                            expertise: ["TypeScript", "Next.js", "LangChain", "LlamaIndex", "Pinecone", "Cursor"],
+                            hourlyRate: 55,
+                        },
+                        {
+                            name: "Sienna Miller",
+                            email: "sienna.m@example.com",
+                            bio: "Data Scientist focusing on Natural Language Processing and sentiment analysis.",
+                            expertise: ["R", "Scikit-Learn", "NLP", "Google Gemini", "Perplexity AI", "Poe"],
+                            hourlyRate: 50,
+                        }
+                    ];
+                    _i = 0, tutors_1 = tutors;
+                    _b.label = 1;
+                case 1:
+                    if (!(_i < tutors_1.length)) return [3 /*break*/, 4];
+                    t = tutors_1[_i];
+                    return [4 /*yield*/, prisma.user.upsert({
+                            where: { email: t.email },
+                            update: {
+                                tutorProfile: {
+                                    update: {
+                                        expertise: t.expertise,
+                                        hourlyRate: t.hourlyRate,
+                                    }
+                                }
+                            },
+                            create: {
+                                email: t.email,
+                                name: t.name,
+                                emailVerified: true,
+                                role: client_1.Role.TUTOR,
+                                tutorProfile: {
+                                    create: {
+                                        bio: t.bio,
+                                        expertise: t.expertise,
+                                        hourlyRate: t.hourlyRate,
+                                        languages: ["English", "Dutch"],
+                                        verificationStatus: "APPROVED",
+                                        availability: {
+                                            createMany: {
+                                                data: [
+                                                    { dayOfWeek: 1, startTime: "09:00", endTime: "17:00" },
+                                                    { dayOfWeek: 3, startTime: "09:00", endTime: "17:00" },
+                                                    { dayOfWeek: 5, startTime: "10:00", endTime: "15:00" },
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        })];
+                case 2:
+                    user = _b.sent();
+                    console.log("\u2705 Created/Updated tutor: ".concat(user.name));
+                    _b.label = 3;
+                case 3:
+                    _i++;
+                    return [3 /*break*/, 1];
+                case 4: 
+                // Clear existing plans for a clean state
+                return [4 /*yield*/, prisma.plan.deleteMany({})];
+                case 5:
+                    // Clear existing plans for a clean state
+                    _b.sent();
+                    plans = [
+                        { title: "Single Session", sessionCount: 1, duration: 60, price: 60 },
+                        { title: "Starter Bundle", sessionCount: 5, duration: 60, price: 275 },
+                        { title: "Mastery Bundle", sessionCount: 10, duration: 60, price: 500 },
+                    ];
+                    _a = 0, plans_1 = plans;
+                    _b.label = 6;
+                case 6:
+                    if (!(_a < plans_1.length)) return [3 /*break*/, 9];
+                    p = plans_1[_a];
+                    return [4 /*yield*/, prisma.plan.create({
+                            data: p
+                        })];
+                case 7:
+                    _b.sent();
+                    console.log("\u2705 Created plan: ".concat(p.title));
+                    _b.label = 8;
+                case 8:
+                    _a++;
+                    return [3 /*break*/, 6];
+                case 9:
+                    console.log("🌳 Seeding completed successfully.");
+                    return [2 /*return*/];
+            }
+        });
     });
-    console.log(`✅ Created tutor: ${user.name}`);
-  }
-
-  const plans = [
-    { title: "Quick Starter", sessionCount: 4, duration: 60, price: 199 },
-    { title: "Deep Dive", sessionCount: 10, duration: 60, price: 449 },
-    { title: "Mastery Path", sessionCount: 20, duration: 60, price: 799 },
-  ];
-
-  for (const p of plans) {
-    await prisma.plan.create({
-      data: p
-    });
-    console.log(`✅ Created plan: ${p.title}`);
-  }
-
-  console.log("🌳 Seeding completed successfully.");
 }
-
 main()
-  .catch((e) => {
+    .catch(function (e) {
     console.error(e);
     process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+})
+    .finally(function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, prisma.$disconnect()];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); });

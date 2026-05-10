@@ -11,29 +11,36 @@ async function main() {
       name: "Dr. Elena Vance",
       email: "elena.vance@example.com",
       bio: "Expert in Neural Networks and Deep Learning with 10+ years of academic experience.",
-      expertise: ["Python", "PyTorch", "AI Ethics"],
-      hourlyRate: 85,
+      expertise: ["Python", "PyTorch", "AI Ethics", "ChatGPT", "Claude", "Hugging Face"],
+      hourlyRate: 60,
     },
     {
       name: "Marcus Thorne",
       email: "marcus.t@example.com",
       bio: "Full-stack engineer specializing in LLM integration and vector databases.",
-      expertise: ["TypeScript", "Next.js", "LangChain"],
-      hourlyRate: 65,
+      expertise: ["TypeScript", "Next.js", "LangChain", "LlamaIndex", "Pinecone", "Cursor"],
+      hourlyRate: 55,
     },
     {
       name: "Sienna Miller",
       email: "sienna.m@example.com",
       bio: "Data Scientist focusing on Natural Language Processing and sentiment analysis.",
-      expertise: ["R", "Scikit-Learn", "NLP"],
-      hourlyRate: 75,
+      expertise: ["R", "Scikit-Learn", "NLP", "Google Gemini", "Perplexity AI", "Poe"],
+      hourlyRate: 50,
     }
   ];
 
   for (const t of tutors) {
     const user = await prisma.user.upsert({
       where: { email: t.email },
-      update: {},
+      update: {
+        tutorProfile: {
+          update: {
+            expertise: t.expertise,
+            hourlyRate: t.hourlyRate,
+          }
+        }
+      },
       create: {
         email: t.email,
         name: t.name,
@@ -59,14 +66,17 @@ async function main() {
         }
       }
     });
-    console.log(`✅ Created tutor: ${user.name}`);
+    console.log(`✅ Created/Updated tutor: ${user.name}`);
   }
 
-  // 2. Create Initial Plans
+  // Clear existing plans for a clean state
+  await prisma.plan.deleteMany({});
+
+  // 2. Create Initial Plans based on EUR 50-60 model
   const plans = [
-    { title: "Quick Starter", sessionCount: 4, duration: 60, price: 199 },
-    { title: "Deep Dive", sessionCount: 10, duration: 60, price: 449 },
-    { title: "Mastery Path", sessionCount: 20, duration: 60, price: 799 },
+    { title: "Single Session", sessionCount: 1, duration: 60, price: 60 },
+    { title: "Starter Bundle", sessionCount: 5, duration: 60, price: 275 },
+    { title: "Mastery Bundle", sessionCount: 10, duration: 60, price: 500 },
   ];
 
   for (const p of plans) {

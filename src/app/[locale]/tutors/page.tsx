@@ -74,6 +74,16 @@ export default async function TutorsPage({
               </button>
             </form>
           </div>
+
+          {/* Quick Filter Tags */}
+          <div className="mt-8 flex flex-wrap items-center gap-2">
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mr-2">Popular:</span>
+            {["ChatGPT", "LangChain", "Claude", "PyTorch", "Next.js", "Machine Learning"].map(tag => (
+               <Link key={tag} href={`/${locale}/tutors?query=${tag}`} className="px-4 py-2 bg-white border border-sky-100 rounded-full text-[10px] font-black text-slate-600 uppercase tracking-widest hover:border-brand-primary hover:text-brand-primary transition-all shadow-sm">
+                 {tag}
+               </Link>
+            ))}
+          </div>
         </div>
       </section>
 
