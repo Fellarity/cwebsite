@@ -136,5 +136,27 @@
     "paceSubtitle": "Hoeveel uur per week kun je besteden?",
     "langTitle": "Voorkeurstaal?",
     "langSubtitle": "Kies de primaire taal voor je coachingsessies."
+  },
+  "TutorApply": {
+    "badge": "Sluit je aan bij de Elite",
+    "title": "Deel je AI-expertise met de wereld.",
+    "subtitle": "We zijn op zoek naar deskundige AI-engineers, data scientists en strategen om de volgende generatie innovators te begeleiden.",
+    "benefit1": "Bepaal je eigen tarieven",
+    "benefit2": "Flexibel wereldwijd schema",
+    "benefit3": "Studenten van hoge kwaliteit",
+    "benefit4": "Gecentraliseerde operaties",
+    "labelBio": "Korte professionele biografie",
+    "placeholderBio": "Beschrijf je achtergrond en aanpak...",
+    "labelExpertise": "Expertise (Komma gescheiden)",
+    "placeholderExpertise": "bijv. PyTorch, NLP, RAG",
+    "labelRate": "Uurtarief ($)",
+    "labelLanguages": "Talen",
+    "submit": "Sollicitatie indienen",
+    "submitting": "Verzenden...",
+    "successTitle": "Sollicitatie ontvangen",
+    "successDesc": "Ons team zal je profiel beoordelen. Je ontvangt een e-mail zodra je account is goedgekeurd voor coaching.",
+    "backHome": "Terug naar Home",
+    "toastSuccess": "Sollicitatie succesvol ingediend!",
+    "toastError": "Er is iets misgegaan. Probeer het opnieuw."
   }
 }

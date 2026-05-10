@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { currentUser, clerkClient } from "@clerk/nextjs/server";
 import { prisma } from "./prisma";
 
 /**
@@ -65,6 +65,15 @@ export async function syncUser() {
     }
   }
 
+  // Sync role to Clerk publicMetadata for client-side RBAC UI checks
+  const client = await clerkClient();
+  if (user.publicMetadata.role !== dbUser.role) {
+    await client.users.updateUser(user.id, {
+      publicMetadata: {
+        role: dbUser.role
+      }
+    });
+  }
+
   return dbUser;
 }
-

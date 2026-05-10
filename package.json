@@ -12,6 +12,7 @@
     "seed": "node prisma/seed.js"
   },
   "dependencies": {
+    "@clerk/backend": "^3.4.7",
     "@clerk/nextjs": "^7.2.8",
     "@prisma/client": "^5.22.0",
     "clsx": "^2.1.1",

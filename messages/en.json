@@ -136,5 +136,27 @@
     "paceSubtitle": "How many hours per week can you dedicate?",
     "langTitle": "Preferred language?",
     "langSubtitle": "Choose the primary language for your tutoring sessions."
+  },
+  "TutorApply": {
+    "badge": "Join the Elite",
+    "title": "Share your AI Expertise with the world.",
+    "subtitle": "We are looking for expert AI engineers, data scientists, and strategists to mentor the next generation of innovators.",
+    "benefit1": "Set your own rates",
+    "benefit2": "Flexible global schedule",
+    "benefit3": "High-quality students",
+    "benefit4": "Centralized operations",
+    "labelBio": "Short Professional Bio",
+    "placeholderBio": "Describe your background and tutoring approach...",
+    "labelExpertise": "Expertise (Comma separated)",
+    "placeholderExpertise": "e.g. PyTorch, NLP, RAG",
+    "labelRate": "Hourly Rate ($)",
+    "labelLanguages": "Languages",
+    "submit": "Submit Application",
+    "submitting": "Submitting...",
+    "successTitle": "Application Received",
+    "successDesc": "Our team will review your profile. You will receive an email once your account is approved for tutoring.",
+    "backHome": "Back to Home",
+    "toastSuccess": "Application submitted successfully!",
+    "toastError": "Something went wrong. Please try again."
   }
 }

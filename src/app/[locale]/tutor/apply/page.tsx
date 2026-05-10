@@ -6,8 +6,10 @@ import { motion } from "framer-motion";
 import { ArrowRight, Loader2, Sparkles, CheckCircle2 } from "lucide-react";
 import { useRouter } from "@/navigation";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export default function TutorApplyPage() {
+  const t = useTranslations('TutorApply');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
@@ -36,12 +38,12 @@ export default function TutorApplyPage() {
 
       if (res.ok) {
         setIsSuccess(true);
-        toast.success("Application submitted successfully!");
+        toast.success(t('toastSuccess'));
       } else {
         throw new Error("Failed to submit application");
       }
     } catch {
-      toast.error("Something went wrong. Please try again.");
+      toast.error(t('toastError'));
     } finally {
       setIsSubmitting(false);
     }
@@ -59,15 +61,15 @@ export default function TutorApplyPage() {
           <div className="h-20 w-20 bg-emerald-50 text-emerald-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
             <CheckCircle2 className="h-10 w-10" />
           </div>
-          <h2 className="text-3xl font-black text-slate-900 mb-4 uppercase">Application Received</h2>
+          <h2 className="text-3xl font-black text-slate-900 mb-4 uppercase">{t('successTitle')}</h2>
           <p className="text-slate-500 font-medium leading-relaxed mb-10">
-            Our team will review your profile. You will receive an email once your account is approved for tutoring.
+            {t('successDesc')}
           </p>
           <button 
             onClick={() => router.push("/")}
             className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-slate-800 transition-all"
           >
-            Back to Home
+            {t('backHome')}
           </button>
         </motion.div>
       </main>
@@ -84,16 +86,16 @@ export default function TutorApplyPage() {
           <div className="lg:col-span-2 space-y-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-sky-100 text-sky-700 text-[10px] font-black uppercase tracking-widest shadow-sm">
               <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-              <span>Join the Elite</span>
+              <span>{t('badge')}</span>
             </div>
             <h1 className="text-5xl font-black text-slate-900 tracking-tight leading-[1.1]">
-              Share your <span className="text-brand-primary">AI Expertise</span> with the world.
+              {t('title').split('AI Expertise')[0]}<span className="text-brand-primary">AI Expertise</span>{t('title').split('AI Expertise')[1]}
             </h1>
             <p className="text-slate-600 font-medium text-lg leading-relaxed">
-              We are looking for expert AI engineers, data scientists, and strategists to mentor the next generation of innovators.
+              {t('subtitle')}
             </p>
             <ul className="space-y-4">
-              {["Set your own rates", "Flexible global schedule", "High-quality students", "Centralized operations"].map((feat, i) => (
+              {[t('benefit1'), t('benefit2'), t('benefit3'), t('benefit4')].map((feat, i) => (
                 <li key={i} className="flex items-center gap-3 text-slate-500 font-bold text-sm uppercase tracking-wide">
                   <CheckCircle2 className="h-5 w-5 text-brand-primary" />
                   {feat}
@@ -106,11 +108,11 @@ export default function TutorApplyPage() {
             <div className="bg-white p-10 rounded-[3rem] shadow-2xl border border-sky-100">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 ml-2">Short Professional Bio</label>
+                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 ml-2">{t('labelBio')}</label>
                   <textarea 
                     required
                     className="w-full p-6 bg-slate-50 border border-sky-50 rounded-3xl focus:ring-4 focus:ring-sky-100 outline-none transition-all min-h-[120px] text-sm font-medium"
-                    placeholder="Describe your background and tutoring approach..."
+                    placeholder={t('placeholderBio')}
                     value={formData.bio}
                     onChange={(e) => setFormData({...formData, bio: e.target.value})}
                   />
@@ -118,18 +120,18 @@ export default function TutorApplyPage() {
 
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 ml-2">Expertise (Comma separated)</label>
+                    <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 ml-2">{t('labelExpertise')}</label>
                     <input 
                       type="text"
                       required
                       className="w-full p-5 bg-slate-50 border border-sky-50 rounded-2xl focus:ring-4 focus:ring-sky-100 outline-none transition-all text-sm font-medium"
-                      placeholder="e.g. PyTorch, NLP, RAG"
+                      placeholder={t('placeholderExpertise')}
                       value={formData.expertise}
                       onChange={(e) => setFormData({...formData, expertise: e.target.value})}
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 ml-2">Hourly Rate ($)</label>
+                    <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 ml-2">{t('labelRate')}</label>
                     <input 
                       type="number"
                       required
@@ -142,7 +144,7 @@ export default function TutorApplyPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 ml-2">Languages</label>
+                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 ml-2">{t('labelLanguages')}</label>
                   <input 
                     type="text"
                     required
@@ -159,7 +161,7 @@ export default function TutorApplyPage() {
                 >
                   {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : (
                     <>
-                      Submit Application
+                      {t('submit')}
                       <ArrowRight className="h-5 w-5" />
                     </>
                   )}
