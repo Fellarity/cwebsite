@@ -139,11 +139,19 @@ export default async function TutorDashboard({
                   {t('quickActions')}
                 </h2>
                 <div className="space-y-3">
-                  {[t('action1'), t('action2'), t('action3')].map((action, i) => (
-                    <button key={i} className="w-full text-left p-6 bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-between group">
-                      {action}
+                  {[
+                    { label: t('action1'), href: "/tutor/settings" },
+                    { label: t('action2'), href: "/tutor/earnings" },
+                    { label: t('action3'), href: "/tutor" }, // Mocked for now
+                  ].map((action, i) => (
+                    <Link 
+                      key={i} 
+                      href={action.href}
+                      className="w-full text-left p-6 bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-between group"
+                    >
+                      {action.label}
                       <ArrowRight className="h-4 w-4 text-sky-400 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    </Link>
                   ))}
                 </div>
               </div>
