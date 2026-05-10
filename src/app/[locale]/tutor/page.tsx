@@ -115,7 +115,14 @@ export default async function TutorDashboard({
                                <p className="font-black text-slate-900 uppercase text-[10px] tracking-[0.2em] mb-1">{booking.student.user.name}</p>
                                <p className="text-sm font-bold text-slate-500">{booking.startTime.toLocaleString()}</p>
                             </div>
-                            <button className="px-6 py-2 bg-brand-primary text-white rounded-xl font-black text-[10px] uppercase tracking-widest">Start Call</button>
+                            <a 
+                              href={booking.meetLink || '#'} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className={`px-6 py-2 bg-brand-primary text-white rounded-xl font-black text-[10px] uppercase tracking-widest ${!booking.meetLink ? 'opacity-50 pointer-events-none' : ''}`}
+                            >
+                              Start Call
+                            </a>
                          </div>
                        ))}
                     </div>
