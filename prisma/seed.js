@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -115,33 +126,31 @@ function main() {
                 case 3:
                     _i++;
                     return [3 /*break*/, 1];
-                case 4: 
-                // Clear existing plans for a clean state
-                return [4 /*yield*/, prisma.plan.deleteMany({})];
-                case 5:
-                    // Clear existing plans for a clean state
-                    _b.sent();
+                case 4:
                     plans = [
+                        { title: "Dev Test Plan", sessionCount: 5, duration: 60, price: 1 },
                         { title: "Single Session", sessionCount: 1, duration: 60, price: 60 },
                         { title: "Starter Bundle", sessionCount: 5, duration: 60, price: 275 },
                         { title: "Mastery Bundle", sessionCount: 10, duration: 60, price: 500 },
                     ];
                     _a = 0, plans_1 = plans;
-                    _b.label = 6;
-                case 6:
-                    if (!(_a < plans_1.length)) return [3 /*break*/, 9];
+                    _b.label = 5;
+                case 5:
+                    if (!(_a < plans_1.length)) return [3 /*break*/, 8];
                     p = plans_1[_a];
-                    return [4 /*yield*/, prisma.plan.create({
-                            data: p
+                    return [4 /*yield*/, prisma.plan.upsert({
+                            where: { id: p.title.replace(/\s+/g, '-').toLowerCase() }, // Artificial ID for seeding stability
+                            update: p,
+                            create: __assign({ id: p.title.replace(/\s+/g, '-').toLowerCase() }, p)
                         })];
-                case 7:
+                case 6:
                     _b.sent();
-                    console.log("\u2705 Created plan: ".concat(p.title));
-                    _b.label = 8;
-                case 8:
+                    console.log("\u2705 Created/Updated plan: ".concat(p.title));
+                    _b.label = 7;
+                case 7:
                     _a++;
-                    return [3 /*break*/, 6];
-                case 9:
+                    return [3 /*break*/, 5];
+                case 8:
                     console.log("🌳 Seeding completed successfully.");
                     return [2 /*return*/];
             }

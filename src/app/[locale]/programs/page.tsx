@@ -15,36 +15,36 @@ export default async function ProgramsPage({
     {
       id: "productivity",
       icon: Zap,
-      title: "AI Productivity Mastery",
-      desc: "General AI Chatbots, Automation and Productivity, Note-Taking, Email, and Knowledge Management tools.",
+      title: t('track1Title'),
+      desc: t('track1Desc'),
       features: ["Workflow Automation", "Note-Taking AI", "Advanced Chatbot Mastery"]
     },
     {
       id: "students",
       icon: GraduationCap,
-      title: "AI for Students",
-      desc: "Research Tools, PDF Analysis, Learning Tools, Video Notes, Writing, and Presentation tools.",
+      title: t('track2Title'),
+      desc: t('track2Desc'),
       features: ["Academic Research AI", "Document Analysis", "Smart Study Systems"]
     },
     {
       id: "content",
       icon: Video,
-      title: "AI Content Creation",
-      desc: "Image Generation, Video Editing, Audio Tools, Marketing, and Social Media tools.",
+      title: t('track3Title'),
+      desc: t('track3Desc'),
       features: ["Generative Art", "AI Video Production", "Social Media Strategy"]
     },
     {
       id: "professionals",
       icon: Briefcase,
-      title: "AI for Professionals",
-      desc: "Excel AI, Document Automation, Career Tools, Presentations, and Communication tools.",
+      title: t('track4Title'),
+      desc: t('track4Desc'),
       features: ["Spreadsheet Intelligence", "Career Acceleration", "Executive Presence AI"]
     },
     {
       id: "development",
       icon: Code,
-      title: "AI Development and Data",
-      desc: "Coding Tools, Website Builders, Machine Learning, Data Science, and App-Building tools.",
+      title: t('track5Title'),
+      desc: t('track5Desc'),
       features: ["AI Software Engineering", "MLOps & Data Science", "No-Code App Building"]
     }
   ];
@@ -62,13 +62,13 @@ export default async function ProgramsPage({
         <div className="max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-brand-border text-brand-primary text-[10px] font-black mb-8 shadow-sm uppercase tracking-[0.2em]">
             <BookOpen className="h-4 w-4" />
-            Curriculum
+            {t('curriculumBadge')}
           </div>
           <h1 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight mb-8 leading-tight">
-            The Master <span className="text-brand-primary">AI Tracks</span>.
+            {t('titleMain')} <span className="text-brand-primary">{t('titleHighlight')}</span>.
           </h1>
           <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed">
-            Our tool-based instructional framework covers 110+ premium AI tools across 5 specialized career tracks. Choose your path.
+            {t('subtitleMain')}
           </p>
         </div>
       </section>
@@ -102,12 +102,12 @@ export default async function ProgramsPage({
       </section>
 
       <section className="mt-32 max-w-4xl mx-auto px-4 py-16 bg-slate-900 rounded-[4rem] text-center shadow-2xl border-4 border-slate-800">
-         <h2 className="text-3xl font-black text-white mb-6 uppercase tracking-tight">Personalized 1-to-1 Learning</h2>
+         <h2 className="text-3xl font-black text-white mb-6 uppercase tracking-tight">{t('customTitle')}</h2>
          <p className="text-slate-400 font-medium text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-           Every session is delivered as an exclusive one-hour meeting. We adapt the speed and depth of instruction to your specific pace and requirements.
+           {t('customDesc')}
          </p>
          <Link href="/tutors" className="px-10 py-5 bg-white text-slate-900 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-brand-primary hover:text-white transition-all shadow-xl inline-block">
-           Find your mentor
+           {t('findMentor')}
          </Link>
       </section>
     </main>

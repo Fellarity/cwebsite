@@ -69,21 +69,24 @@ async function main() {
     console.log(`✅ Created/Updated tutor: ${user.name}`);
   }
 
-  // Clear existing plans for a clean state
-  await prisma.plan.deleteMany({});
-
   // 2. Create Initial Plans based on EUR 50-60 model
   const plans = [
+    { title: "Dev Test Plan", sessionCount: 5, duration: 60, price: 1 },
     { title: "Single Session", sessionCount: 1, duration: 60, price: 60 },
     { title: "Starter Bundle", sessionCount: 5, duration: 60, price: 275 },
     { title: "Mastery Bundle", sessionCount: 10, duration: 60, price: 500 },
   ];
 
   for (const p of plans) {
-    await prisma.plan.create({
-      data: p
+    await prisma.plan.upsert({
+      where: { id: p.title.replace(/\s+/g, '-').toLowerCase() }, // Artificial ID for seeding stability
+      update: p,
+      create: {
+        id: p.title.replace(/\s+/g, '-').toLowerCase(),
+        ...p
+      }
     });
-    console.log(`✅ Created plan: ${p.title}`);
+    console.log(`✅ Created/Updated plan: ${p.title}`);
   }
 
   console.log("🌳 Seeding completed successfully.");
