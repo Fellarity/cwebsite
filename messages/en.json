@@ -86,7 +86,8 @@
     "upgrade": "Upgrade Now",
     "matchesTitle": "Top Mentor Matches",
     "matchesSubtitle": "Based on your learning goals",
-    "viewProfile": "View Profile"
+    "viewProfile": "View Profile",
+    "credits": "Session Credits"
   },
   "TutorDashboard": {
     "welcome": "Welcome",

@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import { redirect } from "next/navigation";
-import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight, Star, Video } from "lucide-react";
+import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight, Star, Video, Zap } from "lucide-react";
 import { Link } from "@/navigation";
 import { Navbar } from "@/components/navbar";
 import { prisma } from "@/lib/prisma";
@@ -42,12 +42,12 @@ export default async function StudentDashboard({
   // Calculate Real Stats
   const upcomingSessions = studentProfile.bookings.filter(b => b.status === 'CONFIRMED' || b.status === 'PENDING').length;
   const completedSessions = studentProfile.bookings.filter(b => b.status === 'COMPLETED').length;
-  const totalHours = completedSessions * 1; // Assuming 1 hour per session for now
+  const totalHours = completedSessions * 1; 
 
   const stats = [
+    { title: t('credits'), value: studentProfile.totalCredits.toString(), icon: Zap, color: "text-amber-500", bg: "bg-amber-50" },
     { title: t('upcoming'), value: upcomingSessions.toString(), icon: Calendar, color: "text-sky-500", bg: "bg-sky-50" },
     { title: t('completed'), value: completedSessions.toString(), icon: CheckCircle2, color: "text-emerald-500", bg: "bg-emerald-50" },
-    { title: t('hours'), value: `${totalHours}h`, icon: Clock, color: "text-indigo-500", bg: "bg-indigo-50" },
   ];
 
   return (
@@ -177,7 +177,9 @@ export default async function StudentDashboard({
                 </h2>
                 <div className="bg-white/5 rounded-[2rem] p-8 border border-white/10 mb-8">
                    <p className="text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] mb-2">{t('activePlan')}</p>
-                   <h3 className="text-2xl font-black text-sky-400 uppercase tracking-tighter">{t('noPlan')}</h3>
+                   <h3 className="text-2xl font-black text-sky-400 uppercase tracking-tighter">
+                     {studentProfile.totalCredits > 0 ? `${studentProfile.totalCredits} ${t('credits')}` : t('noPlan')}
+                   </h3>
                 </div>
                 <Link 
                   href="/pricing" 

@@ -24,17 +24,34 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
 
-    // 2. Update Order in DB
-    const order = await prisma.order.update({
+    // 2. Fetch Order with Plan info
+    const order = await prisma.order.findUnique({
       where: { razorpayOrderId: razorpay_order_id },
-      data: {
-        status: "PAID",
-        razorpayPaymentId: razorpay_payment_id,
-      },
+      include: { plan: true }
     });
 
-    // 3. TODO: Activate Student Profile/Credits
-    // For now, we'll just confirm the payment
+    if (!order) {
+      return NextResponse.json({ error: "Order not found" }, { status: 404 });
+    }
+
+    // 3. Update Order and Student Credits in a Transaction
+    await prisma.$transaction([
+      prisma.order.update({
+        where: { razorpayOrderId: razorpay_order_id },
+        data: {
+          status: "PAID",
+          razorpayPaymentId: razorpay_payment_id,
+        },
+      }),
+      prisma.studentProfile.update({
+        where: { userId: order.userId },
+        data: {
+          totalCredits: {
+            increment: order.plan.sessionCount
+          }
+        }
+      })
+    ]);
 
     return NextResponse.json({ success: true, orderId: order.id });
   } catch (error) {

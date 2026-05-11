@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     const start = new Date(startTime);
     const end = new Date(endTime);
 
-    // 1. Fetch Student Details (including email)
+    // 1. Fetch Student Details (including email and credits)
     const student = await prisma.user.findUnique({
       where: { id: user.id },
       include: { studentProfile: true }
@@ -22,6 +22,13 @@ export async function POST(request: Request) {
 
     if (!student?.studentProfile) {
       return NextResponse.json({ error: "Student profile not found" }, { status: 400 });
+    }
+
+    // --- CREDIT CHECK ---
+    if (student.studentProfile.totalCredits <= 0) {
+      return NextResponse.json({ 
+        error: "Insufficient credits. Please purchase a plan to book a session." 
+      }, { status: 403 });
     }
 
     // 2. Fetch Tutor Details (including email)
@@ -44,18 +51,28 @@ export async function POST(request: Request) {
       description: "1-to-1 Live AI Coaching Session hosted on Google Meet."
     });
 
-    // 4. Create Booking in Database
-    const booking = await prisma.booking.create({
-      data: {
-        studentId: student.studentProfile.id,
-        tutorId: tutor.tutorProfile.id,
-        startTime: start,
-        endTime: end,
-        status: "CONFIRMED",
-        meetLink: meetingData?.meetLink || "https://meet.google.com/pending",
-        calendarEventId: meetingData?.eventId
-      }
-    });
+    // 4. Create Booking and Deduct Credit in a Transaction
+    const [booking] = await prisma.$transaction([
+      prisma.booking.create({
+        data: {
+          studentId: student.studentProfile.id,
+          tutorId: tutor.tutorProfile.id,
+          startTime: start,
+          endTime: end,
+          status: "CONFIRMED",
+          meetLink: meetingData?.meetLink || "https://meet.google.com/pending",
+          calendarEventId: meetingData?.eventId
+        }
+      }),
+      prisma.studentProfile.update({
+        where: { id: student.studentProfile.id },
+        data: {
+          totalCredits: {
+            decrement: 1
+          }
+        }
+      })
+    ]);
 
     return NextResponse.json({ 
       success: true, 

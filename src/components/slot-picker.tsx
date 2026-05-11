@@ -46,6 +46,13 @@ export const SlotPicker = ({
         const error = await res.json();
         if (res.status === 401) {
             toast.error("Please sign in to book a session.");
+        } else if (res.status === 403) {
+            toast.error("Insufficient credits. Please purchase a plan first.", {
+              action: {
+                label: "Buy Plan",
+                onClick: () => router.push("/pricing")
+              }
+            });
         } else {
             throw new Error(error.error || "Failed to create booking");
         }
