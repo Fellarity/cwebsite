@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { TutorManager } from "@/components/admin/tutor-manager";
 import { UserManager } from "@/components/admin/user-manager";
 import { AuditTrail } from "@/components/admin/audit-trail";
+import { PlanManager } from "@/components/admin/plan-manager";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +19,7 @@ export default async function AdminDashboard() {
   }
 
   // Fetch Real Stats
-  const [totalUsers, activeTutors, pendingApps, revenueData, pendingTutors, recentOrders, allUsers] = await Promise.all([
+  const [totalUsers, activeTutors, pendingApps, revenueData, pendingTutors, recentOrders, allUsers, allPlans] = await Promise.all([
     prisma.user.count(),
     prisma.tutorProfile.count({ where: { verificationStatus: 'APPROVED' } }),
     prisma.tutorProfile.count({ where: { verificationStatus: 'PENDING' } }),
@@ -36,7 +37,10 @@ export default async function AdminDashboard() {
     prisma.user.findMany({
       include: { studentProfile: true },
       orderBy: { createdAt: 'desc' },
-      take: 20 // Limit to last 20 for initial view
+      take: 20 
+    }),
+    prisma.plan.findMany({
+      orderBy: { price: 'asc' }
     })
   ]);
 
@@ -108,6 +112,9 @@ export default async function AdminDashboard() {
               </div>
            </div>
         </div>
+
+        {/* Plan Management */}
+        <PlanManager initialPlans={allPlans} />
 
         {/* Global User Management */}
         <div className="mt-12 bg-white rounded-[3rem] shadow-2xl shadow-brand-soft border border-brand-border p-10">
