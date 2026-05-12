@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Save, Loader2 } from "lucide-react";
+import { Save, Loader2, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "@/navigation";
+import Image from "next/image";
 
 export const SettingsForm = ({ initialData }: { initialData: any }) => {
   const [formData, setFormData] = useState(initialData);
@@ -39,6 +40,30 @@ export const SettingsForm = ({ initialData }: { initialData: any }) => {
   return (
     <div className="bg-white p-10 rounded-[3rem] shadow-2xl border border-sky-100">
       <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Profile Image Section */}
+        <div className="flex flex-col md:flex-row items-center gap-8 pb-8 border-b border-slate-50">
+           <div className="relative h-32 w-32 rounded-[2rem] overflow-hidden bg-sky-50 border-4 border-white shadow-xl">
+              {formData.profileImage ? (
+                <Image src={formData.profileImage} alt="Preview" fill className="object-cover" />
+              ) : (
+                <div className="flex items-center justify-center h-full text-sky-200">
+                   <ImageIcon className="h-12 w-12" />
+                </div>
+              )}
+           </div>
+           <div className="flex-1 w-full">
+              <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3">Profile Image URL</label>
+              <input 
+                type="text"
+                className="w-full p-4 bg-slate-50 border-none rounded-2xl focus:ring-4 focus:ring-sky-100 outline-none transition-all text-sm font-medium"
+                placeholder="https://images.unsplash.com/photo-..."
+                value={formData.profileImage}
+                onChange={(e) => setFormData({...formData, profileImage: e.target.value})}
+              />
+              <p className="mt-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest italic">Tip: Use a professional headshot from Unsplash or your social media.</p>
+           </div>
+        </div>
+
         <div>
           <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 ml-2">Professional Bio</label>
           <textarea 

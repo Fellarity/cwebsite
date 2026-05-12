@@ -98,9 +98,9 @@ export default async function TutorsPage({
               {tutors.map((tutor) => (
                 <div key={tutor.id} className="group bg-white border border-sky-100 rounded-[3rem] p-3 hover:shadow-2xl hover:shadow-sky-200/50 transition-all hover:-translate-y-2 flex flex-col shadow-xl shadow-sky-100/20">
                   <div className="relative h-64 w-full rounded-[2.5rem] overflow-hidden bg-sky-50">
-                    {tutor.image ? (
+                    {(tutor.tutorProfile?.profileImage || tutor.image) ? (
                       <Image 
-                        src={tutor.image} 
+                        src={tutor.tutorProfile?.profileImage || tutor.image!} 
                         alt={tutor.name} 
                         fill 
                         className="object-cover group-hover:scale-105 transition-transform duration-500"

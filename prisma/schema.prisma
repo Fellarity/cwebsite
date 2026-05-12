@@ -86,6 +86,7 @@ model TutorProfile {
   userId             String              @unique
   user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   bio                String?
+  profileImage       String?
   expertise          String[]
   languages          String[]
   hourlyRate         Float?

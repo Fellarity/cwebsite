@@ -31,6 +31,7 @@ export default async function TutorSettingsPage() {
 
         <SettingsForm initialData={{
           bio: profile.bio || "",
+          profileImage: profile.profileImage || "",
           expertise: profile.expertise.join(", "),
           hourlyRate: profile.hourlyRate?.toString() || ""
         }} />

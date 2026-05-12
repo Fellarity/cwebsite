@@ -9,12 +9,13 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { bio, expertise, hourlyRate } = await request.json();
+    const { bio, expertise, hourlyRate, profileImage } = await request.json();
 
     await prisma.tutorProfile.update({
       where: { userId: user.id },
       data: {
         bio,
+        profileImage,
         expertise,
         hourlyRate: parseFloat(hourlyRate),
       },

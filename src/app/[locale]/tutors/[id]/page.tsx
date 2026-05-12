@@ -87,8 +87,8 @@ export default async function TutorProfilePage({
           
           <div className="flex flex-col md:flex-row gap-16 items-start">
             <div className="relative h-72 w-72 rounded-[3.5rem] overflow-hidden bg-white shadow-2xl shadow-sky-200 border-8 border-white shrink-0">
-              {tutor.image ? (
-                <Image src={tutor.image} alt={tutor.name} fill className="object-cover" />
+              {(tutor.tutorProfile.profileImage || tutor.image) ? (
+                <Image src={tutor.tutorProfile.profileImage || tutor.image!} alt={tutor.name} fill className="object-cover" />
               ) : (
                 <div className="flex items-center justify-center h-full text-sky-100 font-black text-8xl uppercase select-none bg-sky-50">
                   {tutor.name.split(' ').map(n => n[0]).join('')}
