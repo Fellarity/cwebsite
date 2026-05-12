@@ -89,12 +89,21 @@ export default async function AdminDashboard() {
 
            {/* Recent Revenue */}
            <div className="bg-white rounded-[3rem] shadow-2xl shadow-brand-soft border border-brand-border p-10">
-              <h2 className="text-2xl font-black text-brand-text-heading mb-8 flex items-center gap-4 uppercase tracking-tight">
-                <div className="p-3 bg-indigo-600 rounded-xl shadow-lg shadow-brand-soft">
-                  <Wallet className="h-5 w-5 text-white" />
-                </div>
-                Recent Revenue
-              </h2>
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="text-2xl font-black text-brand-text-heading flex items-center gap-4 uppercase tracking-tight">
+                  <div className="p-3 bg-indigo-600 rounded-xl shadow-lg shadow-brand-soft">
+                    <Wallet className="h-5 w-5 text-white" />
+                  </div>
+                  Recent Revenue
+                </h2>
+                <a 
+                  href="/api/admin/revenue/export" 
+                  download
+                  className="px-4 py-2 bg-slate-50 text-slate-500 rounded-xl font-black text-[9px] uppercase tracking-widest hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-slate-100"
+                >
+                  Download CSV
+                </a>
+              </div>
               <div className="space-y-4">
                  {recentOrders.length === 0 ? (
                    <p className="text-center text-brand-text-muted font-bold py-12 italic">No successful transactions yet.</p>
