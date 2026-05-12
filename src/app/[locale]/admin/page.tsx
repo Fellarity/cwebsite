@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
-import { ShieldAlert, Users, TrendingUp, DollarSign, Wallet } from "lucide-react";
+import { ShieldAlert, Users, TrendingUp, DollarSign, Wallet, Settings } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 import { syncUser } from "@/lib/sync-user";
 import { prisma } from "@/lib/prisma";
 import { TutorManager } from "@/components/admin/tutor-manager";
+import { UserManager } from "@/components/admin/user-manager";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +17,7 @@ export default async function AdminDashboard() {
   }
 
   // Fetch Real Stats
-  const [totalUsers, activeTutors, pendingApps, revenueData, pendingTutors, recentOrders] = await Promise.all([
+  const [totalUsers, activeTutors, pendingApps, revenueData, pendingTutors, recentOrders, allUsers] = await Promise.all([
     prisma.user.count(),
     prisma.tutorProfile.count({ where: { verificationStatus: 'APPROVED' } }),
     prisma.tutorProfile.count({ where: { verificationStatus: 'PENDING' } }),
@@ -30,6 +31,11 @@ export default async function AdminDashboard() {
       include: { user: true, plan: true },
       orderBy: { createdAt: 'desc' },
       take: 5
+    }),
+    prisma.user.findMany({
+      include: { studentProfile: true },
+      orderBy: { createdAt: 'desc' },
+      take: 20 // Limit to last 20 for initial view
     })
   ]);
 
@@ -100,6 +106,19 @@ export default async function AdminDashboard() {
                  ))}
               </div>
            </div>
+        </div>
+
+        {/* Global User Management */}
+        <div className="mt-12 bg-white rounded-[3rem] shadow-2xl shadow-brand-soft border border-brand-border p-10">
+           <h2 className="text-2xl font-black text-brand-text-heading mb-4 flex items-center gap-4 uppercase tracking-tight">
+              <div className="p-3 bg-slate-900 rounded-xl shadow-lg shadow-brand-soft">
+                <Settings className="h-5 w-5 text-white" />
+              </div>
+              Account & Subscription Control
+           </h2>
+           <p className="text-brand-text-muted font-bold text-[10px] uppercase tracking-widest ml-16 mb-8">Manage roles and manual session credit adjustments</p>
+           
+           <UserManager initialUsers={allUsers} />
         </div>
       </main>
     </div>
