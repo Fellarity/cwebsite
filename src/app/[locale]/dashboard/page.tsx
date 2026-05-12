@@ -98,37 +98,39 @@ export default async function StudentDashboard({
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div className="lg:col-span-2 space-y-10">
-              {/* Next Session */}
+              {/* Upcoming Sessions */}
               <div className="bg-white border border-sky-100 rounded-[3rem] shadow-xl shadow-sky-100/20 p-10">
                 <h2 className="text-2xl font-black text-slate-900 mb-8 flex items-center gap-4 uppercase tracking-tight">
                   <div className="p-3 bg-brand-primary rounded-xl shadow-lg shadow-brand-soft">
                     <Calendar className="h-5 w-5 text-white" />
                   </div>
-                  {t('nextSession')}
+                  {upcomingSessions > 1 ? t('upcoming') : t('nextSession')}
                 </h2>
                 <div className="bg-sky-50/50 rounded-[2rem] p-12 text-center border-2 border-dashed border-sky-100">
-                  {nextSession ? (
-                    <div className="text-left">
-                       <p className="text-slate-900 font-black uppercase tracking-widest text-xs mb-4">Your next live 1-to-1 session is scheduled.</p>
-                       <div className="bg-white p-6 rounded-3xl border border-sky-100 shadow-sm flex items-center justify-between flex-wrap gap-4">
-                          <div className="flex items-center gap-4">
-                             <div className="h-12 w-12 bg-sky-500 rounded-xl flex items-center justify-center text-white">
-                                <Video className="h-6 w-6" />
-                             </div>
-                             <div>
-                                <p className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Mentor: {nextSession.tutor.user.name}</p>
-                                <p className="text-sky-600 font-bold text-xs uppercase">{nextSession.startTime.toLocaleString()}</p>
-                             </div>
-                          </div>
-                          <a 
-                            href={nextSession.meetLink || '#'} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className={`px-8 py-3 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-800 transition-all ${!nextSession.meetLink ? 'opacity-50 pointer-events-none' : ''}`}
-                          >
-                            Join Room
-                          </a>
-                       </div>
+                  {upcomingSessionsList.length > 0 ? (
+                    <div className="text-left space-y-6">
+                       <p className="text-slate-900 font-black uppercase tracking-widest text-xs mb-4">Your scheduled live 1-to-1 sessions:</p>
+                       {upcomingSessionsList.map((session) => (
+                         <div key={session.id} className="bg-white p-6 rounded-3xl border border-sky-100 shadow-sm flex items-center justify-between flex-wrap gap-4">
+                            <div className="flex items-center gap-4">
+                               <div className="h-12 w-12 bg-sky-500 rounded-xl flex items-center justify-center text-white">
+                                  <Video className="h-6 w-6" />
+                               </div>
+                               <div>
+                                  <p className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Mentor: {session.tutor.user.name}</p>
+                                  <p className="text-sky-600 font-bold text-xs uppercase">{session.startTime.toLocaleString()}</p>
+                               </div>
+                            </div>
+                            <a 
+                              href={session.meetLink || '#'} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className={`px-8 py-3 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-800 transition-all ${!session.meetLink ? 'opacity-50 pointer-events-none' : ''}`}
+                            >
+                              Join Room
+                            </a>
+                         </div>
+                       ))}
                     </div>
                   ) : (
                     <>
