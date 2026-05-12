@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import { redirect } from "next/navigation";
-import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight, Star, Video, Zap } from "lucide-react";
+import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight, Star, Video, Zap, MessageSquare, FileText, ClipboardList } from "lucide-react";
 import { Link } from "@/navigation";
 import { Navbar } from "@/components/navbar";
 import { prisma } from "@/lib/prisma";
@@ -8,6 +8,7 @@ import { syncUser } from "@/lib/sync-user";
 import { getTranslations } from 'next-intl/server';
 import { getRecommendedTutors } from "@/lib/matchmaker";
 import Image from "next/image";
+import { ReviewModal } from "@/components/admin/review-modal";
 
 export default async function StudentDashboard({
   params
@@ -24,21 +25,16 @@ export default async function StudentDashboard({
     redirect('/');
   }
 
-  // Check if onboarding is completed
+  // Fetch student profile and all bookings
   const studentProfile = await prisma.studentProfile.findUnique({
     where: { userId: user.id },
     include: {
       bookings: {
         include: {
-          tutor: {
-            include: {
-              user: true
-            }
-          }
+          tutor: { include: { user: true } },
+          review: true
         },
-        orderBy: {
-          startTime: 'asc'
-        }
+        orderBy: { startTime: 'desc' }
       }
     }
   });
@@ -47,21 +43,21 @@ export default async function StudentDashboard({
     redirect('/onboarding');
   }
 
-  // Fetch recommended tutors based on onboarding data
   const recommendedTutors = await getRecommendedTutors(user.id);
 
-  // Calculate Real Stats
-  const upcomingSessionsList = studentProfile.bookings.filter(b => b.status === 'CONFIRMED' || b.status === 'PENDING');
-  const upcomingSessions = upcomingSessionsList.length;
-  const completedSessions = studentProfile.bookings.filter(b => b.status === 'COMPLETED').length;
-  
-  // Get Next Session Details
-  const nextSession = upcomingSessionsList[0];
+  // Filter Bookings
+  const upcomingSessionsList = studentProfile.bookings
+    .filter(b => b.status === 'CONFIRMED' || b.status === 'PENDING')
+    .sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
+
+  const pastSessionsList = studentProfile.bookings
+    .filter(b => b.status === 'COMPLETED' || b.status === 'CANCELLED')
+    .slice(0, 5); 
 
   const stats = [
     { title: t('credits'), value: studentProfile.totalCredits.toString(), icon: Zap, color: "text-amber-500", bg: "bg-amber-50" },
-    { title: t('upcoming'), value: upcomingSessions.toString(), icon: Calendar, color: "text-sky-500", bg: "bg-sky-50" },
-    { title: t('completed'), value: completedSessions.toString(), icon: CheckCircle2, color: "text-emerald-500", bg: "bg-emerald-50" },
+    { title: t('upcoming'), value: upcomingSessionsList.length.toString(), icon: Calendar, color: "text-sky-500", bg: "bg-sky-50" },
+    { title: t('completed'), value: studentProfile.bookings.filter(b => b.status === 'COMPLETED').length.toString(), icon: CheckCircle2, color: "text-emerald-500", bg: "bg-emerald-50" },
   ];
 
   return (
@@ -104,12 +100,11 @@ export default async function StudentDashboard({
                   <div className="p-3 bg-brand-primary rounded-xl shadow-lg shadow-brand-soft">
                     <Calendar className="h-5 w-5 text-white" />
                   </div>
-                  {upcomingSessions > 1 ? t('upcoming') : t('nextSession')}
+                  {upcomingSessionsList.length > 1 ? t('upcoming') : t('nextSession')}
                 </h2>
                 <div className="bg-sky-50/50 rounded-[2rem] p-12 text-center border-2 border-dashed border-sky-100">
                   {upcomingSessionsList.length > 0 ? (
                     <div className="text-left space-y-6">
-                       <p className="text-slate-900 font-black uppercase tracking-widest text-xs mb-4">Your scheduled live 1-to-1 sessions:</p>
                        {upcomingSessionsList.map((session) => (
                          <div key={session.id} className="bg-white p-6 rounded-3xl border border-sky-100 shadow-sm flex items-center justify-between flex-wrap gap-4">
                             <div className="flex items-center gap-4">
@@ -146,6 +141,70 @@ export default async function StudentDashboard({
                   )}
                 </div>
               </div>
+
+              {/* Past Sessions & Reviews */}
+              {pastSessionsList.length > 0 && (
+                <div className="bg-white border border-sky-100 rounded-[3rem] shadow-xl shadow-sky-100/20 p-10">
+                   <h2 className="text-2xl font-black text-slate-900 mb-8 flex items-center gap-4 uppercase tracking-tight">
+                      <div className="p-3 bg-indigo-600 rounded-xl shadow-lg shadow-indigo-100">
+                        <CheckCircle2 className="h-5 w-5 text-white" />
+                      </div>
+                      Session History
+                   </h2>
+                   <div className="space-y-4">
+                      {pastSessionsList.map((session) => (
+                        <div key={session.id} className="p-6 rounded-3xl bg-slate-50 border border-slate-100 space-y-4">
+                           <div className="flex items-center justify-between flex-wrap gap-4">
+                              <div>
+                                 <p className="font-black text-slate-900 uppercase text-[10px] mb-1">{session.tutor.user.name}</p>
+                                 <p className="text-[10px] font-bold text-slate-400">{new Date(session.startTime).toLocaleDateString()}</p>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                 {session.status === 'COMPLETED' && !session.review && (
+                                   <ReviewModal bookingId={session.id} tutorName={session.tutor.user.name} />
+                                 )}
+                                 {session.review && (
+                                   <div className="flex items-center gap-1 text-amber-500">
+                                      {[...Array(session.review.rating)].map((_, i) => <Star key={i} className="h-3 w-3 fill-amber-500" />)}
+                                   </div>
+                                 )}
+                                 <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${
+                                   session.status === 'COMPLETED' ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'
+                                 }`}>
+                                   {session.status}
+                                 </span>
+                              </div>
+                           </div>
+                           
+                           {session.sessionNotes && (
+                             <div className="pt-4 border-t border-slate-200">
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                   <FileText className="h-3 w-3" /> Session Summary
+                                </p>
+                                <p className="text-xs text-slate-600 leading-relaxed italic">&ldquo;{session.sessionNotes}&rdquo;</p>
+                             </div>
+                           )}
+
+                           {session.actionItems && (session.actionItems as string[]).length > 0 && (
+                             <div className="pt-4">
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                   <ClipboardList className="h-3 w-3" /> Next Steps
+                                </p>
+                                <div className="grid gap-2">
+                                   {(session.actionItems as string[]).map((item, idx) => (
+                                     <div key={idx} className="flex items-center gap-2 text-[10px] font-bold text-slate-500">
+                                        <div className="h-1 w-1 bg-brand-primary rounded-full" />
+                                        {item}
+                                     </div>
+                                   ))}
+                                </div>
+                             </div>
+                           )}
+                        </div>
+                      ))}
+                   </div>
+                </div>
+              )}
 
               {/* Top Matches */}
               <div>

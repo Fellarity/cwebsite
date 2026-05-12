@@ -14,7 +14,8 @@ import {
   BookOpen,
   ArrowLeft,
   CheckCircle2,
-  BadgeCheck
+  BadgeCheck,
+  MessageSquare
 } from "lucide-react";
 
 export default async function TutorProfilePage({
@@ -32,20 +33,38 @@ export default async function TutorProfilePage({
       include: {
         tutorProfile: {
           include: {
-            availability: true
+            availability: true,
+            reviews: {
+               include: {
+                  booking: {
+                     include: {
+                        student: {
+                           include: { user: true }
+                        }
+                     }
+                  }
+               },
+               orderBy: { createdAt: 'desc' }
+            }
           }
         }
       }
     })
   ]);
 
-  if (!tutor || tutor.role !== 'TUTOR') {
+  if (!tutor || tutor.role !== 'TUTOR' || !tutor.tutorProfile) {
     notFound();
   }
 
+  // Calculate Real Rating
+  const reviews = tutor.tutorProfile.reviews;
+  const avgRating = reviews.length > 0 
+    ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
+    : "5.0"; // Default to 5.0 for new tutors
+
   // Generate dynamic slots based on timezones
   const dynamicSlots = generateAvailableSlots(
-    tutor.tutorProfile?.availability || [],
+    tutor.tutorProfile.availability,
     tutor.timezone || "UTC",
     student?.timezone || "UTC"
   );
@@ -84,7 +103,7 @@ export default async function TutorProfilePage({
                 </span>
                 <div className="flex items-center gap-1.5 text-amber-500 font-black text-sm uppercase tracking-tighter">
                   <Star className="h-5 w-5 fill-amber-500" />
-                  4.9 (120+ {t('reviews')})
+                  {avgRating} ({reviews.length}+ {t('reviews')})
                 </div>
               </div>
               
@@ -93,20 +112,20 @@ export default async function TutorProfilePage({
               </h1>
               
               <p className="text-xl text-slate-600 font-medium max-w-2xl leading-relaxed mb-10">
-                {tutor.tutorProfile?.bio}
+                {tutor.tutorProfile.bio}
               </p>
               
               <div className="flex flex-wrap gap-8 items-center">
                 <div className="flex items-center gap-2.5 text-slate-500 font-black text-xs uppercase tracking-widest">
                   <Globe className="h-5 w-5 text-sky-500" />
-                  {tutor.tutorProfile?.languages.join(", ")}
+                  {tutor.tutorProfile.languages.join(", ")}
                 </div>
                 <div className="flex items-center gap-2.5 text-slate-500 font-black text-xs uppercase tracking-widest">
                   <Clock className="h-5 w-5 text-indigo-500" />
                   {t('availableThisWeek')}
                 </div>
                 <div className="text-3xl font-black text-slate-900">
-                  ${tutor.tutorProfile?.hourlyRate}<span className="text-sm text-slate-400 font-black uppercase ml-1">/{tGen('perHour')}</span>
+                  ${tutor.tutorProfile.hourlyRate}<span className="text-sm text-slate-400 font-black uppercase ml-1">/{tGen('perHour')}</span>
                 </div>
               </div>
             </div>
@@ -126,7 +145,7 @@ export default async function TutorProfilePage({
                 {t('expertiseTitle')}
               </h2>
               <div className="grid sm:grid-cols-2 gap-4">
-                {tutor.tutorProfile?.expertise.map((item, i) => (
+                {tutor.tutorProfile.expertise.map((item, i) => (
                   <div key={i} className="flex items-center gap-4 p-6 rounded-3xl bg-white border border-sky-50 group hover:border-sky-200 hover:shadow-xl hover:shadow-sky-100/40 transition-all">
                     <CheckCircle2 className="h-6 w-6 text-emerald-500 shrink-0" />
                     <span className="font-black text-slate-700 uppercase tracking-widest text-[10px]">{item}</span>
@@ -135,16 +154,32 @@ export default async function TutorProfilePage({
               </div>
             </div>
 
+            {/* Student Reviews Section */}
             <div>
               <h2 className="text-3xl font-black text-slate-900 mb-10 flex items-center gap-4 uppercase tracking-tight">
-                <div className="p-3 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-100">
-                  <BadgeCheck className="h-6 w-6 text-white" />
+                <div className="p-3 bg-brand-primary rounded-2xl shadow-lg shadow-brand-soft">
+                  <MessageSquare className="h-6 w-6 text-white" />
                 </div>
-                {t('styleTitle')}
+                Student Feedback
               </h2>
-              <p className="text-lg text-slate-600 leading-relaxed font-medium bg-white/50 p-8 rounded-[2.5rem] border border-sky-50 italic">
-                &ldquo;{t('styleDesc')}&rdquo;
-              </p>
+              <div className="space-y-6">
+                {reviews.length === 0 ? (
+                  <p className="text-slate-400 font-medium italic">No reviews yet. Be the first to book a session!</p>
+                ) : reviews.map((review) => (
+                  <div key={review.id} className="p-8 bg-white/50 rounded-[2.5rem] border border-sky-50 shadow-sm">
+                     <div className="flex justify-between items-start mb-4">
+                        <div>
+                           <p className="font-black text-slate-900 uppercase text-xs mb-1">{review.booking.student.user.name}</p>
+                           <p className="text-[10px] font-bold text-slate-400 uppercase">{new Date(review.createdAt).toLocaleDateString()}</p>
+                        </div>
+                        <div className="flex gap-1">
+                           {[...Array(review.rating)].map((_, i) => <Star key={i} className="h-3 w-3 text-amber-500 fill-amber-500" />)}
+                        </div>
+                     </div>
+                     <p className="text-slate-600 font-medium leading-relaxed italic">&ldquo;{review.comment}&rdquo;</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 

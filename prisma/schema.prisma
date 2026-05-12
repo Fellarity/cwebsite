@@ -96,6 +96,8 @@ model TutorProfile {
   
   availability       TutorAvailability[]
   bookings           Booking[]
+  resources          TutorResource[]
+  reviews            Review[]
 }
 
 model StudentProfile {
@@ -110,6 +112,7 @@ model StudentProfile {
   updatedAt         DateTime  @updatedAt
   
   bookings          Booking[]
+  reviews           Review[]
 }
 
 model TutorAvailability {
@@ -148,8 +151,34 @@ model Booking {
   meetLink        String?
   calendarEventId String?
   status          BookingStatus  @default(PENDING)
+  sessionNotes    String?
+  actionItems     Json?
+  review          Review?
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  bookingId String   @unique
+  booking   Booking  @relation(fields: [bookingId], references: [id])
+  studentId String
+  student   StudentProfile @relation(fields: [studentId], references: [id])
+  tutorId   String
+  tutor     TutorProfile   @relation(fields: [tutorId], references: [id])
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+}
+
+model TutorResource {
+  id          String       @id @default(cuid())
+  tutorId     String
+  tutor       TutorProfile @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  title       String
+  url         String
+  description String?
+  createdAt   DateTime     @default(now())
 }
 
 enum BookingStatus {

@@ -1,10 +1,12 @@
 import { redirect } from "next/navigation";
-import { Video, Calendar, Users, Briefcase, ArrowRight } from "lucide-react";
+import { Video, Calendar, Users, Briefcase, ArrowRight, Star } from "lucide-react";
 import { Link } from "@/navigation";
 import { Navbar } from "@/components/navbar";
 import { getTranslations } from 'next-intl/server';
 import { syncUser } from "@/lib/sync-user";
 import { prisma } from "@/lib/prisma";
+import { StudentContextModal } from "@/components/admin/student-context-modal";
+import { SessionNotesModal } from "@/components/admin/session-notes-modal";
 
 export const dynamic = "force-dynamic";
 
@@ -22,10 +24,11 @@ export default async function TutorDashboard({
     redirect('/');
   }
 
-  // Fetch real tutor profile and bookings
+  // Fetch real tutor profile, bookings and reviews
   const tutorProfile = await prisma.tutorProfile.findUnique({
     where: { userId: user.id },
     include: {
+      reviews: true,
       bookings: {
         include: {
           student: {
@@ -33,6 +36,9 @@ export default async function TutorDashboard({
               user: true
             }
           }
+        },
+        orderBy: {
+          startTime: 'asc'
         }
       }
     }
@@ -47,12 +53,14 @@ export default async function TutorDashboard({
     const today = new Date();
     return b.startTime.toDateString() === today.toDateString();
   }).length;
-  const activeStudents = new Set(tutorProfile.bookings.map(b => b.studentId)).size;
   const totalHours = tutorProfile.bookings.filter(b => b.status === 'COMPLETED').length * 1;
+  const avgRating = tutorProfile.reviews.length > 0 
+    ? (tutorProfile.reviews.reduce((acc, r) => acc + r.rating, 0) / tutorProfile.reviews.length).toFixed(1)
+    : "N/A";
 
   const stats = [
     { title: t('sessionsToday'), value: sessionsToday.toString(), icon: Video, color: "text-sky-500", bg: "bg-sky-50" },
-    { title: t('activeStudents'), value: activeStudents.toString(), icon: Users, color: "text-indigo-500", bg: "bg-indigo-50" },
+    { title: "Average Rating", value: avgRating, icon: Star, color: "text-amber-500", bg: "bg-amber-50" },
     { title: t('totalHours'), value: `${totalHours}h`, icon: Calendar, color: "text-emerald-500", bg: "bg-emerald-50" },
   ];
 
@@ -110,19 +118,37 @@ export default async function TutorDashboard({
                   {tutorProfile.bookings.length > 0 ? (
                     <div className="w-full text-left space-y-3">
                        {tutorProfile.bookings.map((booking) => (
-                         <div key={booking.id} className="bg-white p-6 rounded-3xl border border-sky-50 shadow-sm flex items-center justify-between">
+                         <div key={booking.id} className="bg-white p-6 rounded-3xl border border-sky-50 shadow-sm flex items-center justify-between flex-wrap gap-4">
                             <div>
-                               <p className="font-black text-slate-900 uppercase text-[10px] tracking-[0.2em] mb-1">{booking.student.user.name}</p>
+                               <div className="flex items-center gap-3 mb-1">
+                                  <p className="font-black text-slate-900 uppercase text-[10px] tracking-[0.2em]">{booking.student.user.name}</p>
+                                  <StudentContextModal studentId={booking.studentId} studentName={booking.student.user.name} />
+                               </div>
                                <p className="text-sm font-bold text-slate-500">{booking.startTime.toLocaleString()}</p>
+                               {booking.status !== 'CONFIRMED' && booking.status !== 'PENDING' && (
+                                 <span className={`inline-block mt-2 px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${
+                                   booking.status === 'COMPLETED' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
+                                 }`}>
+                                   {booking.status}
+                                 </span>
+                               )}
                             </div>
-                            <a 
-                              href={booking.meetLink || '#'} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className={`px-6 py-2 bg-brand-primary text-white rounded-xl font-black text-[10px] uppercase tracking-widest ${!booking.meetLink ? 'opacity-50 pointer-events-none' : ''}`}
-                            >
-                              Start Call
-                            </a>
+                            
+                            <div className="flex items-center gap-3">
+                               {(booking.status === 'CONFIRMED' || booking.status === 'PENDING') && (
+                                 <>
+                                   <a 
+                                     href={booking.meetLink || '#'} 
+                                     target="_blank" 
+                                     rel="noopener noreferrer"
+                                     className={`px-6 py-2 bg-brand-primary text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-brand-primary-hover transition-all ${!booking.meetLink ? 'opacity-50 pointer-events-none' : ''}`}
+                                   >
+                                     Start Call
+                                   </a>
+                                   <SessionNotesModal bookingId={booking.id} studentName={booking.student.user.name} />
+                                 </>
+                               )}
+                            </div>
                          </div>
                        ))}
                     </div>
@@ -142,7 +168,7 @@ export default async function TutorDashboard({
                   {[
                     { label: t('action1'), href: "/tutor/settings" },
                     { label: t('action2'), href: "/tutor/earnings" },
-                    { label: t('action3'), href: "/tutor" }, // Mocked for now
+                    { label: t('action3'), href: "/tutor/resources" },
                   ].map((action, i) => (
                     <Link 
                       key={i} 
