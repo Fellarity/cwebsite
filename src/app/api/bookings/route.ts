@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { syncUser } from "@/lib/sync-user";
 import { createGoogleMeeting } from "@/lib/google-calendar";
+import { logEvent } from "@/lib/logger";
 
 export async function POST(request: Request) {
   const user = await syncUser();
@@ -73,6 +74,18 @@ export async function POST(request: Request) {
         }
       })
     ]);
+
+    // LOG: Booking Success
+    await logEvent({
+      event: "BOOKING_CREATED",
+      message: `New session booked: ${student.name} with ${tutor.name}`,
+      userId: student.id,
+      metadata: { 
+        bookingId: booking.id, 
+        tutorId: tutor.id,
+        startTime: start.toISOString() 
+      }
+    });
 
     return NextResponse.json({ 
       success: true, 

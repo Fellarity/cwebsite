@@ -173,6 +173,23 @@ model Order {
   updatedAt        DateTime    @updatedAt
 }
 
+model AuditLog {
+  id        String   @id @default(cuid())
+  event     String   // e.g., "PAYMENT_SUCCESS", "BOOKING_CREATED", "USER_REGISTERED"
+  level     LogLevel @default(INFO)
+  message   String
+  metadata  Json?    // Optional structured data
+  userId    String?  // Optional link to the user involved
+  createdAt DateTime @default(now())
+}
+
+enum LogLevel {
+  INFO
+  WARN
+  ERROR
+  CRITICAL
+}
+
 enum OrderStatus {
   PENDING
   PAID

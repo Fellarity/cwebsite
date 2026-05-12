@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { logEvent } from "@/lib/logger";
 import crypto from "crypto";
 
 export async function POST(request: Request) {
@@ -52,6 +53,18 @@ export async function POST(request: Request) {
         }
       })
     ]);
+
+    // LOG: Payment Success
+    await logEvent({
+      event: "PAYMENT_SUCCESS",
+      message: `Successful payment of $${order.amount} for plan: ${order.plan.title}`,
+      userId: order.userId,
+      metadata: { 
+        orderId: order.id, 
+        razorpayPaymentId: razorpay_payment_id,
+        creditsAwarded: order.plan.sessionCount
+      }
+    });
 
     return NextResponse.json({ success: true, orderId: order.id });
   } catch (error) {

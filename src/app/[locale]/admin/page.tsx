@@ -1,10 +1,11 @@
 import { redirect } from "next/navigation";
-import { ShieldAlert, Users, TrendingUp, DollarSign, Wallet, Settings } from "lucide-react";
+import { ShieldAlert, Users, TrendingUp, DollarSign, Wallet, Settings, Activity } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 import { syncUser } from "@/lib/sync-user";
 import { prisma } from "@/lib/prisma";
 import { TutorManager } from "@/components/admin/tutor-manager";
 import { UserManager } from "@/components/admin/user-manager";
+import { AuditTrail } from "@/components/admin/audit-trail";
 
 export const dynamic = "force-dynamic";
 
@@ -120,6 +121,9 @@ export default async function AdminDashboard() {
            
            <UserManager initialUsers={allUsers} />
         </div>
+
+        {/* Operational Audit Trail */}
+        <AuditTrail />
       </main>
     </div>
   );

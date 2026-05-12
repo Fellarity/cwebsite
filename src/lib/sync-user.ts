@@ -1,5 +1,6 @@
 import { currentUser, clerkClient } from "@clerk/nextjs/server";
 import { prisma } from "./prisma";
+import { logEvent } from "./logger";
 
 /**
  * Syncs the currently authenticated Clerk user to the primary Prisma database.
@@ -61,6 +62,14 @@ export async function syncUser() {
           emailVerified: true,
           role: "STUDENT",
         },
+      });
+
+      // LOG: User Registration
+      await logEvent({
+        event: "USER_REGISTERED",
+        message: `New user signed up: ${name} (${primaryEmail})`,
+        userId: user.id,
+        metadata: { source: "clerk_sync" }
       });
     }
   }
