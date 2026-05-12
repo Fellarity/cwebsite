@@ -7,6 +7,7 @@ import { syncUser } from "@/lib/sync-user";
 import { prisma } from "@/lib/prisma";
 import { StudentContextModal } from "@/components/admin/student-context-modal";
 import { SessionNotesModal } from "@/components/admin/session-notes-modal";
+import { MessageModal } from "@/components/admin/message-modal";
 
 export const dynamic = "force-dynamic";
 
@@ -146,6 +147,7 @@ export default async function TutorDashboard({
                                      Start Call
                                    </a>
                                    <SessionNotesModal bookingId={booking.id} studentName={booking.student.user.name} />
+                                   <MessageModal receiverId={booking.student.userId} studentName={booking.student.user.name} />
                                  </>
                                )}
                             </div>

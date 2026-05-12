@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import { redirect } from "next/navigation";
-import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight, Star, Video, Zap, MessageSquare, FileText, ClipboardList } from "lucide-react";
+import { BookOpen, Calendar, Clock, CheckCircle2, ArrowRight, Star, Video, Zap, MessageSquare, FileText, ClipboardList, Settings, CreditCard, GraduationCap, Mail } from "lucide-react";
 import { Link } from "@/navigation";
 import { Navbar } from "@/components/navbar";
 import { prisma } from "@/lib/prisma";
@@ -9,6 +9,14 @@ import { getTranslations } from 'next-intl/server';
 import { getRecommendedTutors } from "@/lib/matchmaker";
 import Image from "next/image";
 import { ReviewModal } from "@/components/admin/review-modal";
+
+const TRACKS = [
+  { id: "productivity", label: "AI Productivity Mastery" },
+  { id: "students", label: "AI for Students" },
+  { id: "content", label: "AI Content Creation" },
+  { id: "professionals", label: "AI for Professionals" },
+  { id: "development", label: "AI Development and Data" },
+];
 
 export default async function StudentDashboard({
   params
@@ -25,7 +33,7 @@ export default async function StudentDashboard({
     redirect('/');
   }
 
-  // Fetch student profile and all bookings
+  // Fetch student profile, all bookings, and orders
   const studentProfile = await prisma.studentProfile.findUnique({
     where: { userId: user.id },
     include: {
@@ -43,7 +51,14 @@ export default async function StudentDashboard({
     redirect('/onboarding');
   }
 
-  const recommendedTutors = await getRecommendedTutors(user.id);
+  const [recommendedTutors, orders] = await Promise.all([
+    getRecommendedTutors(user.id),
+    prisma.order.findMany({
+      where: { userId: user.id, status: 'PAID' },
+      include: { plan: true },
+      orderBy: { createdAt: 'desc' }
+    })
+  ]);
 
   // Filter Bookings
   const upcomingSessionsList = studentProfile.bookings
@@ -75,7 +90,13 @@ export default async function StudentDashboard({
             <h1 className="text-5xl font-black text-slate-900 tracking-tight">
               {t('welcome')}, <span className="text-sky-600">{user.name || 'Student'}!</span>
             </h1>
-            <p className="text-slate-500 font-bold mt-2 uppercase text-xs tracking-widest">{t('subtitle')}</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-2">
+               <p className="text-slate-500 font-bold uppercase text-xs tracking-widest">{t('subtitle')}</p>
+               <Link href="/dashboard/settings" className="inline-flex items-center gap-2 text-[10px] font-black text-brand-primary uppercase tracking-widest hover:underline">
+                  <Settings className="h-3.5 w-3.5" />
+                  Refine Learning Goals
+               </Link>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
@@ -206,6 +227,38 @@ export default async function StudentDashboard({
                 </div>
               )}
 
+              {/* Billing & Receipts */}
+              <div className="bg-white border border-sky-100 rounded-[3rem] shadow-xl shadow-sky-100/20 p-10">
+                 <h2 className="text-2xl font-black text-slate-900 mb-8 flex items-center gap-4 uppercase tracking-tight">
+                    <div className="p-3 bg-indigo-600 rounded-xl shadow-lg shadow-indigo-100">
+                      <CreditCard className="h-5 w-5 text-white" />
+                    </div>
+                    Billing & Receipts
+                 </h2>
+                 <div className="space-y-4">
+                    {orders.length === 0 ? (
+                      <p className="text-sm italic text-slate-400 py-10 text-center border-2 border-dashed border-slate-50 rounded-[2rem]">No transactions yet.</p>
+                    ) : orders.map((order) => (
+                      <div key={order.id} className="p-6 rounded-3xl bg-slate-50 border border-slate-100 flex items-center justify-between flex-wrap gap-4">
+                         <div>
+                            <p className="font-black text-slate-900 uppercase text-[10px] mb-1">{order.plan.title}</p>
+                            <p className="text-[10px] font-bold text-slate-400">{new Date(order.createdAt).toLocaleDateString()}</p>
+                         </div>
+                         <div className="flex items-center gap-4">
+                            <p className="font-black text-slate-900 text-sm">${order.amount}</p>
+                            <a 
+                              href={`/api/payments/receipts/${order.id}`}
+                              download
+                              className="p-3 bg-white text-brand-primary rounded-xl border border-sky-100 hover:bg-brand-primary hover:text-white transition-all shadow-sm"
+                            >
+                               <FileText className="h-4 w-4" />
+                            </a>
+                         </div>
+                      </div>
+                    ))}
+                 </div>
+              </div>
+
               {/* Top Matches */}
               <div>
                  <div className="flex items-center justify-between mb-8 px-4">
@@ -252,10 +305,51 @@ export default async function StudentDashboard({
             </div>
 
             <div className="space-y-10">
+              {/* Knowledge Vault Shortcut */}
+              <div className="bg-white border border-sky-100 p-8 rounded-[3rem] shadow-xl shadow-sky-100/20">
+                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-2">
+                    <BookOpen className="h-4 w-4 text-brand-primary" /> Knowledge Vault
+                 </p>
+                 <div className="grid gap-3">
+                    <Link 
+                      href="/dashboard/resources"
+                      className="flex items-center justify-between p-6 bg-brand-surface-soft rounded-3xl border border-sky-50 hover:border-brand-primary transition-all group"
+                    >
+                       <span className="font-black text-slate-900 uppercase text-[10px]">Resource Library</span>
+                       <ArrowRight className="h-4 w-4 text-brand-primary group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                    <Link 
+                      href="/dashboard/messages"
+                      className="flex items-center justify-between p-6 bg-brand-surface-soft rounded-3xl border border-sky-50 hover:border-brand-primary transition-all group"
+                    >
+                       <span className="font-black text-slate-900 uppercase text-[10px]">Message Hub</span>
+                       <Mail className="h-4 w-4 text-brand-primary group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                 </div>
+              </div>
+
+              {/* Active Track */}
+              {studentProfile.selectedTrack && (
+                <div className="bg-white border border-sky-100 p-8 rounded-[3rem] shadow-xl shadow-sky-100/20">
+                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-2">
+                      <GraduationCap className="h-4 w-4 text-brand-primary" /> Active Learning Path
+                   </p>
+                   <div className="p-6 bg-brand-surface-soft rounded-3xl border border-sky-50">
+                      <h4 className="font-black text-slate-900 uppercase text-xs mb-2 leading-tight">
+                         {TRACKS.find(t => t.id === studentProfile.selectedTrack)?.label}
+                      </h4>
+                      <div className="w-full h-1.5 bg-sky-100 rounded-full mt-4 overflow-hidden">
+                         <div className="w-1/3 h-full bg-brand-primary rounded-full" />
+                      </div>
+                      <p className="text-[9px] font-bold text-slate-400 uppercase mt-3 tracking-widest">33% Complete</p>
+                   </div>
+                </div>
+              )}
+
               <div className="bg-slate-900 text-white p-10 rounded-[3rem] shadow-2xl shadow-sky-200 border-4 border-slate-800">
                 <h2 className="text-xl font-black mb-8 flex items-center gap-4 uppercase tracking-widest">
                   <div className="p-3 bg-brand-primary/20 rounded-xl">
-                    <BookOpen className="h-5 w-5 text-sky-400" />
+                    <Zap className="h-5 w-5 text-sky-400" />
                   </div>
                   {t('currentPlan')}
                 </h2>

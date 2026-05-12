@@ -23,9 +23,11 @@ model User {
   sessions      Session[]
   accounts      Account[]
   
-  studentProfile StudentProfile?
-  tutorProfile   TutorProfile?
-  orders         Order[]
+  studentProfile   StudentProfile?
+  tutorProfile     TutorProfile?
+  sentMessages     Message[]      @relation("SentMessages")
+  receivedMessages Message[]      @relation("ReceivedMessages")
+  orders           Order[]
 
   @@map("user")
 }
@@ -107,6 +109,7 @@ model StudentProfile {
   user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   learningGoal      String?
   currentLevel      String?
+  selectedTrack     String?
   onboardingAnswers Json?
   totalCredits      Int       @default(0)
   createdAt         DateTime  @default(now())
@@ -182,11 +185,15 @@ model TutorResource {
   createdAt   DateTime     @default(now())
 }
 
-enum BookingStatus {
-  PENDING
-  CONFIRMED
-  COMPLETED
-  CANCELLED
+model Message {
+  id          String   @id @default(cuid())
+  senderId    String
+  sender      User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiverId  String
+  receiver    User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  content     String
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
 }
 
 model Order {
@@ -218,6 +225,13 @@ enum LogLevel {
   WARN
   ERROR
   CRITICAL
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
 }
 
 enum OrderStatus {
