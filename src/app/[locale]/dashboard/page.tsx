@@ -28,7 +28,18 @@ export default async function StudentDashboard({
   const studentProfile = await prisma.studentProfile.findUnique({
     where: { userId: user.id },
     include: {
-      bookings: true
+      bookings: {
+        include: {
+          tutor: {
+            include: {
+              user: true
+            }
+          }
+        },
+        orderBy: {
+          startTime: 'asc'
+        }
+      }
     }
   });
 
@@ -40,9 +51,12 @@ export default async function StudentDashboard({
   const recommendedTutors = await getRecommendedTutors(user.id);
 
   // Calculate Real Stats
-  const upcomingSessions = studentProfile.bookings.filter(b => b.status === 'CONFIRMED' || b.status === 'PENDING').length;
+  const upcomingSessionsList = studentProfile.bookings.filter(b => b.status === 'CONFIRMED' || b.status === 'PENDING');
+  const upcomingSessions = upcomingSessionsList.length;
   const completedSessions = studentProfile.bookings.filter(b => b.status === 'COMPLETED').length;
-  const totalHours = completedSessions * 1; 
+  
+  // Get Next Session Details
+  const nextSession = upcomingSessionsList[0];
 
   const stats = [
     { title: t('credits'), value: studentProfile.totalCredits.toString(), icon: Zap, color: "text-amber-500", bg: "bg-amber-50" },
@@ -93,20 +107,27 @@ export default async function StudentDashboard({
                   {t('nextSession')}
                 </h2>
                 <div className="bg-sky-50/50 rounded-[2rem] p-12 text-center border-2 border-dashed border-sky-100">
-                  {upcomingSessions > 0 ? (
+                  {nextSession ? (
                     <div className="text-left">
                        <p className="text-slate-900 font-black uppercase tracking-widest text-xs mb-4">Your next live 1-to-1 session is scheduled.</p>
-                       <div className="bg-white p-6 rounded-3xl border border-sky-100 shadow-sm flex items-center justify-between">
+                       <div className="bg-white p-6 rounded-3xl border border-sky-100 shadow-sm flex items-center justify-between flex-wrap gap-4">
                           <div className="flex items-center gap-4">
                              <div className="h-12 w-12 bg-sky-500 rounded-xl flex items-center justify-center text-white">
                                 <Video className="h-6 w-6" />
                              </div>
                              <div>
-                                <p className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Google Meet</p>
-                                <p className="text-sky-600 font-bold text-xs uppercase">Link will be active 5m before start</p>
+                                <p className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Mentor: {nextSession.tutor.user.name}</p>
+                                <p className="text-sky-600 font-bold text-xs uppercase">{nextSession.startTime.toLocaleString()}</p>
                              </div>
                           </div>
-                          <button className="px-6 py-2 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-widest">Join Room</button>
+                          <a 
+                            href={nextSession.meetLink || '#'} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className={`px-8 py-3 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-800 transition-all ${!nextSession.meetLink ? 'opacity-50 pointer-events-none' : ''}`}
+                          >
+                            Join Room
+                          </a>
                        </div>
                     </div>
                   ) : (
@@ -172,7 +193,9 @@ export default async function StudentDashboard({
             <div className="space-y-10">
               <div className="bg-slate-900 text-white p-10 rounded-[3rem] shadow-2xl shadow-sky-200 border-4 border-slate-800">
                 <h2 className="text-xl font-black mb-8 flex items-center gap-4 uppercase tracking-widest">
-                  <BookOpen className="h-5 w-5 text-sky-400" />
+                  <div className="p-3 bg-brand-primary/20 rounded-xl">
+                    <BookOpen className="h-5 w-5 text-sky-400" />
+                  </div>
                   {t('currentPlan')}
                 </h2>
                 <div className="bg-white/5 rounded-[2rem] p-8 border border-white/10 mb-8">
